@@ -1,0 +1,653 @@
+<!doctype html>
+<html lang="uz" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>10-modul · CSS Transform, Transition va Animatsiyalar</title>
+<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body class="deck" data-lesson="10">
+
+<div class="deck-bar">
+  <a class="home" href="../index.html">← Kurs</a>
+  <span class="title">10-modul · CSS Transform, Transition va Animatsiyalar</span>
+  <span class="spacer"></span>
+  <div class="deck-tools">
+    <button class="tool" data-overview type="button" title="Slaydlar ro'yxati (O)">☰</button>
+    <button class="tool" data-theme-toggle type="button" title="Mavzu">☾</button>
+    <span class="counter">1 / 15</span>
+  </div>
+</div>
+<div class="deck-progress"></div>
+
+<main class="deck-stage">
+
+<!-- ===== 1 ===== -->
+<section class="slide cover">
+  <div class="lesson-no">10-modul</div>
+  <h1>CSS Transform, Transition va Animatsiyalar:<br>saytga «jonlilik» qo'shish</h1>
+  <p>Sichqoncha tugma ustiga kelganda u sekin-asta kattalashadi, sahifa yuklanayotganda aylanuvchi doiracha (loading spinner) paydo bo'ladi — bularning hech biri "sehr" emas. Bugun buni tashkil etuvchi uchta narsani o'rganamiz: elementni harakatlantirish (<code class="inline">transform</code>), buni silliq qilish (<code class="inline">transition</code>) va uni o'zi-o'zidan takrorlanadigan animatsiyaga aylantirish (<code class="inline">@keyframes</code>).</p>
+  <div class="cover-plan">
+    <div><b>Reja 1</b><code class="inline">transform</code> — scale(), rotate(), translate()</div>
+    <div><b>Reja 2</b><code class="inline">transition</code> — duration va timing-function</div>
+    <div><b>Reja 3</b><code class="inline">@keyframes</code> va <code class="inline">animation</code> — uzluksiz animatsiya</div>
+    <div><b>Amaliyot</b>Loading spinner va transition asosidagi modal oyna yasaymiz</div>
+  </div>
+</section>
+
+<!-- ===== 2 ===== -->
+<section class="slide">
+  <span class="eyebrow">Maqsad</span>
+  <h2>Dars oxirida siz nima qila olasiz</h2>
+  <p class="big">Video oxirida siz elementlarni <code class="inline">transform</code> orqali burish/kattalashtirish/siljitishni, <code class="inline">transition</code> bilan holatlar orasida silliq o'tishni va <code class="inline">@keyframes</code> + <code class="inline">animation</code> yordamida uzluksiz, o'zi-o'zidan ishlaydigan animatsiyalar (masalan aylanuvchi spinner) yasashni bilasiz.</p>
+  <div class="cardset">
+    <div class="card">
+      <span class="ico">🔄</span>
+      <h4>transform bilan harakatlantirasiz</h4>
+      <p>Elementni layoutni buzmasdan kattalashtirasiz, burasiz yoki siljitasiz.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🌊</span>
+      <h4>transition bilan silliqlaysiz</h4>
+      <p>Holatlar orasidagi "sakrashni" yo'qotib, tabiiy o'tish yasaysiz.</p>
+    </div>
+    <div class="card">
+      <span class="ico">♾️</span>
+      <h4>@keyframes bilan animatsiya qurasiz</h4>
+      <p>Foydalanuvchi harakatiga bog'liq bo'lmagan, o'zi-o'zidan takrorlanadigan harakat yasaysiz.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🧱</span>
+      <h4>Real komponent yasaysiz</h4>
+      <p>Loading spinner va ochilib-yopiladigan modal oyna — har bir saytda uchraydigan ikkita andoza.</p>
+    </div>
+  </div>
+  <div class="note tip">
+    <span class="note-t">15 daqiqadan keyin</span>
+    <p>Siz o'zingiz aynan shunday spinner va modal oyna yasay olasiz — buning uchun kerak bo'lgan uchta CSS mexanizmining barchasini shu darsda ko'ramiz.</p>
+  </div>
+</section>
+
+<!-- ===== 3 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 1 · Nazariya</span>
+  <h2><code class="inline">transform</code>: ko'rinishni o'zgartirish, layoutni buzmasdan</h2>
+  <p><code class="inline">transform</code> xossasi elementning ko'rinishini o'zgartiradi, lekin muhimi — sahifadagi boshqa elementlarning joylashuvini <b>"buzmaydi"</b>. Agar <code class="inline">margin</code> orqali joy o'zgartirsangiz, atrofdagi elementlar ham suriladi; <code class="inline">transform</code> esa faqat vizual — xuddi elementning "soyasi"dek harakat qiladi.</p>
+
+  <div class="cardset">
+    <div class="card">
+      <span class="ico">🔍</span>
+      <h4><code class="inline">scale()</code></h4>
+      <p><code class="inline">scale(1.2)</code> — elementni 1.2 barobar kattalashtiradi. <code class="inline">1</code>dan kichik son bo'lsa — kichraytiradi.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🔄</span>
+      <h4><code class="inline">rotate()</code></h4>
+      <p><code class="inline">rotate(45deg)</code> — elementni gradusga (deg) burib yuboradi.</p>
+    </div>
+    <div class="card">
+      <span class="ico">↔️</span>
+      <h4><code class="inline">translate()</code></h4>
+      <p><code class="inline">translate(20px, 10px)</code> — elementni X (o'ng-chap) va Y (yuqori-past) bo'yicha suradi.</p>
+    </div>
+  </div>
+
+  <div class="note">
+    <span class="note-t">Bir nechta transformatsiyani birlashtirish</span>
+    <p>Bitta elementga bir nechta transformatsiyani bir vaqtda, bo'sh joy bilan ajratib, bitta <code class="inline">transform</code> ichida yozish mumkin: <code class="inline">transform: scale(1.1) rotate(5deg);</code></p>
+  </div>
+</section>
+
+<!-- ===== 4 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 1 · Jonli mashq</span>
+  <h2>Transformatsiyalarni birga ishlatish</h2>
+  <p>Pastdagi kodda <code class="inline">.box:hover</code> ichida <code class="inline">scale()</code> va <code class="inline">rotate()</code> birga ishlatilgan, <code class="inline">.moved</code> classida esa <code class="inline">translate()</code> bor. Qiymatlarni o'zgartirib, natijani kuzating.</p>
+
+  <div class="live">
+    <div class="live-head">
+      <span class="dot"></span> transform.html
+      <span class="sp"></span>
+      <button class="live-reset" type="button">↺ Qayta</button>
+    </div>
+    <div class="live-body">
+      <div class="live-editor">
+<textarea spellcheck="false">
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: Arial, sans-serif; padding: 40px; display: flex; gap: 40px; }
+
+  .box {
+    width: 120px;
+    height: 120px;
+    background: #4a6cf7;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+  }
+
+  /* sichqoncha ustiga kelganda kattalashadi va biroz buriladi */
+  .box:hover {
+    transform: scale(1.15) rotate(5deg);
+  }
+
+  /* bu class elementni joyidan suradi — lekin atrofdagilar joyidan qo'zg'almaydi */
+  .box.moved {
+    transform: translate(50px, 20px);
+  }
+</style>
+
+<div class="box">Salom</div>
+<div class="box moved">Ko'chgan</div>
+</textarea>
+      </div>
+      <div class="live-preview"><iframe title="Natija"></iframe></div>
+    </div>
+  </div>
+
+  <div class="note tip">
+    <span class="note-t">Sinab ko'ring</span>
+    <p><code class="inline">rotate(5deg)</code>ni <code class="inline">rotate(180deg)</code>ga o'zgartiring. Boshlanish nuqtasi (rotation origin) sukut bo'yicha elementning <b>markazi</b> hisoblanadi — buni <code class="inline">transform-origin</code> xossasi bilan o'zgartirish mumkin.</p>
+  </div>
+</section>
+
+<!-- ===== 5 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 1 · Muhim farq</span>
+  <h2><code class="inline">translate()</code> joy egallamaydi</h2>
+  <p><code class="inline">translate</code> ichidagi qiymatlar <code class="inline">margin</code> yoki <code class="inline">position</code> kabi joyni "haqiqatan" o'zgartirmaydi — element hujjat oqimida (document flow) o'z eski joyini "band qilib" turadi, atrofidagilar surilmaydi, faqat elementning o'zi ko'rinishda ko'chadi.</p>
+
+  <div class="vs">
+    <div class="ok">
+      <div class="vs-h">✓ transform: translate()</div>
+<pre class="code" data-lang="css"><code>.karta:hover {
+  transform: translateY(-10px);
+}
+/* atrofdagi kartochkalar joyidan
+   qo'zg'almaydi — faqat vizual siljish */</code></pre>
+      <p>Element ko'zga "ko'chgandek" ko'rinadi, lekin uning asl o'rni layoutda hali ham band — qo'shni elementlar buni sezmaydi.</p>
+    </div>
+    <div class="no">
+      <div class="vs-h">✗ margin / position</div>
+<pre class="code" data-lang="css"><code>.karta:hover {
+  margin-top: -10px;
+}
+/* pastdagi barcha elementlar ham
+   yuqoriga suriladi — layout "sakraydi" */</code></pre>
+      <p>Bu holatda joy haqiqatan bo'shaydi — atrofdagi barcha elementlar qayta joylashadi, sahifa "titraydi".</p>
+    </div>
+  </div>
+
+  <div class="note warn">
+    <span class="note-t">Xulosa</span>
+    <p>Kartochkani hover'da "ko'tarish" effekti uchun <code class="inline">margin</code> emas, aynan <code class="inline">transform: translateY()</code> ishlatiladi — chunki u atrofdagi elementlarga hech qanday ta'sir qilmaydi.</p>
+  </div>
+</section>
+
+<!-- ===== 6 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 2 · Nazariya</span>
+  <h2><code class="inline">transition</code>: holatlar orasida silliq o'tish</h2>
+  <p>Avvalgi modullarda <code class="inline">:hover</code> bilan rang yoki o'lcham o'zgarishini ko'rgan edik, lekin u "sirpanib" emas, sakrab o'zgargandi. <code class="inline">transition</code> aynan shu sakrashni yo'qotib, ikki holat orasini silliq qiladi.</p>
+
+<pre class="code" data-lang="css" data-label="sintaksis"><code>.box {
+  width: 120px;
+  height: 120px;
+  background: #4a6cf7;
+  transition: transform 0.3s ease-in-out, background 0.3s ease;
+}
+
+.box:hover {
+  transform: scale(1.15);
+  background: #2f46b0;
+}</code></pre>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th>Qism</th><th>Vazifasi</th></tr>
+      <tr><td><b>Xossa (property)</b></td><td>Qaysi CSS xossasi kuzatilsin — <code class="inline">transform</code>, <code class="inline">background</code>, yoki barchasi uchun <code class="inline">all</code></td></tr>
+      <tr><td><b>Davomiylik (duration)</b></td><td>Necha soniyada tugasin — <code class="inline">0.3s</code>, <code class="inline">300ms</code></td></tr>
+      <tr><td><b><code class="inline">ease</code></b></td><td>Sekin boshlanib, tezlashib, sekin tugaydi (tabiiy his, standart qiymat)</td></tr>
+      <tr><td><b><code class="inline">linear</code></b></td><td>Boshidan oxirigacha bir xil tezlik — mexanik his beradi</td></tr>
+      <tr><td><b><code class="inline">ease-in-out</code></b></td><td>Ikkala uchida ham sekinlashadi</td></tr>
+    </table>
+  </div>
+
+  <div class="note warn">
+    <span class="note-t">Muhim: transition qayerga yoziladi?</span>
+    <p><code class="inline">transition</code> odatda elementning <b>asosiy (bazaviy) holatiga</b> yoziladi, <code class="inline">:hover</code>ga emas — shunda u faqat kirishda emas, chiqishda (sichqoncha olib qochilganda) ham silliq qaytadi. Aks holda sichqoncha chiqib ketganda element darhol, sakrab eski holatiga qaytadi.</p>
+  </div>
+</section>
+
+<!-- ===== 7 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 2 · Jonli mashq</span>
+  <h2><code class="inline">transition</code> qiymatlarini sinab ko'ring</h2>
+  <p><code class="inline">transition</code> qatoridagi davomiylik va easing (timing-function) qiymatlarini o'zgartiring. Keyin uni butunlay o'chirib, farqni his qiling — o'tish yana qo'pol, sakrab bo'lib qoladi.</p>
+
+  <div class="live">
+    <div class="live-head">
+      <span class="dot"></span> transition.html
+      <span class="sp"></span>
+      <button class="live-reset" type="button">↺ Qayta</button>
+    </div>
+    <div class="live-body">
+      <div class="live-editor">
+<textarea spellcheck="false">
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: Arial, sans-serif; padding: 40px; display: flex; justify-content: center; }
+
+  .btn {
+    padding: 16px 32px;
+    border: none;
+    border-radius: 10px;
+    background: #4a6cf7;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+
+    /* shu qatorni o'zgartirib sinang: davomiylik va easing */
+    transition: background 0.3s ease, transform 0.3s ease;
+  }
+
+  .btn:hover {
+    background: #2f46b0;
+    transform: scale(1.06);
+  }
+</style>
+
+<button class="btn">Ustiga suring</button>
+</textarea>
+      </div>
+      <div class="live-preview"><iframe title="Natija"></iframe></div>
+    </div>
+  </div>
+
+  <div class="note tip">
+    <span class="note-t">Sinab ko'ring</span>
+    <p><code class="inline">0.3s ease</code>ni <code class="inline">1.2s linear</code>ga o'zgartiring. Keyin <code class="inline">transition</code> qatorini <code class="inline">.btn</code>dan olib, <code class="inline">.btn:hover</code> ichiga ko'chiring — sichqonchani olib qochganda holat qanday qo'pol qaytishini kuzating.</p>
+  </div>
+</section>
+
+<!-- ===== 8 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 3 · Nazariya</span>
+  <h2><code class="inline">@keyframes</code> va <code class="inline">animation</code>: o'zi-o'zidan ishlaydigan harakat</h2>
+  <p><code class="inline">transition</code> faqat ikkita holat (boshlanish va tugash) orasida ishlaydi va odatda foydalanuvchi harakatiga (<code class="inline">:hover</code> kabi) bog'liq. Lekin agar biror narsa sahifa ochilishi bilan o'zi-o'zidan, uzluksiz harakatlanishi kerak bo'lsa (masalan spinner doim aylanib tursin) — bunga <code class="inline">@keyframes</code> kerak.</p>
+
+<pre class="code" data-lang="css" data-label="sintaksis"><code>@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}</code></pre>
+
+  <p><code class="inline">@keyframes</code> animatsiyaning "nomini" (bu misolda <code class="inline">spin</code>) va yo'lda qanday bosqichlardan o'tishini belgilaydi — foizlarda (<code class="inline">0%</code>, <code class="inline">50%</code>, <code class="inline">100%</code>) yoki shunchaki <code class="inline">from</code>/<code class="inline">to</code> bilan. So'ng shu nomni elementga bog'lash uchun kamida to'rtta xossa kerak bo'ladi:</p>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th>Xossa</th><th>Vazifasi</th></tr>
+      <tr><td><code>animation-name</code></td><td>Qaysi <code class="inline">@keyframes</code>ga bog'lansin</td></tr>
+      <tr><td><code>animation-duration</code></td><td>Bir marta aylanish qancha davom etadi</td></tr>
+      <tr><td><code>animation-timing-function</code></td><td>Tezlik egri chizig'i — <code class="inline">linear</code>, <code class="inline">ease</code></td></tr>
+      <tr><td><code>animation-iteration-count</code></td><td>Necha marta takrorlanadi — raqam yoki cheksiz uchun <code class="inline">infinite</code></td></tr>
+      <tr><td><code>animation</code></td><td>Barchasi uchun qisqartma (shorthand): <code class="inline">spin 1s linear infinite</code></td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ===== 9 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 3 · Jonli mashq</span>
+  <h2>Bosqichli animatsiya: <code class="inline">0%</code>, <code class="inline">50%</code>, <code class="inline">100%</code></h2>
+  <p><code class="inline">from</code>/<code class="inline">to</code> — bu shunchaki <code class="inline">0%</code>/<code class="inline">100%</code>ning qisqa yozilishi. Agar oraliqda qo'shimcha bosqich kerak bo'lsa (masalan yarim yo'lda rang ham o'zgarsin), foiz qiymatlardan foydalaniladi. Nomlarni tekshiring: <code class="inline">@keyframes</code> nomi va <code class="inline">animation-name</code> bir xil yozilganiga ishonch hosil qiling.</p>
+
+  <div class="live">
+    <div class="live-head">
+      <span class="dot"></span> keyframes.html
+      <span class="sp"></span>
+      <button class="live-reset" type="button">↺ Qayta</button>
+    </div>
+    <div class="live-body">
+      <div class="live-editor">
+<textarea spellcheck="false">
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: Arial, sans-serif; padding: 40px; display: flex; justify-content: center; }
+
+  .dot {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #4a6cf7;
+    animation: pulse 1.4s ease-in-out infinite;
+  }
+
+  /* uchta bosqich: boshlanish, o'rta, tugash */
+  @keyframes pulse {
+    0%   { transform: scale(1);   background: #4a6cf7; }
+    50%  { transform: scale(1.3); background: #ef476f; }
+    100% { transform: scale(1);   background: #4a6cf7; }
+  }
+</style>
+
+<div class="dot"></div>
+</textarea>
+      </div>
+      <div class="live-preview"><iframe title="Natija"></iframe></div>
+    </div>
+  </div>
+
+  <div class="note bad">
+    <span class="note-t">Talabalar ko'p adashadigan joy</span>
+    <p><code class="inline">@keyframes</code> nomini elementga <code class="inline">animation-name</code> (yoki qisqartmada birinchi so'z) orqali bog'lashni unutish yoki nomni xato yozish (masalan <code class="inline">@keyframes pulse</code> yozib, <code class="inline">animation: puls 1.4s...</code> deb xato qilish) — natijada hech qanday xatolik chiqmaydi, lekin animatsiya sukut umuman ishlamaydi.</p>
+  </div>
+</section>
+
+<!-- ===== 10 ===== -->
+<section class="slide">
+  <span class="eyebrow">Amaliy misol 1</span>
+  <h2>Loading spinner yasaymiz</h2>
+  <p>Eng ko'p uchraydigan animatsiya misollaridan biri — yuklanish davomida aylanadigan doiracha. Hiyla: doiraning faqat bitta chetiga (<code class="inline">border-top</code>) boshqa rang beriladi, so'ng butun doira <code class="inline">rotate</code> bilan uzluksiz aylantiriladi.</p>
+
+  <div class="live">
+    <div class="live-head">
+      <span class="dot"></span> spinner.html
+      <span class="sp"></span>
+      <button class="live-reset" type="button">↺ Qayta</button>
+    </div>
+    <div class="live-body">
+      <div class="live-editor">
+<textarea spellcheck="false">
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: Arial, sans-serif; padding: 60px; display: flex; justify-content: center; }
+
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #e0e0e0;
+    border-top: 4px solid #4a6cf7; /* faqat yuqori chetning rangi boshqa */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+</style>
+
+<div class="spinner"></div>
+</textarea>
+      </div>
+      <div class="live-preview"><iframe title="Natija"></iframe></div>
+    </div>
+  </div>
+
+  <div class="note tip">
+    <span class="note-t">Sinab ko'ring</span>
+    <p><code class="inline">border-top</code> o'rniga <code class="inline">border-left</code>ga rang bering — aylanish yo'nalishi boshqacha ko'rinadi. <code class="inline">animation-duration</code>ni <code class="inline">0.3s</code>ga tushiring — spinner tezroq aylanadi.</p>
+  </div>
+</section>
+
+<!-- ===== 11 ===== -->
+<section class="slide">
+  <span class="eyebrow">Amaliy misol 2</span>
+  <h2>Modal pop-up: transition asosida ochilish/yopilish</h2>
+  <p>Modal — "Ochish" havolasi bosilganda paydo bo'ladigan, "Yopish" bosilganda yo'qoladigan oyna. Bu kursda JavaScript o'rganilmagani uchun buni <b>faqat CSS</b> bilan, <code class="inline">:target</code> psevdo-klassi (09-modul) yordamida boshqaramiz — havola manzil satriga <code class="inline">#modal</code> qo'shganda, shu <code class="inline">id</code>ga ega element "nishonlangan" (target) holatga o'tadi; ko'rinish/yashirinish esa <code class="inline">opacity</code> va <code class="inline">transform: scale()</code> orqali <b>silliq</b> — sakramasdan — sodir bo'ladi.</p>
+
+  <div class="live stack">
+    <div class="live-head">
+      <span class="dot"></span> modal.html
+      <span class="sp"></span>
+      <button class="live-reset" type="button">↺ Qayta</button>
+    </div>
+    <div class="live-body">
+      <div class="live-editor">
+<textarea spellcheck="false">
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: Arial, sans-serif; padding: 30px; }
+
+  .open-btn {
+    padding: 12px 22px;
+    background: #4a6cf7;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(16,19,28,.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* boshlang'ich holat: ko'rinmas va biroz kichrayngan */
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+
+  /* JS kerak emas — brauzerning o'zi :target orqali boshqaradi:
+     havola #modal'ga o'tganda, shu id'ga ega element ":target" bo'lib qoladi */
+  .modal:target {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .modal-box {
+    background: #fff;
+    border-radius: 14px;
+    padding: 28px;
+    max-width: 300px;
+    transform: scale(0.85);
+    transition: transform 0.25s ease;
+  }
+
+  .modal:target .modal-box {
+    transform: scale(1);
+  }
+
+  .modal-close {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 8px 16px;
+    border: 1px solid #d0d4de;
+    background: none;
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+  }
+</style>
+
+<a href="#modal" class="open-btn">
+  Modalni ochish
+</a>
+
+<div id="modal" class="modal">
+  <div class="modal-box">
+    <h4>Assalomu alaykum!</h4>
+    <p>Bu — transition va transform asosida ochiladigan/yopiladigan modal. JavaScript ishlatilmagan — faqat CSS'ning <code>:target</code> psevdo-klassi (09-modulda ko'rgan pseudo-klasslar oilasidan) va oddiy havolalar!</p>
+    <a href="#" class="modal-close">
+      Yopish
+    </a>
+  </div>
+</div>
+</textarea>
+      </div>
+      <div class="live-preview"><iframe title="Natija"></iframe></div>
+    </div>
+  </div>
+
+  <div class="note tip">
+    <span class="note-t">Diqqat qiling</span>
+    <p><code class="inline">.modal</code> (asosiy holat) <code class="inline">transition</code>ga ega, <code class="inline">.modal.open</code> esa faqat yakuniy qiymatlarni beradi. Aynan shuning uchun modal ham ochilishda, ham yopilishda bir xil silliqlik bilan ishlaydi.</p>
+  </div>
+</section>
+
+<!-- ===== 12 ===== -->
+<section class="slide">
+  <span class="eyebrow">Xatolar</span>
+  <h2>Eng ko'p uchraydigan xatolar</h2>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th style="width:26%">Xato</th><th style="width:37%">Nima bo'ladi</th><th>Yechim</th></tr>
+      <tr>
+        <td><b>Kutilmagan aylanish nuqtasi (<code>transform-origin</code>)</b></td>
+        <td>Sukut bo'yicha <code>transform-origin</code> elementning <b>markazi</b> (<code>50% 50%</code>) — burchakdan aylanishi kerak bo'lgan elementlar kutilmaganda markazdan aylanadi</td>
+        <td>Aylanish nuqtasini o'zgartirish kerak bo'lsa, <code>transform-origin: top left;</code> kabi aniq belgilang</td>
+      </tr>
+      <tr>
+        <td><b>Tasodifan qoldirilgan <code>infinite</code></b></td>
+        <td>Animatsiya bir marta ishlashi kerak bo'lsa-da, <code>animation-iteration-count: infinite</code> unutilib qolgani uchun to'xtovsiz takrorlanaveradi</td>
+        <td>Bir martalik animatsiyaga son bering — <code>animation-iteration-count: 1;</code> (yoki umuman yozmang, sukut qiymati <code>1</code>)</td>
+      </tr>
+      <tr>
+        <td><b><code>transition</code> noto'g'ri joyga yozilgan</b></td>
+        <td><code>transition</code> faqat <code>:hover</code>ga yozilsa, sichqoncha olib qochilganda holat bir zumda, qo'pol qaytadi</td>
+        <td><code>transition</code>ni asosiy (bazaviy) selektorga yozing, <code>:hover</code>ga emas</td>
+      </tr>
+      <tr>
+        <td><b><code>@keyframes</code> nomi mos kelmaydi</b></td>
+        <td><code>animation</code>dagi nom <code>@keyframes</code> nomidan farq qilsa, hech qanday xatolik chiqmaydi — animatsiya shunchaki sukut ishlamaydi</td>
+        <td>Ikkala joydagi nom aynan bir xil yozilganini tekshiring</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="note bad">
+    <span class="note-t">Eng muhim maslahat</span>
+    <p>Animatsiya "umuman ishlamayapti" desangiz — birinchi tekshiring: <code class="inline">@keyframes</code> nomi va <code class="inline">animation-name</code> bir xilmi. Bu xatolik konsolda hech qanday xato chiqarmaydi.</p>
+  </div>
+</section>
+
+<!-- ===== 13 ===== -->
+<section class="slide">
+  <span class="eyebrow">Best practice</span>
+  <h2>Yaxshi amaliyot — qisqacha</h2>
+  <div class="cols">
+    <div>
+      <ul>
+        <li><code class="inline">transition</code>ni har doim asosiy (bazaviy) holatga yozing, <code class="inline">:hover</code>ga emas.</li>
+        <li><code class="inline">transform</code>ni faqat vizual effekt uchun ishlating — u atrofdagi elementlarni surmaydi.</li>
+        <li>Cheksiz aylanuvchi elementlar (spinner) uchungina <code class="inline">animation-iteration-count: infinite</code> ishlating.</li>
+      </ul>
+    </div>
+    <div>
+      <ul>
+        <li><code class="inline">@keyframes</code> nomini va <code class="inline">animation-name</code>ni aynan bir xil yozing — imloni ikki marta tekshiring.</li>
+        <li>Iloji bo'lsa <code class="inline">animation</code> qisqartmasidan (shorthand) foydalaning — kod qisqa va o'qish oson bo'ladi.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="note tip">
+    <span class="note-t">Keyingi qadam</span>
+    <p>Endi siz saytga "jonlilik" qo'sha olasiz. Lekin hozirgacha faqat kompyuter ekrani uchun ishladik — keyingi darsda buni telefon va planshetga ham moslashtiramiz.</p>
+  </div>
+</section>
+
+<!-- ===== 14 ===== -->
+<section class="slide">
+  <span class="eyebrow">Amaliy vazifa</span>
+  <h2>Uyga vazifa</h2>
+
+  <div class="task">
+    <h4><span class="n">1</span> Loading spinner</h4>
+    <ol>
+      <li><code class="inline">dars-10</code> papkasida <code class="inline">index.html</code> yarating.</li>
+      <li><code class="inline">@keyframes</code> bilan uzluksiz aylanadigan doiracha (spinner) yasang.</li>
+      <li>Rang va o'lchamni o'zingiz tanlang — shart emas darsdagiga aynan o'xshash bo'lishi.</li>
+    </ol>
+    <div class="crit">
+      <b>Baholash mezoni:</b> spinner uzluksiz (<code>infinite</code>) aylanadi · kamida bitta joyda <code>transform</code> ishlatilgan · <code>@keyframes</code> nomi va <code>animation-name</code> bir xil.
+    </div>
+  </div>
+
+  <div class="task">
+    <h4><span class="n">2</span> Modal pop-up</h4>
+    <ol>
+      <li>"Ochish" tugmasi bosilganda paydo bo'ladigan, "Yopish" tugmasi bosilganda yo'qoladigan modal oyna yasang.</li>
+      <li>Ochilish/yopilishda <code class="inline">transition</code> ishlating (masalan <code class="inline">opacity</code> va <code class="inline">transform: scale()</code> orqali).</li>
+      <li>Holatni class qo'shish/olib tashlash orqali (JavaScript bilan) yoki faqat CSS bilan (<code class="inline">:target</code> yoki checkbox trikidan foydalanib) boshqarishingiz mumkin — qaysi usul qulay bo'lsa, o'shani tanlang.</li>
+    </ol>
+    <div class="crit">
+      <b>Baholash mezoni:</b> modal ochilish/yopilishda sakramasdan silliq o'tadi · kamida bitta joyda <code>transform</code> ishlatilgan · asosiy holatda <code>transition</code> yozilgan.
+    </div>
+  </div>
+</section>
+
+<!-- ===== 15 ===== -->
+<section class="slide">
+  <span class="eyebrow">Yakun</span>
+  <h2>Xulosa va o'z-o'zini tekshirish</h2>
+
+  <div class="recap">
+    <div><b><code class="inline">transform</code></b><code class="inline">scale()</code>, <code class="inline">rotate()</code>, <code class="inline">translate()</code> — vizual o'zgarish, atrofdagi elementlarni surmaydi.</div>
+    <div><b><code class="inline">transition</code></b>Holatlar orasidagi silliq o'tish. Asosiy (bazaviy) selektorga yoziladi, <code class="inline">:hover</code>ga emas.</div>
+    <div><b><code class="inline">@keyframes</code></b>Animatsiya bosqichlarini (<code class="inline">0%</code>–<code class="inline">100%</code> yoki <code class="inline">from</code>/<code class="inline">to</code>) belgilaydi.</div>
+    <div><b><code class="inline">animation</code></b><code class="inline">animation-name</code>, <code class="inline">duration</code>, <code class="inline">timing-function</code>, <code class="inline">iteration-count</code> — <code class="inline">@keyframes</code>ni elementga bog'laydi.</div>
+    <div><b>Loading spinner</b>Aylanuvchi doiracha — <code class="inline">border-top</code> rangi + <code class="inline">rotate</code> + <code class="inline">infinite</code>.</div>
+    <div><b>Modal pop-up</b>Class qo'shish/olib tashlash + <code class="inline">opacity</code>/<code class="inline">scale()</code> ustidagi <code class="inline">transition</code>.</div>
+  </div>
+
+  <h3 style="margin-top:30px">Savol-javob</h3>
+  <div class="quiz">
+    <div class="q">
+      <p>1. <code class="inline">transform: translate(50px, 0)</code> berilgan element atrofidagi boshqa elementlarni suradimi?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans"><b>Yo'q.</b> <code>transform</code> faqat vizual o'zgarish — element hujjat oqimida (document flow) o'z eski joyini "band qilib" turadi, atrofdagilar surilmaydi.</div>
+    </div>
+    <div class="q">
+      <p>2. <code class="inline">transition</code> qaysi holatga — asosiy selektorgami yoki <code class="inline">:hover</code>gami — yozilishi kerak?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans"><b>Asosiy (bazaviy) selektorga.</b> Faqat shunda o'zgarish ham holatga kirishda, ham undan chiqishda silliq bo'ladi. Agar <code>transition</code> faqat <code>:hover</code> ichida yozilsa, sichqoncha olib qochilganda holat bir zumda, qo'pol qaytadi.</div>
+    </div>
+    <div class="q">
+      <p>3. <code class="inline">@keyframes spin</code> deb yozib, <code class="inline">animation: spinn 1s linear infinite;</code> deb xato yozilsa nima bo'ladi?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">Hech qanday xatolik konsolda chiqmaydi, lekin animatsiya <b>umuman ishlamaydi</b> — chunki brauzer <code>spinn</code> nomli <code>@keyframes</code>ni topa olmaydi. Ikkala joydagi nom aynan bir xil bo'lishi shart.</div>
+    </div>
+    <div class="q">
+      <p>4. <code class="inline">animation-iteration-count: infinite</code> nimani anglatadi?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">Animatsiya <b>to'xtovsiz, cheksiz</b> takrorlanaveradi — masalan loading spinner uchun mos. Agar bu qiymat tasodifan qoldirilib ketsa, bir marta ishlashi kerak bo'lgan animatsiya ham to'xtamay davom etadi.</div>
+    </div>
+    <div class="q">
+      <p>5. Modal oynani ochish/yopishda nega <code class="inline">transition</code> ishlatiladi, <code class="inline">@keyframes</code> emas?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">Chunki modalda faqat <b>ikkita holat</b> bor — yopiq va ochiq — va o'tish foydalanuvchi harakatiga (tugma bosish) bog'liq. <code>@keyframes</code> esa foydalanuvchi harakatidan mustaqil, o'zi-o'zidan takrorlanadigan animatsiyalar (masalan spinner) uchun mo'ljallangan.</div>
+    </div>
+  </div>
+
+  <div class="lesson-jump">
+    <a href="../09-pseudo-gradient/index.html"><b>Oldingi modul</b><span>← 09-modul: CSS Pseudo-classes, Pseudo-elements va Gradientlar</span></a>
+    <a href="../11-responsive-media-query/index.html"><b>Keyingi modul</b><span>11-modul: Adaptiv dizayn (Responsive) va Media Queries →</span></a>
+  </div>
+</section>
+
+</main>
+
+<div class="deck-nav">
+  <button data-prev type="button" title="Oldingi (←)">‹</button>
+  <span class="hint">← → varaqlash · <kbd>O</kbd> ro'yxat · <kbd>F</kbd> to'liq ekran</span>
+  <button data-next type="button" title="Keyingi (→)">›</button>
+</div>
+
+<div class="deck-overview"><h3>Slaydlar ro'yxati</h3><div class="ov-grid"></div></div>
+
+<script src="../assets/js/deck.js"></script>
+</body>
+</html>

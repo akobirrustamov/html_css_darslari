@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="uz" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>02-modul · HTML Struktura, Media va Havolalar</title>
+<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body class="deck" data-lesson="2">
+
+<div class="deck-bar">
+  <a class="home" href="../index.html">← Kurs</a>
+  <span class="title">02-modul · HTML Struktura, Media va Havolalar</span>
+  <span class="spacer"></span>
+  <div class="deck-tools">
+    <button class="tool" data-overview type="button" title="Slaydlar ro'yxati (O)">☰</button>
+    <button class="tool" data-theme-toggle type="button" title="Mavzu">☾</button>
+    <span class="counter">1 / 14</span>
+  </div>
+</div>
+<div class="deck-progress"></div>
+
+<main class="deck-stage">
+
+<!-- ===== 1 ===== -->
+<section class="slide cover">
+  <div class="lesson-no">02-modul</div>
+  <h1>HTML Struktura, Media<br>va Havolalar</h1>
+  <p>O'tgan darsda birinchi sahifamizni yozdik — <code class="inline">h1</code>–<code class="inline">h6</code>, <code class="inline">p</code> va <code class="inline">br</code> teglari bilan. Lekin sahifamiz hali to'g'ri "skelet"ka ega emas edi. Bugun to'liq HTML strukturasini, rasm va havola qo'yishni, hamda ro'yxatlar bilan ishlashni o'rganamiz.</p>
+  <div class="cover-plan">
+    <div><b>Reja 1</b>index.html faylining standart strukturasi: DOCTYPE, html, head, body</div>
+    <div><b>Reja 2</b>Rasm (img) va havola (a) teglari — atributlari bilan</div>
+    <div><b>Reja 3</b>Ro'yxatlar (ul, ol, li) va ajratuvchi chiziq (hr)</div>
+    <div><b>Amaliyot</b>Maqola-sahifa: to'g'ri struktura + rasm + havola + ro'yxatlar</div>
+  </div>
+</section>
+
+<!-- ===== 2 ===== -->
+<section class="slide">
+  <span class="eyebrow">Maqsad</span>
+  <h2>Dars oxirida siz nima qila olasiz</h2>
+  <p class="big">Bu darsdan keyin sahifangiz endi to'g'ri strukturaga ega bo'ladi, rasm ko'rsatadi, boshqa saytlarga olib boradi va ma'lumotni ro'yxat shaklida chiroyli tartiblaydi.</p>
+  <div class="cardset">
+    <div class="card">
+      <span class="ico">🗂</span>
+      <h4>Yozasiz</h4>
+      <p>Har bir index.html fayl uchun standart, o'zgarmas skeletni — DOCTYPE, html, head, body.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🖼</span>
+      <h4>Qo'shasiz</h4>
+      <p>Sahifaga <code class="inline">src</code> va <code class="inline">alt</code> bilan to'g'ri rasm.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🔗</span>
+      <h4>Bog'laysiz</h4>
+      <p><code class="inline">href</code> orqali boshqa saytga yoki boshqa sahifaga havola.</p>
+    </div>
+    <div class="card">
+      <span class="ico">📋</span>
+      <h4>Tartiblaysiz</h4>
+      <p><code class="inline">ul</code>/<code class="inline">ol</code> va <code class="inline">li</code> yordamida ro'yxatlarni to'g'ri yozasiz.</p>
+    </div>
+  </div>
+  <div class="note tip">
+    <span class="note-t">Eslatma</span>
+    <p>Bugun ham har bir slaydda kod bor. Live-muharrirlarda albatta o'zingiz qo'l bilan o'zgartirib ko'ring — faqat o'qib chiqish esda qolmaydi.</p>
+  </div>
+</section>
+
+<!-- ===== 3 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 1 · Asosiy</span>
+  <h2>index.html faylining standart strukturasi</h2>
+  <p>Har bir HTML fayl, xuddi rasmiy hujjat — pasport — kabi qat'iy tuzilmadan boshlanadi. Pasportning birinchi sahifasida ismingiz, tug'ilgan sananingiz kabi "meta" ma'lumotlar bo'ladi, keyingi sahifalarda esa asosiy mazmun. HTML'da ham xuddi shunday.</p>
+
+<pre class="code" data-lang="html" data-label="index.html"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="uz"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Mening sahifam&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Salom, dunyo!&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th>Qator</th><th>Ma'nosi</th></tr>
+      <tr><td><code>&lt;!DOCTYPE html&gt;</code></td><td>Bu <b>teg emas</b>, ko'rsatma (declaration) — brauzerga "bu HTML5 hujjati" deb aytadi. Har doim <b>birinchi qatorda</b> turadi.</td></tr>
+      <tr><td><code>&lt;html lang="uz"&gt;</code></td><td>Butun sahifani o'rab turuvchi asosiy konteyner — hamma narsa shu ichida joylashadi. <code>lang</code> atributi sahifa tilini ko'rsatadi.</td></tr>
+      <tr><td><code>&lt;head&gt;</code></td><td>"Ko'rinmas boshqaruv markazi" — bu yerdagi hech narsa sahifada to'g'ridan-to'g'ri ko'rinmaydi, lekin brauzer va qidiruv tizimlari uchun muhim ma'lumotni saqlaydi.</td></tr>
+      <tr><td><code>&lt;meta charset="UTF-8"&gt;</code></td><td>Belgilar kodlashi. <b>Bo'lmasa</b> o'zbekcha "o'", "g'" harflari brauzerda g'alati belgilar sifatida chiqadi.</td></tr>
+      <tr><td><code>&lt;title&gt;</code></td><td>Brauzer tabida ko'rinadigan sahifa nomi.</td></tr>
+      <tr><td><code>&lt;body&gt;</code></td><td>Foydalanuvchi <b>ko'radigan</b> barcha narsa shu yerda: matnlar, rasmlar, havolalar. O'tgan darsdagi <code class="inline">h1</code>, <code class="inline">p</code> teglarimiz aslida shu ichida bo'lishi kerak edi.</td></tr>
+    </table>
+  </div>
+
+  <div class="note tip">
+    <span class="note-t">Kichik "sehr" — Emmet</span>
+    <p>VS Code'da bo'sh faylga <code class="inline">!</code> belgisini yozib, <kbd>Tab</kbd> tugmasini bosing — yuqoridagi butun skelet bir soniyada avtomatik yaraladi.</p>
+  </div>
+</section>
+
+<!-- ===== 4 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 1 · Muhim ogohlantirish</span>
+  <h2><code class="inline">&lt;meta charset="UTF-8"&gt;</code> nega har doim kerak</h2>
+  <p>Ko'p talabalar bu qatorni o'tkazib yuboradi — natijada o'zbekcha maxsus harflar, kirill harflari va emoji brauzerda g'alati belgilar sifatida chiqadi. Ta'kidlang: bu qatorni har doim, har bir yangi faylda birinchi ishlardan biri sifatida yozish kerak.</p>
+
+  <div class="vs">
+    <div class="ok">
+      <div class="vs-h">✓ charset bilan</div>
+<pre class="code" data-lang="html"><code>&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Sahifa&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;O'zbekiston, g'oya, qishloq&lt;/h1&gt;
+&lt;/body&gt;</code></pre>
+      <p>Brauzerda: <b>O'zbekiston, g'oya, qishloq</b> — to'g'ri ko'rinadi.</p>
+    </div>
+    <div class="no">
+      <div class="vs-h">✗ charset'siz</div>
+<pre class="code" data-lang="html"><code>&lt;head&gt;
+  &lt;title&gt;Sahifa&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;O'zbekiston, g'oya, qishloq&lt;/h1&gt;
+&lt;/body&gt;</code></pre>
+      <p>Brauzerda: <b>Ð£Ð·Ð±ÐµÐºÐ¸ÑÑ‚Ð¾Ð½</b> kabi "krakozyabra" chiqishi mumkin.</p>
+    </div>
+  </div>
+
+  <div class="note bad">
+    <span class="note-t">Qoida</span>
+    <p><code class="inline">&lt;meta charset="UTF-8"&gt;</code> — <code class="inline">&lt;head&gt;</code> ichidagi <b>birinchi qator</b> bo'lsin. Bu shunchaki formalik emas — o'zbek tilidagi maxsus harflarning to'g'ri ko'rinishi shunga bog'liq.</p>
+  </div>
+</section>
+
+<!-- ===== 5 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 2 · Asosiy</span>
+  <h2>Rasm qo'yish: <code class="inline">&lt;img&gt;</code></h2>
+  <p><code class="inline">&lt;img&gt;</code> — sahifani "jonlantiradigan" birinchi teg. Bu <b>yolg'iz (self-closing) teg</b> — o'tgan darsdagi <code class="inline">&lt;br&gt;</code> kabi, yopilish tegi yo'q.</p>
+
+<pre class="code" data-lang="html" data-label="misol"><code>&lt;img src="images/bxu-logo.png" alt="BXU logotipi"&gt;</code></pre>
+
+  <p style="margin:4px 0 18px"><img src="images/bxu-logo.png" alt="BXU logotipi" width="90" height="90" style="border-radius:8px"> <span style="color:var(--ink-3);font-size:13.5px">← shu kod aynan shu rasmni chiqaradi (haqiqiy fayl, chizilgan emas)</span></p>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th>Atribut</th><th>Vazifasi</th></tr>
+      <tr><td><code>src</code></td><td>Source — rasm faylining manzili (yo'li).</td></tr>
+      <tr><td><code>alt</code></td><td>Alternative text — rasm yuklanmasa yoki ekran o'quvchi (screen reader) ishlatilsa, o'rniga o'qiladigan matn tavsifi.</td></tr>
+    </table>
+  </div>
+
+  <div class="note bad">
+    <span class="note-t"><code class="inline">alt</code> nega majburiy</span>
+    <p><code class="inline">alt</code> ni har doim yozish kerak — bu shunchaki formalik emas, balki foydalanish imkoniyati (accessibility) uchun muhim: ko'zi ojiz foydalanuvchi ekran o'quvchi dastur orqali shu matnni eshitadi.</p>
+  </div>
+</section>
+
+<!-- ===== 6 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 2 · Asosiy</span>
+  <h2>Havola yaratish: <code class="inline">&lt;a href&gt;</code></h2>
+  <p><code class="inline">&lt;a&gt;</code> (anchor) tagi havola (link) yaratadi. <code class="inline">href</code> (hypertext reference) atributi orqali qayerga o'tishni ko'rsatadi.</p>
+
+<pre class="code" data-lang="html" data-label="misol"><code>&lt;!-- Tashqi saytga --&gt;
+&lt;a href="https://uz.wikipedia.org" target="_blank" rel="noopener"&gt;Vikipediya&lt;/a&gt;
+
+&lt;!-- Sahifa ichidagi boshqa faylga --&gt;
+&lt;a href="haqida.html"&gt;Men haqimda&lt;/a&gt;</code></pre>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th>Atribut</th><th>Vazifasi</th></tr>
+      <tr><td><code>href</code></td><td>Havola qayerga olib borishini ko'rsatadi — tashqi sayt (<code>https://...</code>) yoki o'z papkangizdagi fayl (<code>haqida.html</code>).</td></tr>
+      <tr><td><code>target="_blank"</code></td><td>Havolani <b>yangi tabda</b> ochadi — joriy sahifa yopilmaydi.</td></tr>
+    </table>
+  </div>
+
+  <div class="note tip">
+    <span class="note-t">Kichik odat</span>
+    <p><code class="inline">target="_blank"</code> ishlatganda yoniga <code class="inline">rel="noopener"</code> qo'shish yaxshi amaliyot hisoblanadi — xavfsizlik uchun.</p>
+  </div>
+</section>
+
+<!-- ===== 7 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 3 · Asosiy</span>
+  <h2>Ro'yxatlar: <code class="inline">&lt;ul&gt;</code> va <code class="inline">&lt;ol&gt;</code></h2>
+  <p>Ikkalasida ham har bir band <code class="inline">&lt;li&gt;</code> (list item) tagi bilan yoziladi — bu <code class="inline">ul</code>/<code class="inline">ol</code> ichida joylashadigan <b>yagona to'g'ri tag</b>.</p>
+
+  <div class="vs">
+    <div class="ok">
+      <div class="vs-h"><code class="inline">&lt;ul&gt;</code> — tartiblanmagan</div>
+<pre class="code" data-lang="html"><code>&lt;ul&gt;
+  &lt;li&gt;Qiziqarli syujet&lt;/li&gt;
+  &lt;li&gt;Oson tushuniladi&lt;/li&gt;
+  &lt;li&gt;Amaliy misollar ko'p&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+      <p>Nuqtachalar bilan. Tartib <b>muhim emas</b> — xarid ro'yxati kabi.</p>
+    </div>
+    <div class="ok">
+      <div class="vs-h"><code class="inline">&lt;ol&gt;</code> — tartiblangan</div>
+<pre class="code" data-lang="html"><code>&lt;ol&gt;
+  &lt;li&gt;Kirish qismini o'qing&lt;/li&gt;
+  &lt;li&gt;Asosiy boblarni o'rganing&lt;/li&gt;
+  &lt;li&gt;Amaliyot qiling&lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+      <p>Raqamlangan. Tartib <b>muhim</b> — retsept qadamlari kabi.</p>
+    </div>
+  </div>
+
+  <div class="note warn">
+    <span class="note-t">Eslatma</span>
+    <p><code class="inline">&lt;ul&gt;</code> yoki <code class="inline">&lt;ol&gt;</code> ichiga to'g'ridan-to'g'ri matn yozib, <code class="inline">&lt;li&gt;</code> tagini unutish — keng tarqalgan xato. Ro'yxat taglarining ichida <b>FAQAT</b> <code class="inline">&lt;li&gt;</code> bo'lishi kerak.</p>
+  </div>
+</section>
+
+<!-- ===== 8 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 3 · Asosiy</span>
+  <h2>Ajratuvchi chiziq: <code class="inline">&lt;hr&gt;</code></h2>
+  <p><code class="inline">&lt;hr&gt;</code> (horizontal rule) — sahifada gorizontal chiziq chizib, mazmunni vizual jihatdan bo'limlarga ajratadi, xuddi gazetadagi bo'limlar orasidagi chiziq kabi. Bu ham <code class="inline">&lt;img&gt;</code> va <code class="inline">&lt;br&gt;</code> kabi <b>yolg'iz teg</b>.</p>
+
+<pre class="code" data-lang="html" data-label="misol"><code>&lt;h2&gt;Kitobning afzalliklari&lt;/h2&gt;
+&lt;p&gt;Bu kitob meni dasturlashga ilhomlantirdi.&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;h2&gt;O'qish tartibi&lt;/h2&gt;
+&lt;p&gt;Har kuni kamida 10 sahifa o'qing.&lt;/p&gt;</code></pre>
+
+  <div class="note">
+    <span class="note-t">Diqqat</span>
+    <p><code class="inline">&lt;hr&gt;</code> — bo'limlar orasiga <b>vizual chiziq</b> qo'shish uchun. Faqat bo'sh joy (masofa) kerak bo'lsa, buni CSS'ning <code class="inline">margin</code> xususiyati (keyingi modullarda) bilan hal qilamiz — <code class="inline">&lt;hr&gt;</code> ni shunchaki bo'shliq uchun ishlatmang.</p>
+  </div>
+</section>
+
+<!-- ===== 9 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 2-3 · Jonli kod</span>
+  <h2>Birgalikda kichik "maqola" tuzamiz</h2>
+  <p>Endi o'rgangan barcha teglarni birlashtiramiz: sarlavha, rasm, chiziq, paragraf, havola va ro'yxatlar.</p>
+
+<pre class="code" data-lang="html" data-label="maqola.html"><code>&lt;h1&gt;Mening sevimli kitobim&lt;/h1&gt;
+&lt;img src="kitob.jpg" alt="Kitob muqovasi rasmi"&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;Bu kitob meni dasturlashga ilhomlantirdi.&lt;/p&gt;
+&lt;p&gt;To'liq ma'lumot uchun &lt;a href="https://uz.wikipedia.org" target="_blank" rel="noopener"&gt;Vikipediya&lt;/a&gt; sahifasiga o'ting.&lt;/p&gt;
+
+&lt;h2&gt;Kitobning afzalliklari:&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Qiziqarli syujet&lt;/li&gt;
+  &lt;li&gt;Oson tushuniladi&lt;/li&gt;
+  &lt;li&gt;Amaliy misollar ko'p&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;O'qish tartibi:&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;Kirish qismini o'qing&lt;/li&gt;
+  &lt;li&gt;Asosiy boblarni o'rganing&lt;/li&gt;
+  &lt;li&gt;Amaliyot qiling&lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+
+  <div class="note tip">
+    <span class="note-t">Keyingi slayd</span>
+    <p>Endi shu kabi kodni siz o'zingiz, jonli muharrirda, haqiqiy rasm bilan sinab ko'rasiz.</p>
+  </div>
+</section>
+
+<!-- ===== 10 ===== -->
+<section class="slide">
+  <span class="eyebrow">Jonli mashq</span>
+  <h2>O'zingiz sinab ko'ring</h2>
+  <p>Chapdagi kodni to'g'ridan-to'g'ri o'zgartiring — o'ng tomonda natija darhol yangilanadi. Ichida haqiqiy sinf rasmi ham bor.</p>
+
+  <div class="live">
+    <div class="live-head">
+      <span class="dot"></span> maqola.html
+      <span class="sp"></span>
+      <button class="live-reset" type="button">↺ Qayta</button>
+    </div>
+    <div class="live-body">
+      <div class="live-editor">
+<textarea spellcheck="false">
+<h1>Bizning sinfimiz</h1>
+<img src="images/talabalar.jpg" alt="Talabalar kompyuter sinfida mashg'ulot qilmoqda" width="500" style="max-width:100%;border-radius:8px">
+
+<hr>
+
+<p>Bu — bizning IT sinfimiz. Bu yerda biz <a href="https://uz.wikipedia.org" target="_blank" rel="noopener">HTML</a> o'rganyapmiz.</p>
+
+<h2>Sinfda nimalar bor:</h2>
+<ul>
+  <li>15 ta kompyuter</li>
+  <li>Proyektor</li>
+  <li>Tez internet</li>
+</ul>
+
+<h2>Darsning borishi:</h2>
+<ol>
+  <li>Nazariyani tinglaymiz</li>
+  <li>Kodni birga yozamiz</li>
+  <li>Uy vazifasini bajaramiz</li>
+</ol>
+</textarea>
+      </div>
+      <div class="live-preview"><iframe title="Natija"></iframe></div>
+    </div>
+  </div>
+
+  <div class="note tip">
+    <span class="note-t">Sinab ko'ring</span>
+    <p><code class="inline">&lt;ul&gt;</code> ichiga yana bitta <code class="inline">&lt;li&gt;</code> qo'shing. <code class="inline">alt</code> matnini o'zgartiring. <code class="inline">&lt;img&gt;</code> qatorini butunlay o'chirib ko'ring va nima bo'lishini kuzating.</p>
+  </div>
+</section>
+
+<!-- ===== 11 ===== -->
+<section class="slide">
+  <span class="eyebrow">Xatolar</span>
+  <h2>Ko'p uchraydigan 2 ta xato</h2>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th style="width:30%">Xato</th><th style="width:35%">Nima bo'ladi</th><th>Yechim</th></tr>
+      <tr>
+        <td><b>Rasm manzili (<code>src</code>) noto'g'ri</b></td>
+        <td>Rasm boshqa papkada bo'lsa ham to'g'ridan-to'g'ri nom yozib qo'yiladi — natijada rasm brauzerda "sinib" chiqadi</td>
+        <td>Yo'lni papka tuzilishiga qarab yozing, masalan <code class="inline">images/rasm.jpg</code></td>
+      </tr>
+      <tr>
+        <td><b><code>&lt;ul&gt;</code>/<code>&lt;ol&gt;</code> ichiga matn to'g'ridan-to'g'ri</b></td>
+        <td><code class="inline">&lt;li&gt;</code> tagi unutiladi, ro'yxat noto'g'ri HTML bo'lib qoladi</td>
+        <td>Har doim eslatib turing: ro'yxat taglarining ichida <b>FAQAT</b> <code class="inline">&lt;li&gt;</code> bo'lishi kerak</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="note tip">
+    <span class="note-t">Eng yaxshi amaliyot</span>
+    <p>Har bir <code class="inline">&lt;img&gt;</code> uchun ma'noli <code class="inline">alt</code> yozing, har bir tashqi havolada <code class="inline">target="_blank" rel="noopener"</code> ishlating, va yangi fayl yozishni har doim <code class="inline">&lt;meta charset="UTF-8"&gt;</code> bilan boshlang.</p>
+  </div>
+</section>
+
+<!-- ===== 12 ===== -->
+<section class="slide">
+  <span class="eyebrow">Foydali lifehaklar</span>
+  <h2>Kundalik ishni osonlashtiradigan 2 ta trik</h2>
+
+  <div class="cols">
+    <div>
+      <h3>1. VS Code Word Wrap</h3>
+      <p>Uzun bir qatorli matn yozganda (masalan uzun paragraf), qator ekrandan tashqariga chiqib, uni ko'rish uchun gorizontal skroll qilishga to'g'ri keladi.</p>
+      <p><b>View</b> menyusi → <b>Word Wrap</b> (yoki <kbd>Alt</kbd>+<kbd>Z</kbd> / macOS'da <kbd>Option</kbd>+<kbd>Z</kbd>) — shunda uzun qatorlar avtomatik ravishda keyingi qatorga "o'raladi".</p>
+<pre class="code" data-lang="json" data-label="settings.json"><code>{
+  "editor.wordWrap": "on"
+}</code></pre>
+      <div class="note warn">
+        <span class="note-t">Zoom out shart emas</span>
+        <p>Ba'zi talabalar uzun qatorni ko'rish uchun sahifani kichraytirib (zoom out) yozishga harakat qiladi — Word Wrap muammoni butunlay hal qiladi.</p>
+      </div>
+    </div>
+    <div>
+      <h3>2. Windows emoji paneli</h3>
+      <p><kbd>Win</kbd>+<kbd>.</kbd> (ba'zi klaviaturalarda <kbd>Win</kbd>+<kbd>Ж</kbd>) tugmalari orqali Windows'ning o'rnatilgan emoji panelini istalgan joyda chaqirish mumkin.</p>
+      <p>Bu HTML matn ichiga tez-tez emoji qo'shish kerak bo'lganda (masalan sarlavhaga ✅ yoki 🚀 belgisi) juda qulay — alohida saytga kirib nusxa ko'chirish shart emas.</p>
+      <div class="note tip">
+        <span class="note-t">Sinab ko'ring</span>
+        <p>VS Code'da kursorni istalgan joyga qo'yib <kbd>Win</kbd>+<kbd>.</kbd> ni bosing va bevosita kodga emoji joylashtiring.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 13 ===== -->
+<section class="slide">
+  <span class="eyebrow">Amaliy vazifa</span>
+  <h2>Uyga vazifa</h2>
+
+  <div class="task">
+    <h4><span class="n">1</span> Maqola-sahifa yarating</h4>
+    <ol>
+      <li>Kompyuteringizda <code class="inline">dars-02</code> nomli papka yarating, ichida <code class="inline">index.html</code> faylini toping (Emmet <code class="inline">!</code> orqali skeletni qo'ying).</li>
+      <li>Erkin mavzu tanlang — masalan "Mening shahrim", "Sevimli ovqatim" yoki "Sport turi haqida".</li>
+      <li><code class="inline">head</code> ichida <code class="inline">charset</code> va mazmunli <code class="inline">title</code> bo'lsin.</li>
+      <li><code class="inline">body</code> ichiga quyidagilarni qo'shing:
+        <ul>
+          <li>Bitta <code class="inline">&lt;img&gt;</code> — <code class="inline">src</code> va <code class="inline">alt</code> to'g'ri to'ldirilgan</li>
+          <li>Kamida bitta tashqi saytga <code class="inline">&lt;a href="..."&gt;</code> havola</li>
+          <li>Kamida bitta <code class="inline">&lt;ul&gt;</code> va bitta <code class="inline">&lt;ol&gt;</code>, ichida faqat <code class="inline">&lt;li&gt;</code> bandlari bilan</li>
+          <li>Kamida bitta <code class="inline">&lt;hr&gt;</code> — bo'limlarni ajratish uchun</li>
+        </ul>
+      </li>
+      <li>Live Server orqali oching va brauzerda tekshiring.</li>
+    </ol>
+    <div class="crit">
+      <b>Baholash mezoni:</b> fayl to'g'ri <code class="inline">DOCTYPE</code>, <code class="inline">html</code> (<code class="inline">lang</code> bilan), <code class="inline">head</code> (<code class="inline">charset</code> va <code class="inline">title</code> bilan), <code class="inline">body</code> bilan boshlangan · kamida bitta <code class="inline">&lt;img&gt;</code>da <code class="inline">src</code>/<code class="inline">alt</code> to'g'ri · kamida bitta ishlaydigan <code class="inline">&lt;a href&gt;</code> · kamida bitta <code class="inline">&lt;ul&gt;</code> va bitta <code class="inline">&lt;ol&gt;</code>, faqat <code class="inline">&lt;li&gt;</code> bandlari bilan · kamida bitta <code class="inline">&lt;hr&gt;</code>.
+    </div>
+  </div>
+</section>
+
+<!-- ===== 14 ===== -->
+<section class="slide">
+  <span class="eyebrow">Yakun</span>
+  <h2>Xulosa va o'z-o'zini tekshirish</h2>
+
+  <div class="recap">
+    <div><b>Skelet — o'zgarmas</b>DOCTYPE → html (lang bilan) → head (charset, title) → body. Har bir faylda shu.</div>
+    <div><b>charset — birinchi ishlardan biri</b>Bo'lmasa o'zbekcha harflar noto'g'ri chiqadi.</div>
+    <div><b>img — src va alt bilan</b>src — manzil, alt — tavsif matni. alt majburiy.</div>
+    <div><b>a href — havola</b>Tashqi saytga to'liq manzil, ichki faylga nisbiy yo'l bilan.</div>
+    <div><b>ul/ol ichida faqat li</b>ul — tartib muhim emas, ol — tartib muhim.</div>
+    <div><b>hr — vizual ajratuvchi</b>Bo'shliq uchun emas, chiziq uchun.</div>
+  </div>
+
+  <h3 style="margin-top:30px">Savol-javob</h3>
+  <div class="quiz">
+    <div class="q">
+      <p>1. <code class="inline">&lt;img&gt;</code> tegida qaysi atribut majburiy hisoblanadi va nega?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans"><code>alt</code> — rasm yuklanmasa yoki ekran o'quvchi (screen reader) ishlatilsa, o'rniga o'qiladigan matn tavsifi. Bu foydalanish imkoniyati (accessibility) uchun muhim, shunchaki formalik emas.</div>
+    </div>
+    <div class="q">
+      <p>2. <code class="inline">&lt;ul&gt;</code> va <code class="inline">&lt;ol&gt;</code> o'rtasidagi farq nima?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans"><code>ul</code> (unordered list) — tartib muhim bo'lmagan, nuqtachali ro'yxat. <code>ol</code> (ordered list) — tartib muhim bo'lgan, raqamlangan ro'yxat. Ikkalasida ham bandlar faqat <code>li</code> tagi bilan yoziladi.</div>
+    </div>
+    <div class="q">
+      <p>3. <code class="inline">&lt;meta charset="UTF-8"&gt;</code> ni yozishni unutsak nima bo'ladi?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">O'zbekcha maxsus harflar ("o'", "g'"), kirill harflari va emoji brauzerda g'alati belgilar ("krakozyabra") sifatida chiqishi mumkin.</div>
+    </div>
+    <div class="q">
+      <p>4. <code class="inline">&lt;hr&gt;</code> va <code class="inline">&lt;br&gt;</code> nima bilan farqlanadi?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans"><code>hr</code> (horizontal rule) — sahifada gorizontal chiziq chizib, bo'limlarni vizual ajratadi. <code>br</code> — matn ichida bitta qator tashlaydi, hech qanday chiziq chizmaydi. Ikkalasi ham yolg'iz (self-closing) teg.</div>
+    </div>
+    <div class="q">
+      <p>5. Bu kodda qanday xato bor? <code class="inline">&lt;ul&gt;Veb-dasturlash&lt;/ul&gt;</code></p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">Matn to'g'ridan-to'g'ri <code>&lt;ul&gt;</code> ichiga yozilgan, <code>&lt;li&gt;</code> tagi ishlatilmagan. To'g'risi: <code>&lt;ul&gt;&lt;li&gt;Veb-dasturlash&lt;/li&gt;&lt;/ul&gt;</code> — ro'yxat ichida faqat <code>&lt;li&gt;</code> bo'lishi kerak.</div>
+    </div>
+  </div>
+
+  <div class="lesson-jump">
+    <a href="../01-muhit-va-internet/index.html"><b>Oldingi modul</b><span>← 01-modul: Dasturchi muhiti va Internet qanday ishlaydi?</span></a>
+    <a href="../03-jadvallar/index.html"><b>Keyingi modul</b><span>03-modul: HTML Jadvallar bilan professional ishlash →</span></a>
+  </div>
+</section>
+
+</main>
+
+<div class="deck-nav">
+  <button data-prev type="button" title="Oldingi (←)">‹</button>
+  <span class="hint">← → varaqlash · <kbd>O</kbd> ro'yxat · <kbd>F</kbd> to'liq ekran</span>
+  <button data-next type="button" title="Keyingi (→)">›</button>
+</div>
+
+<div class="deck-overview"><h3>Slaydlar ro'yxati</h3><div class="ov-grid"></div></div>
+
+<script src="../assets/js/deck.js"></script>
+</body>
+</html>

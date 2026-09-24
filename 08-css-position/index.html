@@ -1,0 +1,620 @@
+<!doctype html>
+<html lang="uz" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>08-modul · CSS Position moduli (Relative, Absolute, Fixed, Sticky)</title>
+<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body class="deck" data-lesson="8">
+
+<div class="deck-bar">
+  <a class="home" href="../index.html">← Kurs</a>
+  <span class="title">08-modul · CSS Position moduli</span>
+  <span class="spacer"></span>
+  <div class="deck-tools">
+    <button class="tool" data-overview type="button" title="Slaydlar ro'yxati (O)">☰</button>
+    <button class="tool" data-theme-toggle type="button" title="Mavzu">☾</button>
+    <span class="counter">1 / 16</span>
+  </div>
+</div>
+<div class="deck-progress"></div>
+
+<main class="deck-stage">
+
+<!-- ===== 1 ===== -->
+<section class="slide cover">
+  <div class="lesson-no">08-modul</div>
+  <h1>CSS Position moduli:<br>elementni «kimga nisbatan» joylashtirish</h1>
+  <p>Nega <code class="inline">relative</code> bergan elementingiz siljiydi-yu, asl o'rni bo'sh qolib ketaveradi? Nega <code class="inline">absolute</code> bergan element sahifaning burchagiga «uchib ketadi»? Va nega ba'zi menyular qanchalik scroll qilmang, doim tepada yopishib turadi? Bugun buni boshidan oxirigacha, misollar bilan tushunamiz.</p>
+  <div class="cover-plan">
+    <div><b>Reja 1</b>Position turlari — static, relative, absolute, fixed, sticky</div>
+    <div><b>Reja 2</b>z-index — qatlamlarni boshqarish</div>
+    <div><b>Reja 3</b>Hero Section + Fixed Navbar arxitekturasi</div>
+    <div><b>Amaliyot</b>Haqiqiy bino rasmi ustida ishlaydigan navbar va hero yasaymiz</div>
+  </div>
+</section>
+
+<!-- ===== 2 ===== -->
+<section class="slide">
+  <span class="eyebrow">Maqsad</span>
+  <h2>Dars oxirida siz nima qila olasiz</h2>
+  <p class="big">Bu darsdan keyin siz <code class="inline">static</code>, <code class="inline">relative</code>, <code class="inline">absolute</code>, <code class="inline">fixed</code>, <code class="inline">sticky</code> orasidagi farqni tushunasiz, <code class="inline">z-index</code> bilan qatlamlarni boshqara olasiz va haqiqiy Fixed Navbar + Hero Section arxitekturasini qura olasiz.</p>
+  <div class="cardset">
+    <div class="card">
+      <span class="ico">🧭</span>
+      <h4>Reference frame'ni tushunasiz</h4>
+      <p>Har bir position turi «qaysi nuqtaga nisbatan» hisoblanishini — kursning eng konseptual mavzusini.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🪟</span>
+      <h4>relative va absolute'ni farqlaysiz</h4>
+      <p>Nega biri joy qoldiradi, ikkinchisi qoldirmaydi — va nega ular bir-biriga bog'liq.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🗂️</span>
+      <h4>z-index bilan qatlashtira olasiz</h4>
+      <p>Bir-birining ustiga tushgan elementlardan qaysi biri tepada chiqishini boshqarasiz.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🏛️</span>
+      <h4>Hero + Navbar quriysiz</h4>
+      <p>Deyarli barcha zamonaviy saytlarda uchraydigan arxitekturani haqiqiy rasm bilan ishlab chiqasiz.</p>
+    </div>
+  </div>
+  <div class="note tip">
+    <span class="note-t">Nega bu mavzu boshqacha</span>
+    <p>Position — CSS'dagi eng ko'p bosh og'rig'i keltiradigan, lekin eng kuchli mavzulardan biri. Shuning uchun bugun nazariyaga odatdagidan ko'proq vaqt ajratamiz — tushunmasdan yodlash bu yerda ishlamaydi.</p>
+  </div>
+</section>
+
+<!-- ===== 3 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 1 · Nazariya</span>
+  <h2>Har bir element «kimga nisbatan» joylashadi</h2>
+  <p>Position mavzusini tushunishning eng oson yo'li — har bir turni <b>qaysi nuqtaga nisbatan hisoblanadi</b> (reference frame — hisoblash nuqtasi) nuqtai nazaridan ko'rib chiqish. <code class="inline">position</code> xossasining 5 ta asosiy qiymati bor.</p>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th>Qiymat</th><th>Kimga nisbatan joylashadi</th><th>Joy qoldiradimi?</th></tr>
+      <tr><td><code>static</code></td><td>Hech kimga — normal flow (oddiy oqim)</td><td>Ha (bu — sukut holat)</td></tr>
+      <tr><td><code>relative</code></td><td>O'zining static holatidagi joyiga</td><td><b>Ha</b> — asl o'rni bo'sh qoladi</td></tr>
+      <tr><td><code>absolute</code></td><td>Eng yaqin <b>positioned</b> ota-elementga (yoki <code>html</code>ga)</td><td><b>Yo'q</b></td></tr>
+      <tr><td><code>fixed</code></td><td>Brauzer oynasiga (viewport)</td><td><b>Yo'q</b></td></tr>
+      <tr><td><code>sticky</code></td><td>Chegaragacha — relative, keyin — fixed kabi</td><td>Ha (fixed bo'lgunga qadar)</td></tr>
+    </table>
+  </div>
+
+  <div class="note">
+    <span class="note-t">Kalit savol</span>
+    <p>Har safar <code class="inline">position</code> yozganda o'zingizga shu savolni bering: <b>«bu element aynan qaysi nuqtaga nisbatan hisoblanadi?»</b> Keyingi slaydlarda buni «xona» (room) o'xshatishi orqali ko'ramiz.</p>
+  </div>
+</section>
+
+<!-- ===== 4 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 1 · Xona vaziyati</span>
+  <h2>Position turlarini «xona» orqali tasavvur qiling</h2>
+  <p>Har bir position qiymatini xonadagi odam yoki narsa vaziyati orqali eslab qolish osonroq — bu real hayotdagi reference frame tushunchasi bilan bir xil mantiq.</p>
+
+  <div class="cardset">
+    <div class="card">
+      <span class="ico">🪑</span>
+      <h4><code class="inline">static</code></h4>
+      <p>Xonada oddiy o'tirgan odam — hech kim uni koordinata bilan chaqirmaydi.</p>
+    </div>
+    <div class="card">
+      <span class="ico">↔️</span>
+      <h4><code class="inline">relative</code></h4>
+      <p>«Stulingdan bir qadam chapga sur» — lekin stuling joyi baribir sen uchun bron qilingan bo'lib qoladi, boshqalar sen o'sha yerda o'tirgandek harakat qiladi.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🖼️</span>
+      <h4><code class="inline">absolute</code></h4>
+      <p>Xonadan butunlay chiqib, eng yaqin «nazorat qiluvchi» xonaga (positioned ota-element) nisbatan devorga osilgan rasm. Bunday xona bo'lmasa — butun binoning burchagiga osiladi.</p>
+    </div>
+    <div class="card">
+      <span class="ico">📌</span>
+      <h4><code class="inline">fixed</code></h4>
+      <p>Derazaga yopishtirilgan yorliq — butun bino (sahifa) qanchalik aylantirilsa (scroll) ham, yorliq derazaning bir joyida qolaveradi.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🧵</span>
+      <h4><code class="inline">sticky</code></h4>
+      <p>Cho'ziluvchan rezina bilan bog'langan narsa — ma'lum chegaragacha erkin harakatlanadi, chegaraga yetganda «tortilib» bir joyda to'xtab qoladi.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 5 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 1 · Jonli mashq</span>
+  <h2><code class="inline">relative</code> — siljiydi, lekin joyi bo'sh qoladi</h2>
+  <p>2-blokka <code class="inline">position: relative</code> berilgan va u <code class="inline">top</code>/<code class="inline">left</code> bilan siljitilgan. E'tibor bering: 3-blok xuddi 2-blok hali ham o'sha yerda turgandek, o'z joyida qolaveradi.</p>
+
+  <div class="live">
+    <div class="live-head">
+      <span class="dot"></span> relative.html
+      <span class="sp"></span>
+      <button class="live-reset" type="button">↺ Qayta</button>
+    </div>
+    <div class="live-body">
+      <div class="live-editor">
+<textarea spellcheck="false">
+<style>
+  body { font-family: Arial, sans-serif; padding: 16px; }
+  .box {
+    width: 100px;
+    height: 100px;
+    display: inline-block;
+    background: #3498db;
+    color: #fff;
+    text-align: center;
+    line-height: 100px;
+    font-size: 13px;
+    vertical-align: top;
+  }
+  .relative {
+    position: relative;
+    top: 20px;
+    left: 30px;
+    background: #e74c3c;
+    /* vizual siljiydi, lekin asl o'rni bo'sh qolib,
+       3-blok o'z joyida qolaveradi */
+  }
+</style>
+
+<div class="box">1</div>
+<div class="box relative">2 (relative)</div>
+<div class="box">3</div>
+</textarea>
+      </div>
+      <div class="live-preview"><iframe title="Natija"></iframe></div>
+    </div>
+  </div>
+
+  <div class="note tip">
+    <span class="note-t">Sinab ko'ring</span>
+    <p><code class="inline">.relative</code> dagi <code class="inline">top</code> va <code class="inline">left</code> qiymatlarini o'zgartiring. 2-blok qayerga siljisa ham, 1 va 3-bloklar joyidan qo'zg'almaydi — chunki normal flow'da 2-blok hamon o'z original o'rnini «egallab» turibdi.</p>
+  </div>
+</section>
+
+<!-- ===== 6 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 1 · Jonli mashq</span>
+  <h2><code class="inline">absolute</code> — positioned ota-elementga nisbatan</h2>
+  <p><code class="inline">.badge</code> ga <code class="inline">position: absolute</code> berilgan. U <code class="inline">.card</code> ichida, uning yuqori-o'ng burchagida turishi uchun — <code class="inline">.card</code> ga <code class="inline">position: relative</code> berilgan bo'lishi <b>shart</b>.</p>
+
+  <div class="live">
+    <div class="live-head">
+      <span class="dot"></span> absolute.html
+      <span class="sp"></span>
+      <button class="live-reset" type="button">↺ Qayta</button>
+    </div>
+    <div class="live-body">
+      <div class="live-editor">
+<textarea spellcheck="false">
+<style>
+  body { font-family: Arial, sans-serif; padding: 16px; }
+  .card {
+    position: relative; /* endi .badge shunga nisbatan joylashadi */
+    width: 250px;
+    height: 150px;
+    background: #ecf0f1;
+    border: 1px solid #bdc3c7;
+    padding: 14px;
+    box-sizing: border-box;
+  }
+  .badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #e74c3c;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+  }
+</style>
+
+<div class="card">
+  Karta matni
+  <span class="badge">Yangi</span>
+</div>
+</textarea>
+      </div>
+      <div class="live-preview"><iframe title="Natija"></iframe></div>
+    </div>
+  </div>
+
+  <div class="note warn">
+    <span class="note-t">Sinab ko'ring</span>
+    <p><code class="inline">.card</code> dagi <code class="inline">position: relative;</code> qatorini o'chirib ko'ring. <code class="inline">.badge</code> darhol butun sahifaning yuqori-o'ng burchagiga «uchib ketadi» — chunki brauzer eng yaqin positioned ota-elementni topmay, <code class="inline">&lt;html&gt;</code>gacha yuqoriga qarab izlaydi.</p>
+  </div>
+</section>
+
+<!-- ===== 7 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 1 · Nazariya</span>
+  <h2><code class="inline">fixed</code> va <code class="inline">sticky</code> — ekranga yopishish</h2>
+  <p><code class="inline">fixed</code> va <code class="inline">sticky</code> ikkalasi ham elementni ekranga «yopishtiradi», lekin turli mantiq bilan ishlaydi.</p>
+
+  <div class="cols">
+    <div>
+<pre class="code" data-lang="css" data-label="fixed navbar"><code>.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #2c3e50;
+}
+/* sahifa qanchalik scroll qilinmasin,
+   navbar viewport'ga nisbatan
+   joyidan qimirlamaydi */</code></pre>
+    </div>
+    <div>
+<pre class="code" data-lang="css" data-label="sticky sarlavha"><code>.section-title {
+  position: sticky;
+  top: 0;
+  background: white;
+  padding: 10px;
+}
+/* scroll qilib top: 0 ga yetguncha
+   oddiy turadi, keyin "yopishib" qoladi */</code></pre>
+    </div>
+  </div>
+
+  <div class="note">
+    <span class="note-t">Farqni eslab qoling</span>
+    <p><code class="inline">fixed</code> — butun viewport'ga nisbatan, boshidanoq «yopishgan». <code class="inline">sticky</code> — <b>relative va fixed'ning aralashmasi</b>: chegaraga yetguncha oddiy oqimda turadi, chegaraga yetgach fixed'ga aylanadi.</p>
+  </div>
+</section>
+
+<!-- ===== 8 ===== -->
+<section class="slide">
+  <span class="eyebrow">Xatolar</span>
+  <h2>Position bo'yicha eng ko'p uchraydigan ikkita xato</h2>
+
+  <div class="cols">
+    <div>
+      <div class="note bad">
+        <span class="note-t">1. Ota-elementga <code class="inline">relative</code> berishni unutish</span>
+        <p><code class="inline">.badge</code>ga <code class="inline">absolute</code> berib, lekin <code class="inline">.card</code>ga <code class="inline">position: relative</code> qo'ymasangiz — <code class="inline">.badge</code> <code class="inline">.card</code>ga emas, butun sahifaga nisbatan joylashib, ekranning burchagiga «uchib ketadi».</p>
+      </div>
+    </div>
+    <div>
+      <div class="note bad">
+        <span class="note-t">2. Fixed navbar ostida kontent yashirinishi</span>
+        <p><code class="inline">fixed</code> element normal flow'dan chiqib ketgani uchun <b>joy qoldirmaydi</b>. Natijada sahifaning birinchi qismi navbar ostida «yashirinib qoladi». Yechim: <code class="inline">body</code>ga yoki keyingi kontentga navbar balandligiga teng <code class="inline">padding-top</code> bering.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 9 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 2 · Nazariya</span>
+  <h2>Qatlamlar bilan ishlash: <code class="inline">z-index</code></h2>
+  <p>Bir nechta positioned element bir-birining ustiga tushib qolganda, qaysi biri tepada ko'rinishini <code class="inline">z-index</code> belgilaydi — qiymati kattaroq element tepada chiqadi.</p>
+
+  <div class="note warn">
+    <span class="note-t">Muhim shart</span>
+    <p><code class="inline">z-index</code> faqat <code class="inline">position</code>i <code class="inline">static</code> bo'lmagan (<code class="inline">relative</code>, <code class="inline">absolute</code>, <code class="inline">fixed</code>, <code class="inline">sticky</code>) elementlarda ishlaydi. Buni <b>qog'ozlar uyumiga</b> (stack) o'xshatish mumkin: kattaroq raqamli qog'oz har doim tepada yotadi, kichikroq raqamli esa uning ostida qoladi.</p>
+  </div>
+
+  <div class="live">
+    <div class="live-head">
+      <span class="dot"></span> z-index.html
+      <span class="sp"></span>
+      <button class="live-reset" type="button">↺ Qayta</button>
+    </div>
+    <div class="live-body">
+      <div class="live-editor">
+<textarea spellcheck="false">
+<style>
+  body { font-family: Arial, sans-serif; padding: 16px; position: relative; height: 160px; }
+  .layer-1 {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 140px;
+    height: 100px;
+    z-index: 1;
+    background: #e74c3c;
+    color: #fff;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  .layer-2 {
+    position: absolute;
+    top: 55px;
+    left: 70px;
+    width: 140px;
+    height: 100px;
+    z-index: 2; /* kattaroq son - tepada ko'rinadi */
+    background: #2980b9;
+    color: #fff;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+</style>
+
+<div class="layer-1">z-index: 1</div>
+<div class="layer-2">z-index: 2 (tepada)</div>
+</textarea>
+      </div>
+      <div class="live-preview"><iframe title="Natija"></iframe></div>
+    </div>
+  </div>
+
+  <div class="note tip">
+    <span class="note-t">Sinab ko'ring</span>
+    <p><code class="inline">.layer-1</code>ning <code class="inline">z-index</code>ini <code class="inline">3</code>ga o'zgartiring — endi qizil qatlam ko'k qatlam ustiga chiqadi. Agar <code class="inline">z-index</code> ishlamayotgan bo'lsa, avval elementning <code class="inline">position</code>i <code class="inline">static</code> qolib ketmaganini tekshiring.</p>
+  </div>
+</section>
+
+<!-- ===== 10 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 3 · Nazariya</span>
+  <h2>Hero Section + Fixed Navbar arxitekturasi</h2>
+  <p>Haqiqiy loyihalarda ikkita narsa ko'pincha birga ishlatiladi: butun ekranni egallovchi katta fon rasm ustiga matn joylashtirilgan bo'lim (<b>Hero section</b>) va sahifa tepasida har doim ko'rinib turadigan <b>Fixed Navbar</b>. Bu — deyarli barcha zamonaviy saytlarda uchraydigan arxitektura.</p>
+
+  <div class="cols">
+    <div>
+      <ul>
+        <li><code class="inline">.hero</code> konteyneriga <code class="inline">height: 100vh</code> — 5-darsda o'rgangan <code class="inline">vh</code> birligi — butun ekranni egallatamiz.</li>
+        <li>Ichidagi rasmga <code class="inline">object-fit: cover</code> — 6-darsda o'rgangan xossa — beriladi, u nisbatini buzmay to'ldiradi.</li>
+      </ul>
+    </div>
+    <div>
+      <ul>
+        <li>Matn rasm ustiga <code class="inline">position: absolute</code> bilan qo'yiladi.</li>
+        <li>Uni aniq markazga joylash uchun <code class="inline">transform: translate(-50%, -50%)</code> ishlatiladi — element o'zining yarim eni va yarim balandligiga orqaga suriladi va mukammal markazlashadi.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="note">
+    <span class="note-t">Nega ikkalasi birga o'rganiladi</span>
+    <p>Navbar — <code class="inline">fixed</code>ning eng klassik qo'llanilishi. Hero matni — <code class="inline">absolute</code> + <code class="inline">relative</code> ota-elementning eng klassik qo'llanilishi. Ular birga real loyihaning «old sahifasi» arxitekturasini tashkil qiladi.</p>
+  </div>
+</section>
+
+<!-- ===== 11 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 3 · Jonli mashq</span>
+  <h2>To'liq ishlaydigan Hero + Navbar — haqiqiy rasm bilan</h2>
+  <p>Quyida BXU binosining haqiqiy rasmi (<code class="inline">bxu-hero.jpg</code>) ustiga yarim shaffof <code class="inline">fixed</code> navbar va markazlashtirilgan matn qo'yilgan. Pastga scroll qilib, navbar joyidan qimirlamasligini kuzating.</p>
+
+  <div class="live stack">
+    <div class="live-head">
+      <span class="dot"></span> hero.html
+      <span class="sp"></span>
+      <button class="live-reset" type="button">↺ Qayta</button>
+    </div>
+    <div class="live-body">
+      <div class="live-editor">
+<textarea spellcheck="false">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: Arial, sans-serif; }
+
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 15px 24px;
+    background: rgba(44, 62, 80, 0.9); /* yarim shaffof fon */
+    color: white;
+    font-weight: 700;
+    z-index: 100;
+  }
+
+  .hero {
+    position: relative; /* .hero-text shunga nisbatan joylashadi */
+    width: 100%;
+    height: 100vh; /* butun ekranni egallaydi */
+  }
+
+  .hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .hero-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* aniq markazga joylashtirish */
+    color: white;
+    font-size: 2.4rem;
+    text-align: center;
+    text-shadow: 0 2px 10px rgba(0,0,0,.5);
+  }
+
+  .content {
+    padding: 40px 24px;
+  }
+</style>
+
+<nav class="navbar">BXU · Sayt nomi</nav>
+
+<section class="hero">
+  <img src="images/bxu-hero.jpg" alt="BXU binosi" class="hero-img">
+  <h1 class="hero-text">Xush kelibsiz!</h1>
+</section>
+
+<div class="content">
+  <p>Sahifani pastga scroll qiling — navbar tepada qolaveradi.</p>
+  <p>Bu matn hero ostida ko'rinadi.</p>
+</div>
+</textarea>
+      </div>
+      <div class="live-preview"><iframe title="Natija"></iframe></div>
+    </div>
+  </div>
+
+  <div class="note tip">
+    <span class="note-t">Sinab ko'ring</span>
+    <p><code class="inline">.hero-text</code>dagi <code class="inline">transform: translate(-50%, -50%);</code> qatorini vaqtincha o'chiring — matn markazdan chetlashib ketadi, chunki <code class="inline">top: 50%; left: 50%;</code> faqat elementning yuqori-chap burchagini markazga qo'yadi, o'zini emas.</p>
+  </div>
+</section>
+
+<!-- ===== 12 ===== -->
+<section class="slide">
+  <span class="eyebrow">Xatolar</span>
+  <h2>Hero + Navbar qurishda uchraydigan xatolar</h2>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th style="width:30%">Xato</th><th style="width:35%">Nima bo'ladi</th><th>Yechim</th></tr>
+      <tr>
+        <td><b><code>.hero</code>ga <code>position: relative</code> berishni unutish</b></td>
+        <td><code>.hero-text</code> <code>.hero</code> ichida emas, butun sahifaga nisbatan joylashib qoladi</td>
+        <td><code>.hero</code>ga har doim <code>position: relative</code> bering</td>
+      </tr>
+      <tr>
+        <td><b>Fixed navbar uchun <code>padding-top</code> qo'ymaslik</b></td>
+        <td>Sahifaning birinchi kontenti navbar ostida yashiringan bo'ladi</td>
+        <td><code>body</code>ga navbar balandligiga teng <code>padding-top</code> bering</td>
+      </tr>
+      <tr>
+        <td><b><code>.badge</code>/overlay uchun ota-elementga <code>relative</code> unutish</b></td>
+        <td>Element eng yaqin positioned ota-elementni topolmay, <code>&lt;html&gt;</code>ga nisbatan burchakka «uchadi»</td>
+        <td>Absolute berilgan har bir element uchun ota-elementda <code>position</code> borligini tekshiring</td>
+      </tr>
+    </table>
+  </div>
+</section>
+
+<!-- ===== 13 ===== -->
+<section class="slide">
+  <span class="eyebrow">Best practice</span>
+  <h2>Yaxshi amaliyot — qisqacha</h2>
+  <div class="cols">
+    <div>
+      <ul>
+        <li><code class="inline">absolute</code> ishlatishdan oldin har doim ota-elementga <code class="inline">position: relative</code> berilganini tekshiring.</li>
+        <li>Fixed navbar qo'llasangiz — kontentga darhol <code class="inline">padding-top</code> qo'shishni unutmang.</li>
+        <li><code class="inline">z-index</code> qiymatlarini tartibli tanlang (masalan: navbar — 100, modal — 1000) — tasodifiy katta sonlar bilan chalkashmang.</li>
+      </ul>
+    </div>
+    <div>
+      <ul>
+        <li>Hero rasm uchun <code class="inline">object-fit: cover</code> + <code class="inline">height: 100vh</code> naqshini standart deb bilib qoling.</li>
+        <li>Elementni aniq markazlash uchun <code class="inline">top: 50%; left: 50%; transform: translate(-50%, -50%);</code> — bu kombinatsiyani yodda tuting.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="note tip">
+    <span class="note-t">Bugungi eng muhim xulosa</span>
+    <p>Position bilan ishlashda birinchi savol har doim shu: <b>«bu element kimga nisbatan joylashyapti?»</b> Javobni topsangiz, qolgan hammasi mantiqiy tarzda o'z-o'zidan kelib chiqadi.</p>
+  </div>
+</section>
+
+<!-- ===== 14 ===== -->
+<section class="slide">
+  <span class="eyebrow">Amaliy vazifa</span>
+  <h2>Uyga vazifa</h2>
+
+  <div class="task">
+    <h4><span class="n">1</span> Fixed Header — 07-darsdagi menyuni jonlantiring</h4>
+    <ol>
+      <li>07-darsda yasagan <code class="inline">inline-block</code> menyungizni oling.</li>
+      <li>Unga <code class="inline">position: fixed; top: 0; left: 0; width: 100%;</code> bering — endi u sahifa tepasida doim ko'rinadigan navbarga aylanadi.</li>
+      <li><code class="inline">body</code>ga navbar balandligiga teng <code class="inline">padding-top</code> qo'shing — aks holda birinchi kontent navbar ostida yashiringan bo'ladi.</li>
+    </ol>
+    <div class="crit">
+      <b>Baholash mezoni:</b> navbar sahifani scroll qilganda ham tepada qoladi · kontent navbar ostida yashirinib qolmagan.
+    </div>
+  </div>
+
+  <div class="task">
+    <h4><span class="n">2</span> Hero Section — o'z rasmingiz bilan</h4>
+    <ol>
+      <li>Butun ekranni egallovchi (<code class="inline">height: 100vh</code>) <code class="inline">.hero</code> bo'limi yarating, ichiga o'zingiz tanlagan fon rasmni <code class="inline">object-fit: cover</code> bilan joylashtiring.</li>
+      <li>Rasm ustiga matn (sarlavha) qo'ying, uni <code class="inline">position: absolute</code> va <code class="inline">transform: translate(-50%, -50%)</code> usuli bilan aniq o'rtaga joylashtiring.</li>
+      <li>1- va 2-vazifani birlashtirib, to'liq ishlaydigan bitta sahifa yasang.</li>
+    </ol>
+    <div class="crit">
+      <b>Baholash mezoni:</b> hero rasm butun ekranni to'ldiradi va nisbati buzilmagan · matn rasm ustida to'g'ri markazda ko'rinadi · navbar va hero bitta sahifada birga ishlaydi.
+    </div>
+  </div>
+</section>
+
+<!-- ===== 15 ===== -->
+<section class="slide">
+  <span class="eyebrow">Yakun</span>
+  <h2>Xulosa</h2>
+
+  <div class="recap">
+    <div><b>static</b>Sukut holat — normal flow, top/left ta'sir qilmaydi.</div>
+    <div><b>relative</b>O'z joyidan nisbatan siljiydi, asl o'rni bo'sh qoladi va yangi reference frame yaratadi.</div>
+    <div><b>absolute</b>Oqimdan chiqadi, eng yaqin positioned ota-elementga (yoki html'ga) nisbatan joylashadi.</div>
+    <div><b>fixed</b>Viewport'ga yopishadi, scroll ta'sir qilmaydi, joy qoldirmaydi.</div>
+    <div><b>sticky</b>Chegaragacha oddiy, keyin fixed kabi yopishib qoladi.</div>
+    <div><b>z-index</b>Faqat positioned elementlarda ishlaydi — kattaroq son tepada ko'rinadi.</div>
+    <div><b>Hero + Navbar</b>100vh + object-fit: cover + absolute/translate + fixed — real loyihaning asosiy arxitekturasi.</div>
+  </div>
+</section>
+
+<!-- ===== 16 ===== -->
+<section class="slide">
+  <span class="eyebrow">Savol-javob</span>
+  <h2>O'z-o'zini tekshirish</h2>
+
+  <div class="quiz">
+    <div class="q">
+      <p>1. <code class="inline">relative</code> va <code class="inline">absolute</code> orasidagi eng muhim farq nima?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans"><code>relative</code> normal flow'da qoladi va asl o'rni bo'sh saqlanadi. <code>absolute</code> esa oqimdan butunlay chiqib ketadi, joy qoldirmaydi va eng yaqin positioned ota-elementga nisbatan joylashadi.</div>
+    </div>
+    <div class="q">
+      <p>2. <code class="inline">.badge</code>ga <code class="inline">position: absolute</code> berdingiz, lekin u kutilganidek kartochka ichida emas, sahifaning burchagida chiqdi. Sabab nima?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">Kartochka (ota-element)ga <code>position: relative</code> berilmagan. Brauzer eng yaqin positioned ota-elementni topmay, <code>&lt;html&gt;</code>gacha izlab, shunga nisbatan joylashtirgan.</div>
+    </div>
+    <div class="q">
+      <p>3. <code class="inline">fixed</code> va <code class="inline">sticky</code> orasidagi farqni tushuntiring.</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans"><code>fixed</code> boshidanoq viewport'ga nisbatan «yopishgan» va doim shu holatda qoladi. <code>sticky</code> esa chegaraga (masalan <code>top: 0</code>) yetgunga qadar oddiy relative kabi turadi, chegaraga yetgach fixed'ga aylanadi.</div>
+    </div>
+    <div class="q">
+      <p>4. <code class="inline">z-index</code> nega ba'zan ishlamay qoladi?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans"><code>z-index</code> faqat <code>position</code>i <code>static</code> bo'lmagan elementlarda ishlaydi. Agar element hali ham <code>static</code> holatida bo'lsa, <code>z-index</code> berilsa ham hech qanday natija bermaydi.</div>
+    </div>
+    <div class="q">
+      <p>5. Hero section matnini rasm ustida aniq markazga joylash uchun qanday uchta xossa kombinatsiyasi ishlatiladi?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans"><code>position: absolute;</code> bilan <code>top: 50%; left: 50%;</code>, so'ngra <code>transform: translate(-50%, -50%);</code> — bu element o'zining yarim eni va yarim balandligiga orqaga surib, mukammal markazlaydi.</div>
+    </div>
+  </div>
+
+  <div class="note tip">
+    <span class="note-t">Keyingi darsga ko'prik</span>
+    <p>Bugun haqiqiy Hero Section + Fixed Navbar arxitekturasini qurdik. Lekin diqqat qiling — hozirgacha yasagan navbar va kartochkalarimiz butunlay «jonsiz»: sichqonchani ustiga olib borsangiz ham hech narsa o'zgarmaydi, tugma bosilganini his qilmaysiz. Keyingi darsda <code class="inline">:hover</code>, <code class="inline">:focus</code> kabi holatlar va <code class="inline">::before</code>/<code class="inline">::after</code> bilan elementlarga «hayot» kiritishni, so'ngra gradientlar bilan zamonaviy, chuqurlik hissi beruvchi fonlar yasashni o'rganamiz.</p>
+  </div>
+
+  <div class="lesson-jump">
+    <a href="../07-css-display/index.html"><b>Oldingi modul</b><span>← 07-modul: CSS Display moduli</span></a>
+    <a href="../09-pseudo-gradient/index.html"><b>Keyingi modul</b><span>09-modul: CSS Pseudo-classes, Pseudo-elements va Gradientlar →</span></a>
+  </div>
+</section>
+
+</main>
+
+<div class="deck-nav">
+  <button data-prev type="button" title="Oldingi (←)">‹</button>
+  <span class="hint">← → varaqlash · <kbd>O</kbd> ro'yxat · <kbd>F</kbd> to'liq ekran</span>
+  <button data-next type="button" title="Keyingi (→)">›</button>
+</div>
+
+<div class="deck-overview"><h3>Slaydlar ro'yxati</h3><div class="ov-grid"></div></div>
+
+<script src="../assets/js/deck.js"></script>
+</body>
+</html>

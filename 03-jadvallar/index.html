@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="uz" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>03-modul · HTML Jadvallar bilan professional ishlash</title>
+<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body class="deck" data-lesson="3">
+
+<div class="deck-bar">
+  <a class="home" href="../index.html">← Kurs</a>
+  <span class="title">03-modul · HTML Jadvallar bilan professional ishlash</span>
+  <span class="spacer"></span>
+  <div class="deck-tools">
+    <button class="tool" data-overview type="button" title="Slaydlar ro'yxati (O)">☰</button>
+    <button class="tool" data-theme-toggle type="button" title="Mavzu">☾</button>
+    <span class="counter">1 / 14</span>
+  </div>
+</div>
+<div class="deck-progress"></div>
+
+<main class="deck-stage">
+
+<!-- ===== 1 ===== -->
+<section class="slide cover">
+  <div class="lesson-no">03-modul</div>
+  <h1>HTML Jadvallar bilan<br>professional ishlash</h1>
+  <p>O'tgan darsda rasm, havola va ro'yxatlarni o'rgandik. Bugun esa ma'lumotni <b>qator va ustunlar</b> shaklida — jadval (table) orqali — ko'rsatishni o'rganamiz: dars jadvali, narxnoma, baholar ro'yxati kabi haqiqiy loyihalarda ishlatiladigan bilim.</p>
+  <div class="cover-plan">
+    <div><b>Reja 1</b>Jadval taglari — table, caption, thead, tbody, tfoot, tr, th, td</div>
+    <div><b>Reja 2</b>Jadval atributlari — border, cellpadding, cellspacing, align</div>
+    <div><b>Reja 3</b>Kataklarni birlashtirish — colspan va rowspan</div>
+    <div><b>Amaliyot</b>Live-muharrirda o'z jadvalingizni quramiz, so'ng uyga vazifa</div>
+  </div>
+</section>
+
+<!-- ===== 2 ===== -->
+<section class="slide">
+  <span class="eyebrow">Maqsad</span>
+  <h2>Dars oxirida siz nima qila olasiz</h2>
+  <p class="big">Tasavvur qiling — dekanatdan guruhingizning baholar ro'yxatini saytda ko'rsatish topshirildi: har bir talabaning ismi, fani va bahosi. Alohida paragraflar bilan bu chalkash chiqadi — qator va ustunlar mos tushmaydi. Aynan shu vazifa uchun HTML'da maxsus vosita bor: <b>jadval</b>.</p>
+  <div class="cardset">
+    <div class="card">
+      <span class="ico">🏗</span>
+      <h4>Quradigan bo'lasiz</h4>
+      <p>To'g'ri strukturaga ega jadval — <code class="inline">thead</code>, <code class="inline">tbody</code>, <code class="inline">tfoot</code> bilan.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🎨</span>
+      <h4>Bezaydigan bo'lasiz</h4>
+      <p>Legacy atributlar (<code class="inline">border</code>, <code class="inline">cellpadding</code>) yordamida jadvalni ko'rinishga keltirasiz.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🧩</span>
+      <h4>Birlashtiradigan bo'lasiz</h4>
+      <p><code class="inline">colspan</code> va <code class="inline">rowspan</code> bilan katakchalarni to'g'ri birlashtirasiz.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🚫</span>
+      <h4>Bilib oladigan bo'lasiz</h4>
+      <p>Jadvalni <b>sahifa maketi</b> uchun ishlatish nega katta xato ekanini.</p>
+    </div>
+  </div>
+  <div class="note tip">
+    <span class="note-t">Eslatma</span>
+    <p>Deyarli har qanday real loyihada — narxlar ro'yxati, dars jadvali, statistika — jadvalsiz ishlab bo'lmaydi. Bugun oddiy uch qatorli jadvaldan tortib, katakchalari birlashtirilgan murakkab jadvalgacha noldan quramiz.</p>
+  </div>
+</section>
+
+<!-- ===== 3 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 1 · Nazariya</span>
+  <h2>Jadval — qog'ozdagi jadvalga o'xshaydi</h2>
+  <p>Har qanday qog'ozdagi jadvalda uchta qism bor: <b>nomi</b>, <b>ustun sarlavhalari</b> va <b>ma'lumot qatorlari</b>. HTML jadvali ham aynan shu mantiqqa qurilgan — har bir qism uchun alohida teg bor.</p>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th>Teg</th><th>Vazifasi</th></tr>
+      <tr><td><code>&lt;table&gt;</code></td><td>Butun jadvalni o'rab turuvchi asosiy teg — boshqa hamma jadval taglari shuning ichida.</td></tr>
+      <tr><td><code>&lt;caption&gt;</code></td><td>Jadvalning nomi/tavsifi. <code class="inline">&lt;table&gt;</code> ochilgandan darhol keyin yoziladi, jadval tepasida ko'rinadi.</td></tr>
+      <tr><td><code>&lt;thead&gt;</code></td><td>Jadvalning "boshi" — odatda ustun nomlari (Ism, Fan, Baho) shu yerda.</td></tr>
+      <tr><td><code>&lt;tbody&gt;</code></td><td>Jadvalning "tanasi" — asosiy ma'lumotlar, eng katta qism.</td></tr>
+      <tr><td><code>&lt;tfoot&gt;</code></td><td>Jadvalning "oyog'i" — odatda jamlovchi qator (Jami, O'rtacha ball).</td></tr>
+      <tr><td><code>&lt;tr&gt;</code></td><td>Table row — bitta qator, jadvaldagi har bir gorizontal chiziq shu bilan boshlanadi.</td></tr>
+      <tr><td><code>&lt;th&gt;</code></td><td>Table header — sarlavha katagi, matni qalin va markazlashtirilgan chiqadi, odatda <code class="inline">thead</code> ichida.</td></tr>
+      <tr><td><code>&lt;td&gt;</code></td><td>Table data — oddiy ma'lumot katagi, <code class="inline">tbody</code> ichida.</td></tr>
+    </table>
+  </div>
+
+  <div class="note warn">
+    <span class="note-t">Muhim tuzilma qoidasi</span>
+    <p><code class="inline">&lt;table&gt;</code> ichida to'g'ridan-to'g'ri <code class="inline">&lt;tr&gt;</code> emas, avval <code class="inline">&lt;thead&gt;</code>/<code class="inline">&lt;tbody&gt;</code>/<code class="inline">&lt;tfoot&gt;</code> bo'lishi kerak — bu professional yozish uslubi. <code class="inline">&lt;tr&gt;</code> ichida esa faqat <code class="inline">&lt;th&gt;</code> yoki <code class="inline">&lt;td&gt;</code> bo'ladi, hech qachon to'g'ridan-to'g'ri matn yozilmaydi.</p>
+  </div>
+</section>
+
+<!-- ===== 4 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 1 · Amaliy</span>
+  <h2>Birinchi jadvalimiz: "1-guruh baholari"</h2>
+  <p>Caption bilan nom beramiz, <code class="inline">thead</code> ichiga 3 ta <code class="inline">th</code>, <code class="inline">tbody</code> ichiga 2 ta talaba qatori, <code class="inline">tfoot</code> ichiga "O'rtacha ball" qatorini yozamiz.</p>
+
+  <div class="cols">
+    <div>
+<pre class="code" data-lang="html" data-label="baholar.html"><code>&lt;table&gt;
+  &lt;caption&gt;1-guruh baholari&lt;/caption&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Ism&lt;/th&gt;
+      &lt;th&gt;Fan&lt;/th&gt;
+      &lt;th&gt;Baho&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Aziz Karimov&lt;/td&gt;
+      &lt;td&gt;HTML/CSS&lt;/td&gt;
+      &lt;td&gt;92&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Dilnoza Yusupova&lt;/td&gt;
+      &lt;td&gt;HTML/CSS&lt;/td&gt;
+      &lt;td&gt;88&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+  &lt;tfoot&gt;
+    &lt;tr&gt;
+      &lt;td colspan="2"&gt;O'rtacha ball&lt;/td&gt;
+      &lt;td&gt;90&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tfoot&gt;
+&lt;/table&gt;</code></pre>
+    </div>
+    <div>
+      <p style="margin-top:0"><b>Natija brauzerda:</b></p>
+      <table border="1" cellpadding="8" cellspacing="0" style="border-collapse:collapse;width:100%">
+        <caption style="caption-side:top;font-weight:600;padding-bottom:6px">1-guruh baholari</caption>
+        <thead>
+          <tr><th>Ism</th><th>Fan</th><th>Baho</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Aziz Karimov</td><td>HTML/CSS</td><td>92</td></tr>
+          <tr><td>Dilnoza Yusupova</td><td>HTML/CSS</td><td>88</td></tr>
+        </tbody>
+        <tfoot>
+          <tr><td colspan="2">O'rtacha ball</td><td>90</td></tr>
+        </tfoot>
+      </table>
+      <div class="note bad" style="margin-top:14px">
+        <span class="note-t">Ko'p adashadigan joy</span>
+        <p>Ko'p talabalar <code class="inline">&lt;th&gt;</code> va <code class="inline">&lt;td&gt;</code> farqini tushunmay, hammasini <code class="inline">&lt;td&gt;</code> bilan yozadi — natijada sarlavha qatori boshqalardan ajralib turmaydi. Qoida: ustun nomlari — <code class="inline">th</code>, ma'lumot — <code class="inline">td</code>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 5 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 2 · Nazariya</span>
+  <h2>Jadval atributlari: <code class="inline">border</code>, <code class="inline">cellpadding</code>, <code class="inline">cellspacing</code>, <code class="inline">align</code></h2>
+  <p>Ochiq tan olib aytamiz: bu atributlar — <b>eskirgan (legacy)</b> HTML atributlari. Zamonaviy loyihalarda buning o'rniga CSS ishlatiladi, va kursning CSS bosqichida buni to'g'ri usulda qaytadan o'rganamiz. Lekin hozircha, jadval "qismlari" qanday ishlashini his qilish uchun ularni to'g'ridan-to'g'ri HTML ichida ko'ramiz.</p>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th>Atribut</th><th>Vazifasi</th></tr>
+      <tr><td><code>border</code></td><td>Jadval va kataklar atrofiga chegara chiziq chizadi, qiymati piksel miqdorida (masalan <code>border="1"</code>).</td></tr>
+      <tr><td><code>cellpadding</code></td><td>Katak <b>ICHIDAGI</b> bo'shliq — matn bilan katak chegarasi orasidagi masofa (matn "chegaraga yopishib qolmasligi" uchun).</td></tr>
+      <tr><td><code>cellspacing</code></td><td>Kataklar <b>O'RTASIDAGI</b> bo'shliq — bitta katak bilan boshqasi orasidagi "tirqish".</td></tr>
+      <tr><td><code>align</code></td><td>Matnni katak ichida gorizontal joylashtiradi: <code>left</code>, <code>center</code>, <code>right</code>.</td></tr>
+    </table>
+  </div>
+
+  <pre class="code" data-lang="html" data-label="misol"><code>&lt;table border="1" cellpadding="8" cellspacing="0"&gt;
+  &lt;tr&gt;
+    &lt;th align="left"&gt;Ism&lt;/th&gt;
+    &lt;th align="center"&gt;Baho&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td align="left"&gt;Aziz Karimov&lt;/td&gt;
+    &lt;td align="center"&gt;92&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;</code></pre>
+
+  <div class="note bad">
+    <span class="note-t">Ko'p adashadigan joy</span>
+    <p><code class="inline">cellpadding</code> va <code class="inline">cellspacing</code> ko'pincha chalkashtiriladi: <b>cellpadding</b> — katak ICHIDAGI bo'shliq (matn bilan chegara orasida), <b>cellspacing</b> — kataklar O'RTASIDAGI bo'shliq (bitta katak bilan boshqasi orasida).</p>
+  </div>
+</section>
+
+<!-- ===== 6 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 2 · Amaliy</span>
+  <h2>Atributlar natijasi brauzerda</h2>
+  <p>Yuqoridagi kodga <code class="inline">border="1" cellpadding="8" cellspacing="0"</code> qo'shilgach, chegara paydo bo'ladi va matn bilan chegara orasida bo'shliq hosil bo'ladi.</p>
+
+  <table border="1" cellpadding="8" cellspacing="0" style="width:100%;max-width:480px">
+    <tr>
+      <th align="left">Ism</th>
+      <th align="center">Baho</th>
+    </tr>
+    <tr>
+      <td align="left">Aziz Karimov</td>
+      <td align="center">92</td>
+    </tr>
+  </table>
+
+  <div class="note tip" style="margin-top:18px">
+    <span class="note-t">Kelajakka nazar</span>
+    <p>Bu atributlarni kursning CSS bosqichida <code class="inline">border</code>, <code class="inline">padding</code> va <code class="inline">border-collapse</code> xususiyatlari bilan qayta yozamiz — ular ancha kuchliroq va moslashuvchan bo'ladi. Hozircha maqsad — jadval qismlarining mantig'ini tushunish.</p>
+  </div>
+</section>
+
+<!-- ===== 7 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 3 · Nazariya</span>
+  <h2>Kataklarni birlashtirish: <code class="inline">colspan</code> va <code class="inline">rowspan</code></h2>
+  <p>Ba'zan jadvalda bir katak bir nechta ustun yoki qatorni "egallashi" kerak bo'ladi — masalan, narxnomada "Jami narx" qatori butun jadval kengligini egallaydi, yoki bitta mahsulot bir nechta xususiyat qatoriga ega bo'lsa, mahsulot nomi ularning barchasi uchun bitta katak bo'lib qoladi.</p>
+
+  <div class="cols">
+    <div>
+      <h3><code class="inline">colspan</code> (column span)</h3>
+      <p>Katakni <b>gorizontal</b> yo'nalishda bir nechta ustunga cho'zadi. Qiymati nechta ustunni egallashini bildiradi: <code class="inline">colspan="2"</code> — 2 ta ustun o'rnini egallaydi.</p>
+    </div>
+    <div>
+      <h3><code class="inline">rowspan</code> (row span)</h3>
+      <p>Katakni <b>vertikal</b> yo'nalishda bir nechta qatorga cho'zadi: <code class="inline">rowspan="2"</code> — 2 ta qator o'rnini egallaydi.</p>
+    </div>
+  </div>
+
+  <div class="note warn">
+    <span class="note-t">Muhim qoida</span>
+    <p>Agar bir katak <code class="inline">colspan</code> yoki <code class="inline">rowspan</code> orqali boshqa kataklarni "egallab" olsa, o'sha qatordagi keyingi <code class="inline">&lt;td&gt;</code>/<code class="inline">&lt;th&gt;</code> lar sonini <b>kamaytirish</b> kerak — aks holda jadval "sirg'alib" ketadi, ustunlar to'g'ri tekislanmaydi.</p>
+  </div>
+</section>
+
+<!-- ===== 8 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 3 · Amaliy</span>
+  <h2>Misol: mahsulotlar narxnomasi</h2>
+  <p>"Futbolka" nomi 2 qatorga (<code class="inline">rowspan="2"</code>) cho'zilgan, "Jami mahsulotlar" qatori esa 2 ustunga (<code class="inline">colspan="2"</code>) cho'zilgan.</p>
+
+  <div class="cols">
+    <div>
+<pre class="code" data-lang="html" data-label="narxnoma.html"><code>&lt;table border="1" cellpadding="8"&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Mahsulot&lt;/th&gt;
+      &lt;th&gt;O'lcham&lt;/th&gt;
+      &lt;th&gt;Narx&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td rowspan="2"&gt;Futbolka&lt;/td&gt;
+      &lt;td&gt;M&lt;/td&gt;
+      &lt;td&gt;85 000 so'm&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;L&lt;/td&gt;
+      &lt;td&gt;90 000 so'm&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td colspan="2"&gt;Jami mahsulotlar&lt;/td&gt;
+      &lt;td&gt;175 000 so'm&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+    </div>
+    <div>
+      <p style="margin-top:0"><b>Natija brauzerda:</b></p>
+      <table border="1" cellpadding="8" cellspacing="0" style="border-collapse:collapse;width:100%">
+        <thead>
+          <tr><th>Mahsulot</th><th>O'lcham</th><th>Narx</th></tr>
+        </thead>
+        <tbody>
+          <tr><td rowspan="2">Futbolka</td><td>M</td><td>85 000 so'm</td></tr>
+          <tr><td>L</td><td>90 000 so'm</td></tr>
+          <tr><td colspan="2">Jami mahsulotlar</td><td>175 000 so'm</td></tr>
+        </tbody>
+      </table>
+      <div class="note bad" style="margin-top:14px">
+        <span class="note-t">Eng keng tarqalgan xato</span>
+        <p><code class="inline">colspan</code>/<code class="inline">rowspan</code> ishlatilgandan keyin ham o'sha qatorda ortiqcha <code class="inline">&lt;td&gt;</code> qoldirib qo'yish — natijada jadval chizig'i buziladi. Har doim: colspan/rowspan qo'shsangiz, o'sha qatordagi kerakli kataklar sonini qayta sanab chiqing.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 9 ===== -->
+<section class="slide">
+  <span class="eyebrow">Oldin / Keyin</span>
+  <h2>Xato colspan jadvalni qanday "sirg'antiradi"</h2>
+  <p>Bu — jonli darsda ataylab qilinadigan xato: <code class="inline">colspan="2"</code> qo'yilgan, lekin o'sha qatorda ortiqcha <code class="inline">&lt;td&gt;</code> qoldirilgan. Natijada ustunlar boshqa qatorlarga mos tushmay qoladi.</p>
+
+  <div class="vs">
+    <div class="no">
+      <div class="vs-h">✗ NOTO'G'RI — ustunlar soni mos kelmaydi</div>
+<pre class="code" data-lang="html"><code>&lt;tr&gt;
+  &lt;th&gt;Mahsulot&lt;/th&gt;
+  &lt;th&gt;O'lcham&lt;/th&gt;
+  &lt;th&gt;Narx&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td colspan="2"&gt;Jami mahsulotlar&lt;/td&gt;
+  &lt;td&gt;175 000 so'm&lt;/td&gt;
+  &lt;td&gt;ortiqcha katak&lt;/td&gt;
+&lt;/tr&gt;</code></pre>
+      <p>3 ustunlik jadvalda birinchi katak 2 ustunni egallagan (jami 2), keyin яна 2 ta <code class="inline">&lt;td&gt;</code> qo'shilgan — jami 4 ustun hosil bo'ladi, jadval "sirg'alib" ketadi.</p>
+    </div>
+    <div class="ok">
+      <div class="vs-h">✓ TO'G'RI — jami har doim 3 ustun</div>
+<pre class="code" data-lang="html"><code>&lt;tr&gt;
+  &lt;th&gt;Mahsulot&lt;/th&gt;
+  &lt;th&gt;O'lcham&lt;/th&gt;
+  &lt;th&gt;Narx&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td colspan="2"&gt;Jami mahsulotlar&lt;/td&gt;
+  &lt;td&gt;175 000 so'm&lt;/td&gt;
+&lt;/tr&gt;</code></pre>
+      <p><code class="inline">colspan="2"</code> (2 ustun) + oddiy <code class="inline">&lt;td&gt;</code> (1 ustun) = jami 3 ustun — jadval sarlavhasidagi 3 ustun bilan mos keladi.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 10 ===== -->
+<section class="slide">
+  <span class="eyebrow">Jonli mashq</span>
+  <h2>O'zingiz jadvalni o'zgartirib ko'ring</h2>
+  <p>Chapdagi kodda "baholar" jadvali bor. Uni o'zgartiring — masalan, yangi talaba qatori qo'shing, "Fizika" fanini kiriting yoki <code class="inline">tfoot</code>dagi <code class="inline">colspan</code> qiymatini o'zgartirib, jadval qanday "sirg'alib ketishini" ko'ring.</p>
+
+  <div class="live">
+    <div class="live-head">
+      <span class="dot"></span> baholar.html
+      <span class="sp"></span>
+      <button class="live-reset" type="button">↺ Qayta</button>
+    </div>
+    <div class="live-body">
+      <div class="live-editor">
+<textarea spellcheck="false">
+<table border="1" cellpadding="8" cellspacing="0">
+  <caption>2-guruh baholari</caption>
+  <thead>
+    <tr>
+      <th>Ism</th>
+      <th>Fan</th>
+      <th>Baho</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Sardor Aliyev</td>
+      <td>HTML/CSS</td>
+      <td>95</td>
+    </tr>
+    <tr>
+      <td>Malika Nosirova</td>
+      <td>HTML/CSS</td>
+      <td>89</td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="2">O'rtacha ball</td>
+      <td>92</td>
+    </tr>
+  </tfoot>
+</table>
+</textarea>
+      </div>
+      <div class="live-preview"><iframe title="Natija"></iframe></div>
+    </div>
+  </div>
+
+  <div class="note tip">
+    <span class="note-t">Sinab ko'ring</span>
+    <p>Yangi <code class="inline">&lt;tr&gt;</code> qator qo'shib, 3-talabani kiriting. So'ng <code class="inline">tfoot</code>dagi <code class="inline">colspan="2"</code> ni <code class="inline">colspan="3"</code> ga o'zgartirib, "Baho" ustuni g'oyib bo'lib ketishini kuzating — shu orqali colspan qanchalik ehtiyotkorlik talab qilishini his qilasiz.</p>
+  </div>
+</section>
+
+<!-- ===== 11 ===== -->
+<section class="slide">
+  <span class="eyebrow">Xatolar</span>
+  <h2>Jadval qurishda ko'p uchraydigan xatolar</h2>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th style="width:28%">Xato</th><th style="width:36%">Nima bo'ladi</th><th>Yechim</th></tr>
+      <tr>
+        <td><b>Yopilmagan <code>&lt;/tr&gt;</code></b></td>
+        <td>Brauzer jadvalni o'zicha "tuzatishga" harakat qiladi, natijada qatorlar noto'g'ri joyda tugaydi yoki birlashadi</td>
+        <td>Har bir <code>&lt;tr&gt;</code>ni ochgach, darhol <code>&lt;/tr&gt;</code>sini yozing</td>
+      </tr>
+      <tr>
+        <td><b>colspan/rowspan jami mos kelmaydi</b></td>
+        <td>Ustunlar bir-biriga tekislanmaydi, jadval "sirg'alib" ko'rinadi</td>
+        <td>Har bir qatordagi ustunlar yig'indisini boshqa qatorlar bilan solishtirib chiqing</td>
+      </tr>
+      <tr>
+        <td><b><code>&lt;th&gt;</code> o'rniga hammasi <code>&lt;td&gt;</code></b></td>
+        <td>Sarlavha qatori vizual va semantik jihatdan ajralib turmaydi</td>
+        <td>Ustun nomlari — <code>th</code>, ma'lumot — <code>td</code></td>
+      </tr>
+      <tr>
+        <td><b>Jadvalni sahifa maketi uchun ishlatish</b></td>
+        <td>Kod o'qib bo'lmas darajada murakkablashadi, ekran o'quvchi dasturlar chalkashadi, telefon ekraniga moslashmaydi</td>
+        <td>Maket — CSS'ning ishi (keyingi darslarda). Jadval faqat haqiqiy qator+ustun ma'lumoti uchun</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="note bad">
+    <span class="note-t">Tarixiy ogohlantirish</span>
+    <p>1990–2000-yillarda dasturchilar butun sahifa maketini (header, menyu, ustunlar) <code class="inline">&lt;table&gt;</code> yordamida qurishgan — CSS hali yetarlicha rivojlanmagan edi. Bugungi kunda bu — <b>kechirilmaydigan xato</b> hisoblanadi. Jadval — faqat ma'lumot uchun, maket uchun emas.</p>
+  </div>
+</section>
+
+<!-- ===== 12 ===== -->
+<section class="slide">
+  <span class="eyebrow">Eng yaxshi amaliyot</span>
+  <h2>Professional jadval yozish odatlari</h2>
+
+  <div class="cols">
+    <div>
+      <h3>Har doim shunday qiling</h3>
+      <ul>
+        <li>Jadvalga <code class="inline">&lt;caption&gt;</code> orqali nom bering — foydalanuvchi va ekran o'quvchi dastur uchun tushunarli bo'ladi.</li>
+        <li>Strukturani <code class="inline">thead</code>/<code class="inline">tbody</code>/<code class="inline">tfoot</code> ga bo'ling — kod o'qilishi osonlashadi.</li>
+        <li>Sarlavha uchun <code class="inline">th</code>, ma'lumot uchun <code class="inline">td</code> ishlating.</li>
+        <li>colspan/rowspan qo'shgach, o'sha qatordagi ustunlar yig'indisini qayta tekshiring.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Hech qachon shunday qilmang</h3>
+      <ul>
+        <li>Jadvalni sahifa maketi (header, sidebar, kolonkalar) uchun ishlatmang.</li>
+        <li>Bo'sh <code class="inline">&lt;td&gt;&lt;/td&gt;</code> orqali "joy to'ldirish" qilmang.</li>
+        <li><code class="inline">&lt;tr&gt;</code> ichiga to'g'ridan-to'g'ri matn yozmang — u albatta <code class="inline">th</code>/<code class="inline">td</code> ichida bo'lishi kerak.</li>
+      </ul>
+      <div class="note tip">
+        <span class="note-t">Eslab qoling</span>
+        <p>Savol bering: "Bu ma'lumot qator+ustun shaklidami?" Ha bo'lsa — jadval. Yo'q bo'lsa (masalan sahifa bo'limlarini joylashtirish) — bu CSS'ning ishi.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 13 ===== -->
+<section class="slide">
+  <span class="eyebrow">Amaliy vazifa</span>
+  <h2>Uyga vazifa</h2>
+
+  <div class="task">
+    <h4><span class="n">1</span> Murakkab jadval tuzing</h4>
+    <p>Ikkita variantdan birini tanlang:</p>
+    <ol>
+      <li><b>Variant A — Baholash jadvali:</b> o'z guruhingiz uchun bir nechta fan, bir nechta talaba va o'rtacha ball qatori bilan.</li>
+      <li><b>Variant B — Narxnoma:</b> biror do'kon uchun mahsulot nomi, o'lchamlari va narxlari bilan (bugungi darsdagi futbolka misoli kabi).</li>
+    </ol>
+    <p>Namuna sifatida darsda ko'rgan ikkita jadvaldan (baholar yoki narxnoma) birini asos qilib oling, lekin o'zingizning ma'lumotlaringiz bilan to'ldiring.</p>
+    <div class="crit">
+      <b>Baholash mezoni:</b> jadval to'g'ri tuzilmaga ega (<code class="inline">table</code> ichida <code class="inline">thead</code>, <code class="inline">tbody</code>, ixtiyoriy <code class="inline">tfoot</code>) · <code class="inline">caption</code> orqali jadvalga nom berilgan · sarlavha qatorida <code class="inline">th</code>, ma'lumot qatorlarida <code class="inline">td</code> to'g'ri ishlatilgan · kamida bitta <code class="inline">colspan</code> yoki <code class="inline">rowspan</code> ishlatilgan va jadval "sirg'almagan" · <code class="inline">border</code>, <code class="inline">cellpadding</code> atributlari qo'llanilgan, jadval brauzerda tartibli ko'rinadi.
+    </div>
+  </div>
+</section>
+
+<!-- ===== 14 ===== -->
+<section class="slide">
+  <span class="eyebrow">Yakun</span>
+  <h2>Xulosa</h2>
+
+  <div class="recap">
+    <div><b>table = konteyner</b>Butun jadval shu tegning ichida, caption/thead/tbody/tfoot shu yerda joylashadi.</div>
+    <div><b>th = sarlavha, td = ma'lumot</b>Ustun nomlari uchun har doim th, qiymatlar uchun td.</div>
+    <div><b>border/cellpadding/cellspacing/align — legacy</b>Ishlaydi, lekin zamonaviy loyihalarda ularning o'rnini CSS egallaydi.</div>
+    <div><b>colspan — ustunlarni birlashtiradi</b>Gorizontal yo'nalishda, bir necha ustun o'rnini egallaydi.</div>
+    <div><b>rowspan — qatorlarni birlashtiradi</b>Vertikal yo'nalishda, bir necha qator o'rnini egallaydi.</div>
+    <div><b>Jadval — faqat ma'lumot uchun</b>Sahifa maketi (header, kolonkalar) uchun emas — bu CSS'ning ishi.</div>
+  </div>
+
+  <h3 style="margin-top:30px">Savol-javob</h3>
+  <div class="quiz">
+    <div class="q">
+      <p>1. <code class="inline">&lt;th&gt;</code> va <code class="inline">&lt;td&gt;</code> orasidagi farq nima?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans"><code>th</code> (table header) — sarlavha katagi, matni qalin va markazlashtirilgan chiqadi, odatda ustun nomlari uchun ishlatiladi. <code>td</code> (table data) — oddiy ma'lumot katagi, asosiy qiymatlar uchun.</div>
+    </div>
+    <div class="q">
+      <p>2. Nega professional yozuvda <code class="inline">&lt;table&gt;</code> ichida to'g'ridan-to'g'ri <code class="inline">&lt;tr&gt;</code> emas, <code class="inline">&lt;thead&gt;</code>/<code class="inline">&lt;tbody&gt;</code> ishlatiladi?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">Bu jadvalni mantiqiy qismlarga (bosh, tana, oyoq) ajratadi — kodni o'qish osonlashadi va brauzer/ekran o'quvchi dasturlar jadval qismlarini aniq ajrata oladi.</div>
+    </div>
+    <div class="q">
+      <p>3. <code class="inline">cellpadding</code> va <code class="inline">cellspacing</code> orasidagi farq nima?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans"><code>cellpadding</code> — katak ICHIDAGI bo'shliq (matn bilan chegara orasida). <code>cellspacing</code> — kataklar O'RTASIDAGI bo'shliq (bitta katak bilan boshqasi orasida).</div>
+    </div>
+    <div class="q">
+      <p>4. Agar bir qatorda <code class="inline">colspan="2"</code> ishlatilgan bo'lsa, o'sha qatordagi qolgan <code class="inline">&lt;td&gt;</code> lar sonini nega kamaytirish kerak?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">Chunki colspan="2" allaqachon 2 ta ustun o'rnini egallagan. Agar boshqa td'lar soni kamaytirilmasa, o'sha qatordagi umumiy ustunlar soni boshqa qatorlarga mos kelmay, jadval "sirg'alib" ketadi.</div>
+    </div>
+    <div class="q">
+      <p>5. Nega jadvalni sahifa maketi (header, kolonkalar) uchun ishlatish xato hisoblanadi?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">Jadval faqat qator+ustun shaklidagi ma'lumot uchun mo'ljallangan. Uni maket uchun ishlatish kodni murakkablashtiradi, ekran o'quvchi dasturlarni chalkashtiradi va telefon ekraniga moslashtirishni qiyinlashtiradi — bu ish CSS'ning vazifasi.</div>
+    </div>
+  </div>
+
+  <div class="note tip">
+    <span class="note-t">Keyingi darsga ko'prik</span>
+    <p>Bugun jadvalni bezash uchun <code class="inline">border</code>, <code class="inline">cellpadding</code> kabi HTML atributlaridan foydalandik. Bu usul ishlaydi, lekin zamonaviy dasturchilar buni CSS orqali qilishadi — ancha kuchliroq va moslashuvchan usul bilan. Hozirgacha yozgan HTML sahifalarimiz "yalang'och qorabayoq" edi — keyingi darsda ularni rang-barang va professional ko'rinishga keltirishni boshlaymiz.</p>
+  </div>
+
+  <div class="lesson-jump">
+    <a href="../02-html-struktura-media/index.html"><b>Oldingi modul</b><span>← 02-modul: HTML Struktura, Media va Havolalar</span></a>
+    <a href="../04-css-kirish/index.html"><b>Keyingi modul</b><span>04-modul: CSS ga kirish va Selektorlar →</span></a>
+  </div>
+</section>
+
+</main>
+
+<div class="deck-nav">
+  <button data-prev type="button" title="Oldingi (←)">‹</button>
+  <span class="hint">← → varaqlash · <kbd>O</kbd> ro'yxat · <kbd>F</kbd> to'liq ekran</span>
+  <button data-next type="button" title="Keyingi (→)">›</button>
+</div>
+
+<div class="deck-overview"><h3>Slaydlar ro'yxati</h3><div class="ov-grid"></div></div>
+
+<script src="../assets/js/deck.js"></script>
+</body>
+</html>

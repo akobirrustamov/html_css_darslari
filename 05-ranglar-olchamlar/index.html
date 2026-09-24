@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="uz" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>05-modul · CSS Ranglar va O'lchamlar bilan ishlash</title>
+<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body class="deck" data-lesson="5">
+
+<div class="deck-bar">
+  <a class="home" href="../index.html">← Kurs</a>
+  <span class="title">05-modul · CSS Ranglar va O'lchamlar bilan ishlash</span>
+  <span class="spacer"></span>
+  <div class="deck-tools">
+    <button class="tool" data-overview type="button" title="Slaydlar ro'yxati (O)">☰</button>
+    <button class="tool" data-theme-toggle type="button" title="Mavzu">☾</button>
+    <span class="counter">1 / 14</span>
+  </div>
+</div>
+<div class="deck-progress"></div>
+
+<main class="deck-stage">
+
+<!-- ===== 1 ===== -->
+<section class="slide cover">
+  <div class="lesson-no">05-modul</div>
+  <h1>CSS Ranglar va O'lchamlar:<br>sahifangizga aniq shakl bering</h1>
+  <p>Tasavvur qiling: dizayner sizga tugmaning rangini <b>#3498db</b> deb yubordi, lekin siz faqat <code class="inline">red</code>, <code class="inline">blue</code> kabi nomli ranglarni bilasiz. Yoki elementga <code class="inline">width: 300px</code> berdingiz — kompyuterda chiroyli, telefonda esa ekrandan chiqib ketyapti. Bugun ikkala muammoni ham hal qilamiz.</p>
+  <div class="cover-plan">
+    <div><b>Reja 1</b>Rang berish formatlari — nomli, HEX</div>
+    <div><b>Reja 2</b>RGB va RGBA — shaffoflik (transparency)</div>
+    <div><b>Reja 3</b>O'lcham birliklari — px, %, em, rem</div>
+    <div><b>Reja 4</b>Viewport birliklari — vh, vw</div>
+    <div><b>Reja 5</b>Amaliyot — rangli va turli o'lchamli kartochkalar</div>
+  </div>
+</section>
+
+<!-- ===== 2 ===== -->
+<section class="slide">
+  <span class="eyebrow">Maqsad</span>
+  <h2>Dars oxirida siz nima qila olasiz</h2>
+  <p class="big">Bu darsdan keyin siz CSS'da rangni to'rt xil usulda (nomli, HEX, RGB, RGBA) bera olasiz va kontekstga qarab to'g'ri o'lchov birligini (px, %, em, rem, vh, vw) tanlab ishlata olasiz.</p>
+  <div class="cardset">
+    <div class="card">
+      <span class="ico">🎨</span>
+      <h4>Ranglaysiz</h4>
+      <p>Nomli rang, HEX va RGB — bir xil rangni yozishning uch xil usulini.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🔍</span>
+      <h4>Shaffof qilasiz</h4>
+      <p><code class="inline">rgba()</code> yordamida yarim shaffof fon va qoplamalar yasashni.</p>
+    </div>
+    <div class="card">
+      <span class="ico">📏</span>
+      <h4>O'lchaysiz</h4>
+      <p><code class="inline">px</code>, <code class="inline">%</code>, <code class="inline">em</code>, <code class="inline">rem</code> orasidagi farqni va qachon qaysi birini ishlatishni.</p>
+    </div>
+    <div class="card">
+      <span class="ico">📱</span>
+      <h4>Moslashtirasiz</h4>
+      <p><code class="inline">vh</code>/<code class="inline">vw</code> bilan butun ekranni egallovchi bo'limlar yasashni.</p>
+    </div>
+  </div>
+  <div class="note tip">
+    <span class="note-t">Bu darsning tuzilishi</span>
+    <p>Avval ranglarni, keyin o'lchamlarni ko'ramiz. Ikkalasida ham jonli mashq bor — qiymatni o'zgartiring, natijani darhol ko'ring.</p>
+  </div>
+</section>
+
+<!-- ===== 3 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 1 · Nazariya</span>
+  <h2>Ranglarni CSS'da qanday yozamiz</h2>
+  <p>CSS'da rangni bir nechta usulda ko'rsatish mumkin, va har birining o'z o'rni bor. Birinchi ikkitasi — eng oddiylari.</p>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th>Format</th><th>Yozilishi</th><th>Izoh</th></tr>
+      <tr><td><b>Nomli (keyword)</b></td><td><code>red</code>, <code>blue</code>, <code>orange</code></td><td>Taxminan 140 ta oldindan tayyor nom. Eng oson usul, lekin aniq soyani (masalan «biroz to'qroq ko'k») tanlay olmaysiz.</td></tr>
+      <tr><td><b>HEX</b></td><td><code>#RRGGBB</code>, masalan <code>#3498db</code></td><td>Dizaynerlar deyarli har doim shu formatda beradi. <code>#</code>dan keyin 6 ta belgi: birinchi ikkitasi qizil (Red), keyingisi yashil (Green), oxirgisi ko'k (Blue) — <code>00</code>dan <code>FF</code>gacha (16-lik sanoq sistemasida 0–255).</td></tr>
+    </table>
+  </div>
+
+  <div class="note">
+    <span class="note-t">Analogiya</span>
+    <p>Har qanday rang aslida uchta lampaning — qizil, yashil, ko'k lampaning — turli quvvatda yonishidan hosil bo'ladi. Barchasi to'liq yonsa — oq, barchasi o'chiq bo'lsa — qora rang chiqadi.</p>
+  </div>
+
+<pre class="code" data-lang="css" data-label="style.css"><code>.card-red {
+  background-color: red; /* keyword - nomli rang */
+}
+
+.card-hex {
+  background-color: #3498db; /* HEX - dizaynerlar shu formatda beradi */
+}</code></pre>
+
+  <div class="note warn">
+    <span class="note-t">Ko'p adashiladigan joy</span>
+    <p>HEX kodda <code class="inline">#</code> belgisini yozishni unutib qo'yishadi — <code class="inline">background-color: 3498db;</code> ishlamaydi, chunki bu son emas, rang kodi ekanini brauzer <code class="inline">#</code>siz tushunmaydi.</p>
+  </div>
+</section>
+
+<!-- ===== 4 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 1 · Asosiy</span>
+  <h2>RGB va RGBA — sonlar bilan rang berish</h2>
+  <p>Uchinchisi — RGB format: xuddi HEX'dagi tamoyil, lekin o'nlik sonlar bilan yoziladi. To'rtinchisi — RGBA: RGB'ga to'rtinchi parametr, <b>alpha</b> (shaffoflik), qo'shiladi.</p>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th>Format</th><th>Yozilishi</th><th>Izoh</th></tr>
+      <tr><td><b>RGB</b></td><td><code>rgb(52, 152, 219)</code></td><td>Qizil, yashil, ko'k — har biri 0–255 oralig'ida. HEX bilan RGB — bir xil rangni ikki xil yozish usuli, xolos.</td></tr>
+      <tr><td><b>RGBA</b></td><td><code>rgba(52, 152, 219, 0.5)</code></td><td>To'rtinchi qiymat — alpha: <code>0</code> (butunlay ko'rinmas) dan <code>1</code> (to'liq tiniq) gacha. Overlay effektlar, shaffof fonlar yasashda ko'p ishlatiladi.</td></tr>
+    </table>
+  </div>
+
+<pre class="code" data-lang="css" data-label="style.css"><code>.card-rgb {
+  background-color: rgb(52, 152, 219); /* xuddi #3498db, boshqa yozuv */
+}
+
+.card-rgba {
+  background-color: rgba(52, 152, 219, 0.5); /* 50% shaffof */
+}</code></pre>
+
+  <div class="note warn">
+    <span class="note-t">Ko'p adashiladigan joy</span>
+    <p>RGB'da qavs ichidagi ranglar tartibini chalkashtirib yuborishadi — tartib doim <b>qizil, yashil, ko'k</b> (R, G, B). Shuningdek <code class="inline">rgba()</code>ga faqat 3 ta qiymat berib, alphani unutib qo'yishadi — natijada shaffoflik ishlamaydi.</p>
+  </div>
+</section>
+
+<!-- ===== 5 ===== -->
+<section class="slide">
+  <span class="eyebrow">Jonli mashq</span>
+  <h2>RGBA bilan shaffoflikni sinab ko'ring</h2>
+  <p>Pastda to'rtta kartochka — nomli, HEX, RGB va RGBA rangda. <code class="inline">rgba()</code> dagi oxirgi sonni (0 dan 1 gacha) o'zgartirib, shaffoflik qanday ishlashini kuzating.</p>
+
+  <div class="live stack">
+    <div class="live-head">
+      <span class="dot"></span> ranglar.html
+      <span class="sp"></span>
+      <button class="live-reset" type="button">↺ Qayta</button>
+    </div>
+    <div class="live-body">
+      <div class="live-editor">
+<textarea spellcheck="false">
+<style>
+  body { background-color: #eef0f7; font-family: Arial, sans-serif; padding: 10px; }
+
+  .card-red, .card-hex, .card-rgb, .card-rgba {
+    color: #ffffff;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+  }
+
+  .card-red  { background-color: red; }
+  .card-hex  { background-color: #3498db; }
+  .card-rgb  { background-color: rgb(52, 152, 219); }
+  .card-rgba { background-color: rgba(52, 152, 219, 0.5); }
+</style>
+
+<div class="card-red">Nomli rang — red</div>
+<div class="card-hex">HEX rang — #3498db</div>
+<div class="card-rgb">RGB rang — rgb(52, 152, 219)</div>
+<div class="card-rgba">RGBA shaffof — rgba(52, 152, 219, 0.5)</div>
+</textarea>
+      </div>
+      <div class="live-preview"><iframe title="Natija"></iframe></div>
+    </div>
+  </div>
+
+  <div class="note tip">
+    <span class="note-t">Sinab ko'ring</span>
+    <p><code class="inline">rgba(52, 152, 219, 0.5)</code> dagi <code class="inline">0.5</code> ni <code class="inline">0.1</code> ga o'zgartiring — kartochka orqa fonga (<code class="inline">#eef0f7</code>) deyarli qo'shilib ketadi. <code class="inline">1</code> ga o'zgartirsangiz — <code class="inline">.card-rgb</code> bilan bir xil to'liq tiniq rangga aylanadi.</p>
+  </div>
+</section>
+
+<!-- ===== 6 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 2 · Nazariya</span>
+  <h2>O'lcham birliklari: <code class="inline">px</code> va <code class="inline">%</code></h2>
+  <p>Rangni o'rgandik, endi element qanchalik katta bo'lishini ham ko'rsatish kerak. Buning uchun turli o'lchov birliklari bor, va har birining o'z vazifasi bor.</p>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th>Birlik</th><th>Nimaga nisbatan hisoblanadi</th><th>Izoh</th></tr>
+      <tr><td><code>px</code> (piksel)</td><td>Hech nimaga — mutlaq (absolute) qiymat</td><td>Eng oddiy birlik, ekrandagi aniq nuqta. Muammosi: barcha qurilmalarda bir xil o'lchamda qoladi, ya'ni moslashuvchan (responsive) emas.</td></tr>
+      <tr><td><code>%</code> (foiz)</td><td>Ota elementga (parent)</td><td><code>width: 50%</code> — ota elementning yarmini egallaydi. Ota element o'zgarsa, bola ham avtomatik moslashadi.</td></tr>
+    </table>
+  </div>
+
+<pre class="code" data-lang="css" data-label="style.css"><code>html {
+  font-size: 16px; /* rem shu songa asoslanib hisoblanadi */
+}
+
+.box-px {
+  width: 300px; /* mutlaq, hamma joyda bir xil */
+}
+
+.box-percent {
+  width: 50%; /* ota elementning yarmi */
+}</code></pre>
+</section>
+
+<!-- ===== 7 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 2 · Davomi</span>
+  <h2>O'lcham birliklari: <code class="inline">em</code> va <code class="inline">rem</code></h2>
+  <p><code class="inline">em</code> va <code class="inline">rem</code> ikkalasi ham shriftga bog'liq "lineyka" sifatida ishlaydi, lekin bir-biridan muhim jihati bilan farq qiladi.</p>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th>Birlik</th><th>Nimaga nisbatan hisoblanadi</th><th>Izoh</th></tr>
+      <tr><td><code>em</code></td><td>Joriy elementning shrift o'lchamiga (font-size)</td><td><code>1em</code> — joriy <code>font-size</code> bilan teng. Muammosi: ichma-ich (nested) elementlarda bir-biriga qo'shilib, kutilmagan katta yoki kichik o'lchamlar chiqishi mumkin (compounding effect).</td></tr>
+      <tr><td><code>rem</code> (root em)</td><td>Faqat eng tepadagi <code>html</code> elementining shrift o'lchamiga (odatda 16px)</td><td>Nechta ichma-ich element bo'lishidan qat'i nazar, hisob-kitob har doim bir xil — shuning uchun <code>em</code>ga qaraganda ko'proq tavsiya etiladi.</td></tr>
+    </table>
+  </div>
+
+<pre class="code" data-lang="css" data-label="style.css"><code>.box-em {
+  font-size: 1.5em; /* joriy elementning shrift o'lchamidan 1.5 barobar */
+}
+
+.box-rem {
+  font-size: 1.5rem; /* root (html) shrift o'lchamidan 1.5 barobar, ya'ni 24px */
+}</code></pre>
+
+  <div class="note warn">
+    <span class="note-t">Ko'p adashiladigan joy</span>
+    <p><code class="inline">em</code>dan foydalanganda, bitta elementni boshqasining ichiga joylashtirib, natijada kutilganidan ancha katta yoki kichik shrift chiqib qolishi — bu <code class="inline">em</code>ning nested elementlarda "qo'shilib ketishi" tufayli yuz beradi. Shu sababli katta loyihalarda ko'pincha <code class="inline">rem</code> afzal ko'riladi.</p>
+  </div>
+</section>
+
+<!-- ===== 8 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 2 · Davomi</span>
+  <h2>Viewport birliklari: <code class="inline">vh</code> va <code class="inline">vw</code></h2>
+  <p><code class="inline">vh</code>/<code class="inline">vw</code> (viewport height/width) — butun ekran balandligi yoki kengligining foizi. Bu holatda "lineyka" bo'lib ekranning o'zi ishlaydi.</p>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th>Birlik</th><th>Nimaga nisbatan hisoblanadi</th><th>Izoh</th></tr>
+      <tr><td><code>vh</code></td><td>Ekran (viewport) balandligining foizi</td><td><code>100vh</code> — butun ekran balandligi.</td></tr>
+      <tr><td><code>vw</code></td><td>Ekran (viewport) kengligining foizi</td><td><code>100vw</code> — butun ekran kengligi.</td></tr>
+    </table>
+  </div>
+
+<pre class="code" data-lang="css" data-label="style.css"><code>.hero {
+  width: 100vw;
+  height: 100vh; /* butun ekranni egallaydi */
+}</code></pre>
+
+  <div class="note tip">
+    <span class="note-t">Qachon ishlatiladi</span>
+    <p>Bu, masalan, ekranni to'liq egallovchi katta bo'limlar (hero section) yasashda juda foydali. Oddiy tarzda tushuntirish uchun: <code class="inline">em</code>/<code class="inline">rem</code> — shriftga bog'liq lineyka, <code class="inline">vh</code>/<code class="inline">vw</code> esa — ekranning o'zi lineyka bo'lib ishlaydigan birlik.</p>
+  </div>
+</section>
+
+<!-- ===== 9 ===== -->
+<section class="slide">
+  <span class="eyebrow">Jonli mashq</span>
+  <h2>Ranglar va o'lchamlarni birlashtiring</h2>
+  <p>Pastdagi kartochkada kenglik <code class="inline">px</code>da, sarlavha shrifti <code class="inline">rem</code>da, ichki matn kengligi <code class="inline">%</code>da, qoplama esa <code class="inline">rgba()</code> bilan berilgan. Qiymatlarni o'zgartirib sinab ko'ring.</p>
+
+  <div class="live">
+    <div class="live-head">
+      <span class="dot"></span> kartochka.html
+      <span class="sp"></span>
+      <button class="live-reset" type="button">↺ Qayta</button>
+    </div>
+    <div class="live-body">
+      <div class="live-editor">
+<textarea spellcheck="false">
+<style>
+  html { font-size: 16px; }
+  * { box-sizing: border-box; }
+  body { font-family: Arial, sans-serif; background: #f5f6fa; padding: 20px; }
+
+  .karta {
+    width: 300px; /* px - qat'iy kenglik */
+    background-color: #ffffff;
+    border: 1px solid #dfe3ec;
+    border-radius: 14px;
+    padding: 20px;
+    margin: 0 auto;
+  }
+
+  .karta h3 {
+    font-size: 1.5rem; /* root shrift o'lchamidan 1.5 barobar, ya'ni 24px */
+    margin: 0 0 8px;
+    color: #16181d;
+  }
+
+  .karta .matn {
+    width: 90%; /* ota elementga (karta) nisbatan foiz */
+    font-size: 1em; /* joriy elementning shrift o'lchami */
+    color: #4a5060;
+  }
+
+  .qoplama {
+    background-color: rgba(47, 92, 255, 0.15); /* shaffof qoplama */
+    padding: 10px;
+    margin-top: 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: #2f5cff;
+  }
+</style>
+
+<div class="karta">
+  <h3>Kurs kartochkasi</h3>
+  <p class="matn">Kenglik — px, sarlavha — rem, matn kengligi — %.</p>
+  <div class="qoplama">rgba() bilan yarim shaffof qoplama</div>
+</div>
+</textarea>
+      </div>
+      <div class="live-preview"><iframe title="Natija"></iframe></div>
+    </div>
+  </div>
+
+  <div class="note tip">
+    <span class="note-t">Sinab ko'ring</span>
+    <p><code class="inline">width: 300px</code> ni <code class="inline">width: 90%</code> ga o'zgartiring — brauzer oynasini kichraytirganda karta qanday moslashishini kuzating. So'ng <code class="inline">rgba(47, 92, 255, 0.15)</code> dagi oxirgi sonni <code class="inline">0.6</code> ga oshirib ko'ring.</p>
+  </div>
+</section>
+
+<!-- ===== 10 ===== -->
+<section class="slide">
+  <span class="eyebrow">Xatolar</span>
+  <h2>Ranglar va o'lchamlarda eng ko'p uchraydigan xatolar</h2>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th style="width:26%">Xato</th><th style="width:37%">Nima bo'ladi</th><th>Yechim</th></tr>
+      <tr>
+        <td><b>HEX'da <code>#</code> unutilgan</b></td>
+        <td><code>background-color: 3498db;</code> ishlamaydi</td>
+        <td>HEX qiymat har doim <code>#</code> bilan boshlanishi kerak: <code>#3498db</code></td>
+      </tr>
+      <tr>
+        <td><b>RGB'da rang tartibi chalkashtiriladi</b></td>
+        <td>Kutilmagan rang chiqadi</td>
+        <td>Tartib doim: qizil, yashil, ko'k — <code>rgb(R, G, B)</code></td>
+      </tr>
+      <tr>
+        <td><b><code>rgba()</code>ga 4-qiymat (alpha) unutiladi</b></td>
+        <td>Shaffoflik berilmaydi yoki qoida ishlamaydi</td>
+        <td><code>rgba(r, g, b, alpha)</code> — har doim 4 ta qiymat, oxirgisi 0–1 oralig'ida</td>
+      </tr>
+      <tr>
+        <td><b><code>em</code> va <code>rem</code> chalkashtiriladi</b></td>
+        <td>Ichma-ich elementlarda shrift kutilganidan ancha katta/kichik chiqadi</td>
+        <td>Root'ga bog'liq, barqaror hisob kerak bo'lsa — <code>rem</code> ishlating</td>
+      </tr>
+      <tr>
+        <td><b>Hamma joyda faqat <code>px</code> ishlatiladi</b></td>
+        <td>Sahifa turli ekran o'lchamlarida (masalan telefonda) moslashmay qoladi</td>
+        <td>Kontekstga qarab <code>%</code>, <code>rem</code>, <code>vh</code>/<code>vw</code>dan ham foydalaning</td>
+      </tr>
+    </table>
+  </div>
+</section>
+
+<!-- ===== 11 ===== -->
+<section class="slide">
+  <span class="eyebrow">Best practice</span>
+  <h2>Qaysi vaziyatda qaysi birlikni tanlash kerak</h2>
+
+  <div class="vs">
+    <div class="ok">
+      <div class="vs-h">✓ TAVSIYA ETILADI</div>
+<pre class="code" data-lang="css"><code>.karta {
+  border: 1px solid #dfe3ec; /* px - kichik, qat'iy qiymat */
+  width: 90%;                /* % - moslashuvchan kenglik */
+}
+
+.karta h3 {
+  font-size: 1.5rem;         /* rem - shriftga barqaror */
+}
+
+.hero {
+  height: 100vh;             /* vh - to'liq ekran bo'limi */
+}</code></pre>
+      <p>Har bir birlik o'z vazifasida: chegara va kichik detallar uchun <code class="inline">px</code>, moslashuvchan kengliklar uchun <code class="inline">%</code>, shrift ierarxiyasi uchun <code class="inline">rem</code>, to'liq ekran bo'limlari uchun <code class="inline">vh</code>/<code class="inline">vw</code>.</p>
+    </div>
+    <div class="no">
+      <div class="vs-h">✗ TAVSIYA ETILMAYDI</div>
+<pre class="code" data-lang="css"><code>.karta {
+  width: 300px;
+  border: 1px solid #dfe3ec;
+}
+
+.karta h3 {
+  font-size: 24px;
+}
+
+.hero {
+  height: 800px;
+}</code></pre>
+      <p>Hammasi <code class="inline">px</code>da — kichik ekranda karta ekrandan chiqib ketadi, hero bo'limi esa har bir monitorda boshqacha nisbatda ko'rinadi.</p>
+    </div>
+  </div>
+
+  <div class="note tip">
+    <span class="note-t">Oltin qoida</span>
+    <p>O'lchamni tanlashdan oldin savol bering: "bu qiymat ota elementga, shriftga yoki ekranning o'ziga bog'liq bo'lishi kerakmi?" Javobga qarab <code class="inline">%</code>, <code class="inline">rem</code> yoki <code class="inline">vh</code>/<code class="inline">vw</code> tanlang — faqat haqiqatan o'zgarmasligi kerak bo'lgan joyda (masalan ingichka chegara chizig'i) <code class="inline">px</code> qoldiring.</p>
+  </div>
+</section>
+
+<!-- ===== 12 ===== -->
+<section class="slide">
+  <span class="eyebrow">Amaliy vazifa</span>
+  <h2>Uyga vazifa — vizual kartochkalar</h2>
+
+  <div class="task">
+    <h4><span class="n">1</span> Rangli bloklar va matnlardan iborat vizual kartochkalar</h4>
+    <ol>
+      <li>Kamida <b>3 ta kartochka</b> (<code class="inline">&lt;div class="karta"&gt;</code>) yasang.</li>
+      <li>Birinchi kartochkada — <b>nomli rang</b>, ikkinchisida — <b>HEX</b>, uchinchisida — <b>RGBA</b> yordamida shaffof overlay ishlatilgan bo'lsin.</li>
+      <li>Kartochkalarning o'lchamlarini bera turib, kamida <b>3 xil o'lchov birligidan</b> foydalaning — masalan <code class="inline">px</code> bilan kenglik, <code class="inline">%</code> bilan ichki matn kengligi, <code class="inline">rem</code> bilan shrift o'lchami.</li>
+      <li>Namuna sifatida darsda ko'rgan kartochkani asos qilib oling: fon rangi HEX'da, sarlavha <code class="inline">rem</code>da, kartochka kengligi <code class="inline">px</code>da.</li>
+    </ol>
+    <div class="crit">
+      <b>Bajarilganlik mezoni:</b> kamida 3 xil rang formati ishlatilganmi (nomli, HEX, RGBA) · kamida 3 xil o'lchov birligi ishlatilganmi (masalan px, %, rem) · kartochkalar brauzer oynasini o'zgartirganda ham buzilmay turadimi.
+    </div>
+  </div>
+</section>
+
+<!-- ===== 13 ===== -->
+<section class="slide">
+  <span class="eyebrow">Yakun</span>
+  <h2>Xulosa</h2>
+
+  <div class="recap">
+    <div><b>To'rt xil rang formati</b>Nomli (keyword), HEX (<code>#RRGGBB</code>), RGB (<code>rgb()</code>) va RGBA (<code>rgba()</code> + shaffoflik).</div>
+    <div><b>RGBA — alpha kanal</b>To'rtinchi qiymat 0 (ko'rinmas) dan 1 (tiniq) gacha — overlay va shaffof fonlar uchun.</div>
+    <div><b>px — mutlaq, moslashmaydi</b>Hamma qurilmada bir xil qoladi, shuning uchun hammayerda ishlatilmasligi kerak.</div>
+    <div><b>% — ota elementga bog'liq</b>Ota o'zgarsa, bola ham avtomatik moslashadi.</div>
+    <div><b>em vs rem</b><code>em</code> — joriy elementga, <code>rem</code> — faqat <code>html</code>ga bog'liq va shu sabab barqarorroq.</div>
+    <div><b>vh/vw — ekranga bog'liq</b>Butun ekranni egallovchi bo'limlar (hero) uchun ishlatiladi.</div>
+  </div>
+</section>
+
+<!-- ===== 14 ===== -->
+<section class="slide">
+  <span class="eyebrow">Savol-javob</span>
+  <h2>O'z-o'zini tekshirish</h2>
+
+  <div class="quiz">
+    <div class="q">
+      <p>1. HEX va RGB formatlari o'rtasidagi farq nima?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">Aslida farq yo'q — ikkalasi ham bir xil rangni ifodalaydi, faqat yozuv shakli boshqa. HEX 16-lik sanoq sistemasida (<code>#RRGGBB</code>), RGB esa o'nlik sonlar bilan (<code>rgb(R, G, B)</code>, har biri 0–255) yoziladi.</div>
+    </div>
+    <div class="q">
+      <p>2. <code class="inline">rgba(52, 152, 219, 0.5)</code> dagi oxirgi <code class="inline">0.5</code> nimani anglatadi va uni <code class="inline">0</code> ga o'zgartirsak nima bo'ladi?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">Bu — alpha (shaffoflik) qiymati, 0 dan (butunlay ko'rinmas) 1 gacha (to'liq tiniq) bo'ladi. <code>0</code> ga o'zgartirilsa, element butunlay ko'rinmas bo'lib qoladi.</div>
+    </div>
+    <div class="q">
+      <p>3. <code class="inline">px</code> bilan <code class="inline">%</code> orasidagi asosiy farq nima?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans"><code>px</code> — mutlaq (absolute) qiymat, hamma qurilmada bir xil o'lchamda qoladi. <code>%</code> esa ota elementga (parent) nisbatan hisoblanadi — ota element o'zgarsa, bola ham avtomatik moslashadi.</div>
+    </div>
+    <div class="q">
+      <p>4. <code class="inline">em</code> nima uchun nested (ichma-ich) elementlarda muammoli bo'lishi mumkin, <code class="inline">rem</code> esa yo'q?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans"><code>em</code> joriy elementning shrift o'lchamiga bog'liq, shuning uchun ichma-ich elementlarda har biri o'zidan oldingi qiymatga "qo'shilib" ketaveradi (compounding effect) — natija kutilmagan bo'lishi mumkin. <code>rem</code> esa har doim faqat <code>html</code> elementining shrift o'lchamiga bog'liq, shuning uchun necha qavat ichma-ich bo'lishidan qat'i nazar hisob bir xil qoladi.</div>
+    </div>
+    <div class="q">
+      <p>5. Ekranni to'liq egallovchi hero bo'limi uchun qaysi o'lchov birliklari mos keladi?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans"><code>vh</code> (viewport height) va <code>vw</code> (viewport width). <code>100vh</code> — butun ekran balandligi, <code>100vw</code> — butun ekran kengligi, ya'ni ekranning o'zi "lineyka" bo'lib ishlaydi.</div>
+    </div>
+  </div>
+
+  <div class="lesson-jump">
+    <a href="../04-css-kirish/index.html"><b>Oldingi modul</b><span>← 04-modul: CSS ga kirish va Selektorlar</span></a>
+    <a href="../06-inheritance-object-fit/index.html"><b>Keyingi modul</b><span>06-modul: CSS Inheritance, Object-fit va Retina Display →</span></a>
+  </div>
+</section>
+
+</main>
+
+<div class="deck-nav">
+  <button data-prev type="button" title="Oldingi (←)">‹</button>
+  <span class="hint">← → varaqlash · <kbd>O</kbd> ro'yxat · <kbd>F</kbd> to'liq ekran</span>
+  <button data-next type="button" title="Keyingi (→)">›</button>
+</div>
+
+<div class="deck-overview"><h3>Slaydlar ro'yxati</h3><div class="ov-grid"></div></div>
+
+<script src="../assets/js/deck.js"></script>
+</body>
+</html>

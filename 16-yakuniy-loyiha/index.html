@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="uz" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>16-modul · Yakuniy loyiha (imtihon)</title>
+<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body class="deck" data-lesson="16">
+
+<div class="deck-bar">
+  <a class="home" href="../index.html">← Kurs</a>
+  <span class="title">16-modul · Yakuniy loyiha (imtihon)</span>
+  <span class="spacer"></span>
+  <div class="deck-tools">
+    <button class="tool" data-overview type="button" title="Slaydlar ro'yxati (O)">☰</button>
+    <button class="tool" data-theme-toggle type="button" title="Mavzu">☾</button>
+    <span class="counter">1 / 14</span>
+  </div>
+</div>
+<div class="deck-progress"></div>
+
+<main class="deck-stage">
+
+<!-- ===== 1 ===== -->
+<section class="slide cover">
+  <div class="lesson-no">16-modul · Yakuniy loyiha</div>
+  <h1>Yakuniy loyiha:<br>imtihon vazifasi</h1>
+  <p>Siz <b>15 ta modul</b>ni bosib o'tdingiz — HTML struktura, CSS'ning chuqur imkoniyatlari (display, position, pseudo-klasslar, animatsiyalar, responsive), SCSS va Tailwind (shu jumladan uning flex/grid utility'lari), Figma bilan real ishlash. Endi navbat amaliyotga: hammasini birlashtirib, <b>birinchi to'liq professional loyihangiz</b>ni yaratasiz. Bu — kursning yakuniy imtihoni.</p>
+  <div class="cover-plan">
+    <div><b>Reja 1</b>Loyiha sharti — shaxsiy Figma maket</div>
+    <div><b>Reja 2</b>Texnik talablar va baholash mezonlari</div>
+    <div><b>Reja 3</b>Topshirish jarayoni va muddat</div>
+    <div><b>Reja 4</b>Qayerdan boshlash — amaliy checklist</div>
+    <div><b>Reja 5</b>Junior → Strong Junior yo'l xaritasi va kurs xulosasi</div>
+  </div>
+</section>
+
+<!-- ===== 2 ===== -->
+<section class="slide">
+  <span class="eyebrow">Shart</span>
+  <h2>Har bir talabaga — alohida, shaxsiy loyiha</h2>
+  <p class="big">Yakuniy imtihon uchun har bir talabaga <b>o'ziga xos, individual Figma</b> (dizayn maketi) beriladi. Bu — nusxa ko'chirish yoki qo'shni ekraniga qarab ishlashning oldini olish uchun qilingan: sizning loyihangiz boshqa hech kimnikiga o'xshamaydi.</p>
+  <div class="note warn">
+    <span class="note-t">Muhim</span>
+    <p>Maket — sizniki. Boshqa birovning maketini yoki tayyor kodini ko'chirib olish baholanmaydi. Vazifa — o'sha maketni <b>noldan, o'zingiz</b> kodga aylantirish.</p>
+  </div>
+</section>
+
+<!-- ===== 3 ===== -->
+<section class="slide">
+  <span class="eyebrow">Talablar</span>
+  <h2>Uchta asosiy texnik talab</h2>
+  <p>Loyihangiz quyidagi uchta talabga to'liq javob berishi shart. Ular — bu modulgacha o'rgangan barcha bilimingizning jamlanmasi.</p>
+  <div class="cardset">
+    <div class="card">
+      <span class="ico">🏷️</span>
+      <h4>Semantik HTML5</h4>
+      <p><code class="inline">header</code>, <code class="inline">nav</code>, <code class="inline">main</code>, <code class="inline">section</code>, <code class="inline">article</code>, <code class="inline">footer</code> kabi taglardan to'g'ri, ma'noga qarab foydalaning — ma'nosiz <code class="inline">div</code>larni oshirib yubormang.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🎨</span>
+      <h4>Tailwind CSS yoki SCSS</h4>
+      <p>Uslub (styling) berish uchun ikkalasidan birini (yoki xohlasangiz ikkalasini birga) tanlab ishlating — 12- va 13–14-modullarda o'rgangan texnologiya.</p>
+    </div>
+    <div class="card">
+      <span class="ico">📱</span>
+      <h4>Responsive — 3 qurilma</h4>
+      <p>Loyiha mobil, planshet va desktop qurilmalarida — buzilmasdan, gorizontal skrollsiz — to'g'ri ko'rinishi shart (11-modul).</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 4 ===== -->
+<section class="slide">
+  <span class="eyebrow">Talab #1</span>
+  <h2>Semantik struktura va texnologiya tanlovi</h2>
+  <p>"Ishlayapti" bilan "to'g'ri yozilgan" — ikki xil narsa. Baholashda ikkalasi ham tekshiriladi: teglarning ma'nosi va tanlangan texnologiyaning izchilligi.</p>
+  <div class="cols">
+    <div>
+      <h3>❌ Yomon — "div-soup"</h3>
+<pre class="code" data-lang="html"><code>&lt;div class="top"&gt;
+  &lt;div class="menu"&gt;...&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="content"&gt;...&lt;/div&gt;
+&lt;div class="bottom"&gt;...&lt;/div&gt;</code></pre>
+    </div>
+    <div>
+      <h3>✅ Yaxshi — semantik</h3>
+<pre class="code" data-lang="html"><code>&lt;header&gt;
+  &lt;nav&gt;...&lt;/nav&gt;
+&lt;/header&gt;
+&lt;main&gt;...&lt;/main&gt;
+&lt;footer&gt;...&lt;/footer&gt;</code></pre>
+    </div>
+  </div>
+  <div class="note tip">
+    <span class="note-t">Class nomlanishi ham baholanadi</span>
+    <p>SCSS tanlasangiz — BEM (yoki shunga o'xshash izchil nomlash) qoidasiga rioya qiling. Tailwind tanlasangiz — classlarni mantiqiy tartibda (joylashuv → bo'shliq → rang → holat) yozing va bir xil komponentlarda bir xil strukturani ushlab turing.</p>
+  </div>
+</section>
+
+<!-- ===== 5 ===== -->
+<section class="slide">
+  <span class="eyebrow">Talab #2</span>
+  <h2>Responsive — uchta aniq breakpoint</h2>
+  <p>"Responsive" — mavhum tushuncha emas, aniq uchta o'lcham (breakpoint)da tekshiriladigan mezon. Har bir kenglikda dizayn buzilmasligi, matn siqilib qolmasligi va gorizontal skroll paydo bo'lmasligi shart.</p>
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th style="width:26%">Qurilma</th><th style="width:20%">Kenglik</th><th>Tekshiriladigan narsa</th></tr>
+      <tr><td><b>Mobil</b></td><td>375px</td><td>Bitta ustunli joylashuv, hamburger menyu (agar navbar bo'lsa), matn to'liq o'qiladi</td></tr>
+      <tr><td><b>Planshet</b></td><td>768px</td><td>Oraliq joylashuv — ko'pincha 2 ustunli grid, bo'shliqlar mutanosib</td></tr>
+      <tr><td><b>Desktop</b></td><td>1280px</td><td>To'liq joylashuv, maksimal kenglik (<code class="inline">max-w-*</code>) bilan cheklangan</td></tr>
+    </table>
+  </div>
+  <div class="note tip">
+    <span class="note-t">Amalda</span>
+    <p>Tailwind'da — <code class="inline">grid-cols-1 md:grid-cols-2 lg:grid-cols-3</code> kabi mobile-first prefikslar; SCSS'da — <code class="inline">@media</code> query yoki mixin. Tekshirish uchun DevTools'dagi Device Toolbar (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>M</kbd>) — 01-modul.</p>
+  </div>
+</section>
+
+<!-- ===== 6 ===== -->
+<section class="slide">
+  <span class="eyebrow">Baholash mezoni</span>
+  <h2>Loyiha shu 8 mezon bo'yicha baholanadi</h2>
+  <p>Bu — sub'ektiv "chiroyli ko'rinadimi" emas, har biri alohida tekshiriladigan <b>aniq</b> ro'yxat.</p>
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th style="width:26%">Mezon</th><th>Nima tekshiriladi</th></tr>
+      <tr><td><b>Semantik HTML</b></td><td><code class="inline">header</code>, <code class="inline">main</code>/<code class="inline">section</code>, <code class="inline">footer</code>, <code class="inline">nav</code> — mos joyda, mos tagda</td></tr>
+      <tr><td><b>Figma'ga moslik</b></td><td>O'lcham, rang, shrift, bo'shliqlar maketga (aynan yoki eng yaqin Tailwind qiymati bilan) mos</td></tr>
+      <tr><td><b>3 breakpoint</b></td><td>375 / 768 / 1280px — buzilmasdan, gorizontal skrollsiz, matn siqilmasdan</td></tr>
+      <tr><td><b>Konsolda xatolik yo'q</b></td><td>DevTools → Console'da qizil xato chiqmasligi</td></tr>
+      <tr><td><b>Toza class nomlanishi</b></td><td>BEM (SCSS) yoki mantiqiy tartib (Tailwind), izchil takrorlanadi</td></tr>
+      <tr><td><b>Interaktiv holatlar</b></td><td>Tugma/havolalarda <code class="inline">hover</code>/<code class="inline">focus</code> va silliq <code class="inline">transition</code></td></tr>
+      <tr><td><b>Rasm va assetlar</b></td><td>Har bir rasmda <code class="inline">alt</code> matni, proporsiya <code class="inline">object-fit</code> bilan saqlangan</td></tr>
+      <tr><td><b>Kod tozaligi</b></td><td>Ishlatilmagan element, inline <code class="inline">style</code> qoldig'i yo'q; fayl tuzilishi tartibli</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ===== 7 ===== -->
+<section class="slide">
+  <span class="eyebrow">Topshirish jarayoni</span>
+  <h2>Muddat, tekshiruv va kutilayotgan natija</h2>
+  <p>Loyiha berilgan kundan e'lon qilingan muddatgacha (masalan, 5 kun) tayyor bo'lishi kerak. Oxirgi kunga qoldirmang — ayniqsa responsive tekshiruvga vaqt qoldiring, chunki aksariyat xato aynan shu bosqichda chiqadi.</p>
+  <div class="cols">
+    <div>
+      <h3>Baholash qanday o'tadi</h3>
+      <ul>
+        <li>Har bir mezon (6-slayd) <b>alohida-alohida</b> tekshiriladi</li>
+        <li>"Chiroyli ko'rinyapti" — yetarli emas, DevTools ochib, o'zingiz ham sinab ko'ring</li>
+        <li>Kech topshirish ballarga ta'sir qilishi mumkin</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Nega bu muhim</h3>
+      <p>Bu loyiha — portfolioingizga qo'shiladigan <b>birinchi jiddiy ishlaringizdan biri</b> bo'lishi mumkin. Savol tug'ilsa, darhol so'rang — kutib o'tirmang.</p>
+    </div>
+  </div>
+  <div class="note tip">
+    <span class="note-t">Omad</span>
+    <p>Astoydil ishlang. Har bir bosqichni tugatib, keyingisiga o'ting — hammasini oxirgi kechada qilishga urinish eng ko'p xatoga olib keladi.</p>
+  </div>
+</section>
+
+<!-- ===== 8 ===== -->
+<section class="slide">
+  <span class="eyebrow">Qayerdan boshlash</span>
+  <h2>Papka tuzilishi</h2>
+  <p>Hali bitta teg yozmasdan — loyihani qayerga qurayotganingizni tayyorlab qo'ying. 01-moduldagi nomlash qoidalari (faqat lotin, kichik harf, defis) shu yerda ham amal qiladi.</p>
+<pre class="code" data-lang="html" data-label="papkalar"><code>final-loyiha/
+├── index.html
+├── css/            (yoki scss/)
+│   └── style.css
+├── images/
+│   └── ...          ← optimallashtirilgan rasmlar
+└── README.md        ← ixtiyoriy, loyiha tavsifi</code></pre>
+  <div class="note">
+    <span class="note-t">Tailwind tanlasangiz</span>
+    <p>CDN orqali ulash mumkin (13-modul) — alohida <code class="inline">css/</code> papkasi shart emas, faqat qo'shimcha custom stillar uchun kerak bo'lishi mumkin.</p>
+  </div>
+</section>
+
+<!-- ===== 9 ===== -->
+<section class="slide">
+  <span class="eyebrow">Qayerdan boshlash</span>
+  <h2>Birinchi qadamlar — amaliy tartib</h2>
+  <p>Bu ketma-ketlikni buzmang — har bir bosqich keyingisiga asos bo'ladi (15-modulda mashq qilgan xuddi shu ishchi jarayon).</p>
+  <div class="cols">
+    <div>
+      <h3>1–3. Tayyorgarlik</h3>
+      <ol>
+        <li>Figma maketni oching, har bir bo'limni alohida ko'rib chiqing (15-modul)</li>
+        <li>Ranglar, shriftlar, bo'shliqlarni yozib oling — Tailwind palitrasiga qanday mos kelishini o'ylang</li>
+        <li>Takrorlanadigan bloklarni (kartochka, tugma) <b>komponent</b> sifatida belgilang</li>
+      </ol>
+    </div>
+    <div>
+      <h3>4–6. Qurish</h3>
+      <ol>
+        <li>Avval <b>semantik HTML skelet</b> — hali stilsiz (03-modul)</li>
+        <li>Keyin Tailwind yoki SCSS bilan bosqichma-bosqich stillang</li>
+        <li>Har bo'limdan so'ng darhol 3 breakpoint'da tekshiring (01, 11-modul)</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 10 ===== -->
+<section class="slide">
+  <span class="eyebrow">Yakuniy topshiriq</span>
+  <h2>Vazifa</h2>
+  <div class="task">
+    <h4><span class="n">1</span> Sizga berilgan Figma maketni to'liq kodga aylantiring</h4>
+    <ol>
+      <li>8-slayddagi kabi papka tuzilishini yarating.</li>
+      <li>9-slayddagi tartibda — avval tahlil, so'ng semantik skelet, so'ng stil — ishlang.</li>
+      <li>3-slayddagi uchta talabning barchasini bajaring: semantik HTML5, Tailwind yoki SCSS, 3 qurilmada responsive.</li>
+      <li>6-slayddagi 8 ta mezonning har birini shaxsan tekshiring.</li>
+      <li>Belgilangan muddatda topshiring — 7-slaydda tushuntirilgan tartibda.</li>
+    </ol>
+    <div class="crit">
+      <b>Baholash mezoni:</b> 6-slayddagi barcha 8 mezonga to'liq javob berish · loyiha Figma maketiga (aynan yoki eng yaqin Tailwind qiymati bilan) mos · 375px, 768px va 1280px'da buzilmasdan ko'rinishi · konsolda xatolik yo'qligi.
+    </div>
+  </div>
+</section>
+
+<!-- ===== 11 ===== -->
+<section class="slide">
+  <span class="eyebrow">Topshirishdan oldin</span>
+  <h2>O'z-o'zini tekshirish — qisqa checklist</h2>
+  <p>Topshirishdan oldin quyidagi savollarning har biriga "ha" deb javob bera olishingiz kerak.</p>
+  <div class="note">
+    <span class="note-t">Tezkor o'z-o'zini nazorat</span>
+    <ol>
+      <li>DevTools → Console'da qizil xato chiqmayaptimi?</li>
+      <li>Sahifani 375px, 768px va 1280px'da alohida-alohida sinab ko'rdimmi?</li>
+      <li>Barcha rasmlarda mazmunli <code class="inline">alt</code> matni bormi?</li>
+      <li>Har bir tugma/havolada <code class="inline">hover</code>/<code class="inline">focus</code> holati ishlayaptimi?</li>
+      <li>Class nomlarim (BEM yoki Tailwind tartibi) izchilmi, tasodifiymi?</li>
+      <li>Ishlatilmagan element yoki inline <code class="inline">style</code> qoldig'i qolmadimi?</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ===== 12 ===== -->
+<section class="slide">
+  <span class="eyebrow">Muhim bo'lim</span>
+  <h2>Junior → Strong Junior frontend developer</h2>
+  <p class="big">Bu loyiha — kursning oxiri, lekin sizning yo'lingizning boshlanishi. Siz allaqachon HTML5, CSS'ni chuqur, SCSS va Tailwind'ni, Figma bilan ishlashni bilasiz. Quyidagi qadamlar sizni "Junior"dan "Strong Junior" darajasiga olib chiqadi.</p>
+  <div class="cardset">
+    <div class="card">
+      <span class="ico">⚙️</span>
+      <h4>JavaScript asoslari</h4>
+      <p>HTML/CSS sahifani "jonlantirmaydi" — tugma bosilganda, forma yuborilganda nima bo'lishini JavaScript hal qiladi. Bu — keyingi eng muhim qadam.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🗂️</span>
+      <h4>Git va GitHub</h4>
+      <p>Kod tarixini boshqarish, jamoada ishlash va loyihalarni internetga chiqarishning standart vositasi. Har bir ish beruvchi buni so'raydi.</p>
+    </div>
+    <div class="card">
+      <span class="ico">💼</span>
+      <h4>Portfolio qurish</h4>
+      <p>Shu yakuniy loyihani va yana 3–5 ta real loyihani (klon, shaxsiy g'oya) qiling — har biri turli muammoni yechsin, HTML/CSS/SCSS/Tailwind bilan qurilgan bo'lsin.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🌐</span>
+      <h4>GitHub'ga joylash</h4>
+      <p>Har bir loyihani GitHub'ga yuklang, GitHub Pages yoki Netlify orqali jonli havola qiling — ish beruvchi kodni emas, ishlayotgan saytni ko'rishni yaxshi ko'radi.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🤝</span>
+      <h4>Open-source'ga hissa</h4>
+      <p>Kichik bo'lsa ham — dokumentatsiyani tuzatish, kichik bugni tuzatish. Bu real jamoaviy ish tajribasi sifatida hisoblanadi.</p>
+    </div>
+    <div class="card">
+      <span class="ico">📮</span>
+      <h4>Vakansiyalarga ariza</h4>
+      <p>"Hamma narsani bilib olgach" kutmang — portfolioda 3–4 ta yaxshi loyiha bo'lgach, Junior frontend vakansiyalariga ariza berishni <b>hoziroq</b> boshlang. Amaliyot — eng yaxshi o'qituvchi.</p>
+    </div>
+  </div>
+  <div class="note tip">
+    <span class="note-t">Realistik maslahat</span>
+    <p>Bu ro'yxatning barchasini bir oyda o'zlashtirib bo'lmaydi — va shart ham emas. Har oy bittadan qadam qo'ying, lekin <b>hech qachon to'xtamang</b>. Doimiy, kichik progress — tezlikdan muhimroq.</p>
+  </div>
+</section>
+
+<!-- ===== 13 ===== -->
+<section class="slide">
+  <span class="eyebrow">Yakun</span>
+  <h2>Kurs xulosasi — 15 modulda o'rgangan yo'lingiz</h2>
+  <div class="recap">
+    <div><b>HTML — ma'no</b>Semantik struktura, jadvallar, media va havolalar (02–03-modul).</div>
+    <div><b>CSS asoslari</b>Selektorlar, ranglar, o'lchamlar, inheritance, object-fit (04–06-modul).</div>
+    <div><b>Layout</b>Display, position — har qanday joylashuvni ishonch bilan qura olasiz (07–08-modul).</div>
+    <div><b>Vizual tafsilotlar</b>Pseudo-class/element, gradientlar, transform, transition, animatsiyalar (09–10-modul).</div>
+    <div><b>Responsive dizayn</b>Bitta kod — mobil, planshet, desktopda bir xil ishonchli ishlaydi (11-modul).</div>
+    <div><b>SASS/SCSS</b>Preprosessor bilan tartibli, qayta ishlatiluvchi stil yozish (12-modul).</div>
+    <div><b>Tailwind CSS</b>Tezkor, izchil, komponent asosidagi zamonaviy stillash va adaptiv UI (13–14-modul).</div>
+    <div><b>Figma → kod</b>Real dizaynni tahlil qilib, aniq strukturaga aylantirish (15-modul).</div>
+  </div>
+  <div class="note tip">
+    <span class="note-t">Endi siz shunchaki "HTML biladigan odam" emassiz</span>
+    <p>Siz — dizaynni tahlil qila oladigan, uni to'g'ri strukturaga o'tkaza oladigan, zamonaviy vosita bilan tez va sifatli stillay oladigan, va o'z ishini sinab ko'rib topshira oladigan <b>frontend developer</b>siz.</p>
+  </div>
+</section>
+
+<!-- ===== 14 ===== -->
+<section class="slide">
+  <span class="eyebrow">Tabrik</span>
+  <h2>Kursni yakunladingiz! 🎓</h2>
+  <p class="big">16 ta modul, yuzlab qator kod, o'nlab mashq va nihoyat — o'zingiz boshidan oxirigacha qurgan birinchi to'liq professional loyihangiz. Bu oson yo'l emas edi, va siz uni bosib o'tdingiz.</p>
+  <div class="cardset">
+    <div class="card">
+      <span class="ico">💪</span>
+      <h4>Endi siz bilasiz</h4>
+      <p>Bo'sh papkadan boshlab, professional darajadagi, responsive, Tailwind/SCSS bilan qurilgan real veb-sahifa yaratishni.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🧭</span>
+      <h4>Yo'l davom etadi</h4>
+      <p>12-slayddagi roadmap — JavaScript, Git, portfolio, open-source — sizning keyingi manzilingiz.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🌟</span>
+      <h4>Omad tilaymiz</h4>
+      <p>Har bir Strong Junior — bir vaqtlar shu yerdan, birinchi <code class="inline">&lt;h1&gt;</code>dan boshlagan. Endi navbat sizda.</p>
+    </div>
+  </div>
+
+  <div class="lesson-jump" style="margin-top:26px">
+    <a href="../index.html"><b>Kursni yakunladingiz! 🎓</b><span>← Kurs dasturi</span></a>
+  </div>
+</section>
+
+</main>
+
+<div class="deck-nav">
+  <button data-prev type="button" title="Oldingi (←)">‹</button>
+  <span class="hint">← → varaqlash · <kbd>O</kbd> ro'yxat · <kbd>F</kbd> to'liq ekran</span>
+  <button data-next type="button" title="Keyingi (→)">›</button>
+</div>
+
+<div class="deck-overview"><h3>Slaydlar ro'yxati</h3><div class="ov-grid"></div></div>
+
+<script src="../assets/js/deck.js"></script>
+</body>
+</html>

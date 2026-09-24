@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="uz" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>12-modul · SASS/SCSS preprosessori</title>
+<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body class="deck" data-lesson="12">
+
+<div class="deck-bar">
+  <a class="home" href="../index.html">← Kurs</a>
+  <span class="title">12-modul · SASS/SCSS preprosessori</span>
+  <span class="spacer"></span>
+  <div class="deck-tools">
+    <button class="tool" data-overview type="button" title="Slaydlar ro'yxati (O)">☰</button>
+    <button class="tool" data-theme-toggle type="button" title="Mavzu">☾</button>
+    <span class="counter">1 / 16</span>
+  </div>
+</div>
+<div class="deck-progress"></div>
+
+<main class="deck-stage">
+
+<!-- ===== 1 ===== -->
+<section class="slide cover">
+  <div class="lesson-no">12-modul</div>
+  <h1>SASS/SCSS<br>preprosessori</h1>
+  <p>Oldingi darsda formamiz uchun CSS yozganda, <code class="inline">#4a6cf7</code> degan rangni bir necha marta qo'lda yozdik. Bugun kursda o'rganadigan <b>birinchi vosita (tool)</b> bilan tanishasiz — endi kod yozib, uni brauzer to'g'ridan-to'g'ri o'qimaydi, avval uni maxsus dastur "tarjima qiladi" (compile qiladi).</p>
+  <div class="cover-plan">
+    <div><b>Reja 1</b>SASS nima va nega kerak — preprosessor tushunchasi</div>
+    <div><b>Reja 2</b>Live Sass Compiler kengaytmasini o'rnatish va ishlatish</div>
+    <div><b>Reja 3</b>SCSS imkoniyatlari: Variables, Nesting, Mixins, Import</div>
+    <div><b>Amaliyot</b>Avvalgi loyihangizni CSS'dan SCSS arxitekturasiga o'tkazish</div>
+  </div>
+</section>
+
+<!-- ===== 2 ===== -->
+<section class="slide">
+  <span class="eyebrow">Maqsad</span>
+  <h2>Dars oxirida siz nima qila olasiz</h2>
+  <p class="big">Bu darsdan keyin SASS/SCSS nima ekanini va uni nega ishlatishni tushunasiz, VS Code'da Live Sass Compiler kengaytmasini o'rnatib ishga tushira olasiz va Variables, Nesting, Mixins, Import imkoniyatlaridan foydalanib, oldingi CSS loyihangizni SCSS'ga o'tkaza olasiz.</p>
+  <div class="cardset">
+    <div class="card">
+      <span class="ico">🧠</span>
+      <h4>Tushunasiz</h4>
+      <p>SASS nima uchun kerak — preprosessor (preprocessor) tushunchasi.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🧩</span>
+      <h4>O'rnatasiz</h4>
+      <p>Live Sass Compiler kengaytmasini va <b>Watch Sass</b> rejimini yoqasiz.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🧬</span>
+      <h4>Yozasiz</h4>
+      <p>Variables, Nesting, Mixin va Import bilan toza SCSS kodi.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🔄</span>
+      <h4>O'tkazasiz</h4>
+      <p>Avvalgi CSS loyihangizni SCSS arxitekturasiga aylantirasiz.</p>
+    </div>
+  </div>
+  <div class="note tip">
+    <span class="note-t">Eslatma</span>
+    <p>Bu — kursdagi birinchi "kompilyatsiya" darsi. Qo'rqmang, bosqichma-bosqich, aynan qayerni bosishgacha ko'rsatamiz.</p>
+  </div>
+</section>
+
+<!-- ===== 3 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 1 · Asosiy</span>
+  <h2>SASS nima va u CSS'dan nimasi bilan farq qiladi</h2>
+  <p>SASS (<b>S</b>yntactically <b>A</b>wesome <b>S</b>tyle<b>S</b>heets), SCSS esa uning zamonaviy sintaksisi — bu CSS emas, balki CSS yozishni osonlashtiradigan "kengaytirilgan til" (preprocessor — preprosessor). Brauzer <code class="inline">.scss</code> faylni to'g'ridan-to'g'ri tushunmaydi — brauzer faqat oddiy <code class="inline">.css</code> faylni tushunadi.</p>
+  <p>Shuning uchun biz <code class="inline">.scss</code> faylda yozamiz, keyin maxsus dastur (kompilyator) uni avtomatik ravishda oddiy <code class="inline">.css</code> fayliga "tarjima qiladi" — xuddi siz o'zbek tilida qulay yozib, avtomat tarjimon buni ingliz tiliga o'girib bergani kabi. Aynan shu <code class="inline">.css</code> fayl brauzerga ulanadi, <code class="inline">.scss</code> fayl esa faqat bizning "ish faylimiz" bo'lib qoladi.</p>
+
+  <div class="vs">
+    <div class="no">
+      <div class="vs-h">✗ Oddiy CSS — rang har joyda takrorlanadi</div>
+<pre class="code" data-lang="css"><code>.btn {
+  background: #4a6cf7;
+}
+.btn:hover {
+  background: #4a6cf7;
+}
+.card {
+  border: 1px solid #4a6cf7;
+}</code></pre>
+      <p>Rangni o'zgartirish uchun <b>3 ta joyni</b> qidirib topish kerak — bittasini o'tkazib yuborsangiz, sayt "nomuvofiq" ko'rinadi.</p>
+    </div>
+    <div class="ok">
+      <div class="vs-h">✓ SCSS — rang BIR joyda</div>
+<pre class="code" data-lang="scss"><code>$asosiy-rang: #4a6cf7;
+
+.btn {
+  background: $asosiy-rang;
+}
+.btn:hover {
+  background: $asosiy-rang;
+}
+.card {
+  border: 1px solid $asosiy-rang;
+}</code></pre>
+      <p>Rangni o'zgartirish uchun endi faqat <b>BITTA</b> qatorni — <code class="inline">$asosiy-rang</code>ni — o'zgartirish kifoya.</p>
+    </div>
+  </div>
+
+  <div class="note bad">
+    <span class="note-t">Ko'p adashadigan joy</span>
+    <p>HTML faylga <code class="inline">.scss</code> faylni to'g'ridan-to'g'ri <code class="inline">&lt;link&gt;</code> orqali ulashga urinish — bu <b>ishlamaydi</b>, chunki brauzer <code class="inline">.scss</code> kengaytmasini tushunmaydi. HTML'ga har doim kompilyatsiya natijasida chiqqan <code class="inline">.css</code> fayl ulanishi kerak.</p>
+  </div>
+</section>
+
+<!-- ===== 4 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 2 · Asosiy</span>
+  <h2>Nega SCSS yozib, CSS'ni chop etamiz</h2>
+  <p>Oddiy CSS'da o'zgaruvchi (rangni bir joyda saqlab, hamma joyda ishlatish), ichma-ich yozish (nesting) va qayta ishlatiladigan bloklar (mixin) yo'q. SCSS aynan shularni qo'shadi va katta loyihalarda CSS yozishni sezilarli darajada tezlashtiradi hamda xatolarni kamaytiradi.</p>
+
+<pre class="code" data-lang="scss" data-label="styles.scss — biz yozamiz"><code>// styles.scss
+$asosiy-rang: #4a6cf7;
+
+.btn {
+  background: $asosiy-rang;
+}</code></pre>
+
+<pre class="code" data-lang="css" data-label="styles.css — kompilyator yaratadi"><code>/* styles.css — brauzer aynan shuni o'qiydi */
+.btn {
+  background: #4a6cf7;
+}</code></pre>
+
+  <div class="note tip">
+    <span class="note-t">Eslab qoling</span>
+    <p>SCSS yozasiz → kompilyator uni CSS'ga aylantiradi → brauzer aynan shu CSS'ni o'qiydi. SCSS — dasturchi uchun qulaylik, u hech qachon to'g'ridan-to'g'ri brauzerda ishlamaydi.</p>
+  </div>
+</section>
+
+<!-- ===== 5 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 2 · Amaliy</span>
+  <h2>Live Sass Compiler — kengaytmani o'rnatish</h2>
+  <p>Endi eng muhim amaliy qism — SCSS'ni avtomatik CSS'ga aylantiruvchi vositani sozlaymiz. Qadamlarni ketma-ket bajaring.</p>
+
+  <div class="task">
+    <h4><span class="n">1</span> Extensions bo'limiga kiring</h4>
+    <ol>
+      <li>VS Code'ni oching, chap tomondagi <b>Extensions</b> (kengaytmalar) belgisini bosing — bu to'rtta kvadratchadan iborat ikonka.</li>
+      <li>Qidiruv qatoriga <code class="inline">Live Sass Compiler</code> deb yozing.</li>
+      <li>Natijalar orasidan <b>Glenn Marks</b> yozgan, eng ko'p o'rnatilgan (odatda birinchi o'rinda chiqadigan) "Live Sass Compiler" kengaytmasini toping va <b>Install</b> tugmasini bosing.</li>
+    </ol>
+  </div>
+
+  <div class="note warn">
+    <span class="note-t">Diqqat</span>
+    <p>Nomi to'g'ri bo'lishi kerak — aynan <b>Live Sass Compiler</b> (muallifi Glenn Marks). Kengaytmalar do'konida shunga o'xshash boshqa nomlar ham chiqishi mumkin.</p>
+  </div>
+</section>
+
+<!-- ===== 6 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 2 · Amaliy</span>
+  <h2>"Watch Sass" — avtomatik kompilyatsiyani yoqish</h2>
+  <p>Kengaytma o'rnatilgach, loyiha papkasida <code class="inline">styles.scss</code> nomli fayl yarating (yoki oldingi darsdagi CSS faylingizni shu nom bilan saqlang, kengaytmasini <code class="inline">.scss</code>ga o'zgartirib).</p>
+
+  <div class="task">
+    <h4><span class="n">2</span> "Watch Sass"ni yoqing</h4>
+    <ol>
+      <li>VS Code oynasining eng pastida, <b>status bar</b> deb ataladigan qatorda "Watch Sass" degan yozuv paydo bo'ladi — shu yozuvga bosing.</li>
+      <li>Birinchi marta bosganda u "Watching..." ga aylanadi — shu daqiqadan boshlab kompilyator ishga tushadi.</li>
+      <li>Endi <code class="inline">.scss</code> faylni har safar saqlaganingizda (<kbd>Cmd</kbd>+<kbd>S</kbd> / <kbd>Ctrl</kbd>+<kbd>S</kbd>), kengaytma avtomatik ravishda xuddi shu joyda <code class="inline">.css</code> faylni yaratadi yoki yangilaydi.</li>
+      <li>Fayllar ro'yxatida yangi <code class="inline">.css</code> va <code class="inline">.css.map</code> fayl paydo bo'lganini tekshiring.</li>
+    </ol>
+  </div>
+
+<pre class="code" data-lang="html" data-label="index.html"><code>&lt;head&gt;
+  &lt;link rel="stylesheet" href="styles.css" /&gt;
+&lt;/head&gt;</code></pre>
+
+  <div class="note bad">
+    <span class="note-t">Ko'p adashadigan joy</span>
+    <p>"Watch Sass" tugmasini bosishni unutib, faylni saqlab-saqlab, nega o'zgarish ko'rinmayapti deb ajablanish — kompilyator faqat <b>"Watch" rejimi yoqilgandagina</b> avtomatik ishlaydi. Buni har safar VS Code'ni qayta ochganda ham <b>qayta yoqish</b> kerak.</p>
+  </div>
+</section>
+
+<!-- ===== 7 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 3 · Variables</span>
+  <h2>O'zgaruvchilar (Variables): <code class="inline">$nom</code></h2>
+  <p><code class="inline">$</code> belgisi bilan boshlanadigan nom ostida qiymat (rang, o'lcham, shrift) saqlab qo'yamiz va keyin uni <code class="inline">$nom</code> deb istalgan joyda ishlatamiz — rangni o'zgartirish uchun endi faqat BITTA qatorni o'zgartirish kifoya.</p>
+
+<pre class="code" data-lang="scss" data-label="styles.scss"><code>$asosiy-rang: #4a6cf7;
+$matn-rang: #333;
+
+.btn {
+  background: $asosiy-rang;
+  color: #fff;
+}
+.title {
+  color: $matn-rang;
+}</code></pre>
+
+<pre class="code" data-lang="css" data-label="styles.css (kompilyatsiya natijasi)"><code>.btn {
+  background: #4a6cf7;
+  color: #fff;
+}
+.title {
+  color: #333;
+}</code></pre>
+
+  <p>Quyida — kompilyatsiyadan chiqqan <b>aynan shu CSS</b> jonli muharrirda. O'zgartirib ko'ring: <code class="inline">background</code> qiymatini boshqa rangga almashtiring.</p>
+
+  <div class="live">
+    <div class="live-head">
+      <span class="dot"></span> styles.css (kompilyatsiya natijasi)
+      <span class="sp"></span>
+      <button class="live-reset" type="button">↺ Qayta</button>
+    </div>
+    <div class="live-body">
+      <div class="live-editor">
+<textarea spellcheck="false">
+<style>
+  body { font-family: sans-serif; padding: 16px; }
+  .btn {
+    background: #4a6cf7;
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 15px;
+  }
+  .title { color: #333; font-weight: bold; }
+</style>
+<h3 class="title">Kirish formasi</h3>
+<button class="btn">Yuborish</button>
+</textarea>
+      </div>
+      <div class="live-preview"><iframe title="Natija"></iframe></div>
+    </div>
+  </div>
+
+  <div class="note tip">
+    <span class="note-t">Diqqat qiling</span>
+    <p>Bu blokda siz <b>SCSS emas, oddiy CSS</b> bilan ishlayapsiz — chunki brauzer faqat CSS'ni tushunadi. Asl SCSS manbasi yuqoridagi statik kod bloklarida.</p>
+  </div>
+</section>
+
+<!-- ===== 8 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 3 · Nesting</span>
+  <h2>Ichma-ich yozish (Nesting)</h2>
+  <p>Oddiy CSS'da <code class="inline">.card .title</code> va <code class="inline">.card .text</code> deb ikki marta <code class="inline">.card</code> yozamiz. SCSS'da esa <code class="inline">.card</code> ichiga <code class="inline">.title</code> va <code class="inline">.text</code>ni "ichkariga solib" yozamiz — bu HTML strukturasini ko'zda tutib yozish imkonini beradi va bog'liq stillarni bir joyda ushlab turadi.</p>
+
+<pre class="code" data-lang="scss" data-label="styles.scss"><code>.card {
+  padding: 20px;
+  border: 1px solid #4a6cf7;
+
+  .title {
+    font-weight: bold;
+    color: #4a6cf7;
+  }
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+}</code></pre>
+
+<pre class="code" data-lang="css" data-label="styles.css (kompilyatsiya natijasi)"><code>.card {
+  padding: 20px;
+  border: 1px solid #4a6cf7;
+}
+.card .title {
+  font-weight: bold;
+  color: #4a6cf7;
+}
+.card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}</code></pre>
+
+  <p>Quyida shu kompilyatsiya natijasi (oddiy CSS) jonli muharrirda — kartochka ustiga sichqonchani olib boring.</p>
+
+  <div class="live">
+    <div class="live-head">
+      <span class="dot"></span> styles.css (kompilyatsiya natijasi)
+      <span class="sp"></span>
+      <button class="live-reset" type="button">↺ Qayta</button>
+    </div>
+    <div class="live-body">
+      <div class="live-editor">
+<textarea spellcheck="false">
+<style>
+  body { font-family: sans-serif; padding: 16px; }
+  .card {
+    padding: 20px;
+    border: 1px solid #4a6cf7;
+    border-radius: 10px;
+    max-width: 240px;
+    transition: box-shadow .2s;
+  }
+  .card .title { font-weight: bold; color: #4a6cf7; margin: 0 0 6px; }
+  .card:hover { box-shadow: 0 4px 12px rgba(0,0,0,.15); }
+</style>
+<div class="card">
+  <div class="title">Kartochka sarlavhasi</div>
+  <p>Ustiga sichqonchani olib boring — soya paydo bo'ladi.</p>
+</div>
+</textarea>
+      </div>
+      <div class="live-preview"><iframe title="Natija"></iframe></div>
+    </div>
+  </div>
+
+  <div class="note bad">
+    <span class="note-t">Ko'p adashadigan joy</span>
+    <p><code class="inline">&amp;:hover</code> o'rniga oddiy <code class="inline">:hover</code> yozish — natijada u alohida, noto'g'ri selektor sifatida kompilyatsiya bo'ladi. <code class="inline">&amp;</code> belgisi "ota selektorning o'zi" degan ma'noni bildiradi.</p>
+  </div>
+</section>
+
+<!-- ===== 9 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 3 · Nesting</span>
+  <h2>Nestingda chuqurlik xatosi</h2>
+  <p>Nesting'ni haddan tashqari chuqur qilib yuborish (masalan 5-6 daraja ichma-ich) — bu kompilyatsiyadan keyin juda uzun va "og'ir" selektorlar yaratadi. Shuning uchun odatda <b>3 darajadan chuqur</b> nesting qilmaslik tavsiya etiladi.</p>
+
+  <div class="vs">
+    <div class="no">
+      <div class="vs-h">✗ Haddan tashqari chuqur (5 daraja)</div>
+<pre class="code" data-lang="scss"><code>.page {
+  .container {
+    .card {
+      .body {
+        .title {
+          color: red;
+        }
+      }
+    }
+  }
+}</code></pre>
+      <p>Kompilyatsiyadan keyin: <code class="inline">.page .container .card .body .title</code> — juda uzun va o'zgartirish qiyin selektor.</p>
+    </div>
+    <div class="ok">
+      <div class="vs-h">✓ Yetarlicha sayoz (2 daraja)</div>
+<pre class="code" data-lang="scss"><code>.card {
+  .title {
+    color: red;
+  }
+}</code></pre>
+      <p>Kompilyatsiyadan keyin: <code class="inline">.card .title</code> — sodda, o'qish va o'zgartirish oson.</p>
+    </div>
+  </div>
+
+  <div class="note warn">
+    <span class="note-t">Qoida</span>
+    <p>Nestingni HTML strukturasiga mos, lekin <b>3 darajadan oshmaydigan</b> qilib yozing. Chuqur nesting — kelajakda "og'ir" va tushunarsiz CSS'ga olib keladi.</p>
+  </div>
+</section>
+
+<!-- ===== 10 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 3 · Mixins</span>
+  <h2>Mixin'lar: <code class="inline">@mixin</code> / <code class="inline">@include</code></h2>
+  <p>Agar bir xil xossalar to'plamini (masalan flex bilan markazlashtirish) bir necha joyda qayta-qayta yozayotgan bo'lsangiz, buni bitta "shablon" qilib nomlab qo'yamiz (<code class="inline">@mixin</code>), keyin istalgan joyda bir qatorda chaqiramiz (<code class="inline">@include</code>) — hatto parametr ham bera olamiz.</p>
+
+<pre class="code" data-lang="scss" data-label="styles.scss"><code>@mixin flex-center($gap: 10px) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $gap;
+}
+
+.header {
+  @include flex-center(20px);
+  background: #4a6cf7;
+}
+
+.footer {
+  @include flex-center;
+}</code></pre>
+
+<pre class="code" data-lang="css" data-label="styles.css (kompilyatsiya natijasi)"><code>.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  background: #4a6cf7;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}</code></pre>
+
+  <p>Quyida shu kompilyatsiya natijasi jonli muharrirda — <code class="inline">gap</code> qiymatini o'zgartirib ko'ring.</p>
+
+  <div class="live">
+    <div class="live-head">
+      <span class="dot"></span> styles.css (kompilyatsiya natijasi)
+      <span class="sp"></span>
+      <button class="live-reset" type="button">↺ Qayta</button>
+    </div>
+    <div class="live-body">
+      <div class="live-editor">
+<textarea spellcheck="false">
+<style>
+  body { font-family: sans-serif; padding: 16px; }
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    background: #4a6cf7;
+    color: #fff;
+    padding: 14px;
+    border-radius: 8px;
+  }
+</style>
+<div class="header">
+  <span>🏠 Bosh sahifa</span>
+  <span>📚 Kurslar</span>
+  <span>👤 Profil</span>
+</div>
+</textarea>
+      </div>
+      <div class="live-preview"><iframe title="Natija"></iframe></div>
+    </div>
+  </div>
+
+  <div class="note tip">
+    <span class="note-t">Foyda</span>
+    <p>Mixin — bir marta yozib, ko'p marta qayta ishlatish. Parametr (<code class="inline">$gap</code>) berilishi mumkin, shuning uchun har chaqiruvda biroz boshqacha natija olish mumkin.</p>
+  </div>
+</section>
+
+<!-- ===== 11 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 3 · Import</span>
+  <h2>Fayllarni bo'lish va birlashtirish: <code class="inline">@use</code></h2>
+  <p>Katta loyihalarda hamma stilni bitta faylga yozish noqulay, shuning uchun faylni bo'laklarga bo'lamiz (masalan <code class="inline">_buttons.scss</code>, <code class="inline">_variables.scss</code>) va asosiy faylga <code class="inline">@use</code> orqali ularni "birlashtiramiz" — eski <code class="inline">@import</code> ham ishlaydi, lekin zamonaviy SASS endi <code class="inline">@use</code>ni tavsiya qiladi.</p>
+
+<pre class="code" data-lang="scss" data-label="_variables.scss"><code>$asosiy-rang: #4a6cf7;
+$matn-rang: #333;</code></pre>
+
+<pre class="code" data-lang="scss" data-label="_mixins.scss"><code>@mixin flex-center($gap: 10px) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $gap;
+}</code></pre>
+
+<pre class="code" data-lang="scss" data-label="styles.scss — asosiy fayl"><code>@use "variables" as *;
+@use "mixins" as *;
+
+.card {
+  padding: 20px;
+  color: $matn-rang;
+  border: 1px solid $asosiy-rang;
+
+  .title {
+    font-weight: bold;
+    color: $asosiy-rang;
+  }
+}
+
+.header {
+  @include flex-center(20px);
+  background: $asosiy-rang;
+}</code></pre>
+
+  <div class="note tip">
+    <span class="note-t">Fayl nomlanishi</span>
+    <p>Boshida <code class="inline">_</code> (pastki chiziq) bilan yozilgan fayllar — <b>"partial"</b> deb ataladi, ular alohida <code class="inline">.css</code>ga kompilyatsiya bo'lmaydi, faqat <code class="inline">@use</code> orqali boshqa faylga qo'shiladi.</p>
+  </div>
+</section>
+
+<!-- ===== 12 ===== -->
+<section class="slide">
+  <span class="eyebrow">Xatolar</span>
+  <h2>Ko'p uchraydigan 2 ta xato</h2>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th style="width:32%">Xato</th><th style="width:35%">Nima bo'ladi</th><th>Yechim</th></tr>
+      <tr>
+        <td><b>"Watch Sass"ni yoqishni unutish</b></td>
+        <td><code class="inline">.scss</code> faylni saqlayverasiz, lekin <code class="inline">.css</code> fayl yangilanmaydi — brauzerda hech narsa o'zgarmayapti deb ajablanasiz</td>
+        <td>Status bardagi "Watch Sass" yozuviga bosib, "Watching..." holatiga o'tkazing. VS Code'ni qayta ochganda ham qayta yoqing</td>
+      </tr>
+      <tr>
+        <td><b>Kompilyatsiya qilingan <code>.css</code> faylini to'g'ridan-to'g'ri tahrirlash</b></td>
+        <td>O'zgartirish vaqtincha ishlagandek ko'rinadi, lekin <code class="inline">.scss</code> fayl qayta saqlanganda, kompilyator <code class="inline">.css</code> faylini <b>butunlay qayta yozadi</b> — qo'lda kiritgan o'zgarish yo'qoladi</td>
+        <td>Har doim faqat <code class="inline">.scss</code> manba faylni tahrirlang, <code class="inline">.css</code> — faqat kompilyator uchun "chiqish" fayli</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="note bad">
+    <span class="note-t">Yodda tuting</span>
+    <p><code class="inline">.css</code> fayl — avtomatik yaratiladigan "natija" fayli, u sizniki emas, kompilyatorniki. Uni qo'lda tuzatish — vaqtinchalik, keyingi saqlashda yo'qoladigan yechim.</p>
+  </div>
+</section>
+
+<!-- ===== 13 ===== -->
+<section class="slide">
+  <span class="eyebrow">Best practice</span>
+  <h2>Eng yaxshi amaliyot</h2>
+
+  <div class="cols">
+    <div>
+      <h3>Qilish kerak</h3>
+      <ul style="margin:0;padding-left:18px;color:var(--ink-2);font-size:14.2px;line-height:1.7">
+        <li>Har doim faqat <code class="inline">.scss</code> faylni tahrirlang</li>
+        <li>Ranglar, o'lchamlar, shriftlarni <code class="inline">$o'zgaruvchi</code>larga chiqaring</li>
+        <li>Nestingni 3 darajadan oshirmang</li>
+        <li><code class="inline">&amp;:hover</code>, <code class="inline">&amp;:focus</code> kabi holatlarda <code class="inline">&amp;</code> ishlating</li>
+        <li>Takrorlanuvchi xossalar to'plami uchun <code class="inline">@mixin</code> yasang</li>
+        <li>Katta loyihada fayllarni <code class="inline">_partial.scss</code>larga bo'ling</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Qilmaslik kerak</h3>
+      <ul style="margin:0;padding-left:18px;color:var(--ink-2);font-size:14.2px;line-height:1.7">
+        <li><code class="inline">.css</code> faylini qo'lda tahrirlamang — u qayta yoziladi</li>
+        <li>"Watch Sass"ni yoqishni unutmang</li>
+        <li>5-6 daraja chuqur nesting yozmang</li>
+        <li><code class="inline">&amp;</code>siz alohida <code class="inline">:hover</code> yozmang</li>
+        <li>HTML'ga <code class="inline">.scss</code> faylni <code class="inline">&lt;link&gt;</code> qilmang</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="note tip">
+    <span class="note-t">Qoida</span>
+    <p>SCSS'ga o'tish — ko'rinishni o'zgartirmasligi, faqat kodni tozalashi va boshqarishni osonlashtirishi kerak.</p>
+  </div>
+</section>
+
+<!-- ===== 14 ===== -->
+<section class="slide">
+  <span class="eyebrow">Amaliy vazifa</span>
+  <h2>Uyga vazifa</h2>
+
+  <div class="task">
+    <h4><span class="n">1</span> Avvalgi loyihangizni SCSS'ga o'tkazing</h4>
+    <ol>
+      <li>VS Code'da Live Sass Compiler o'rnatilganini va "Watch Sass" yoqilganini tekshiring.</li>
+      <li>11-darsdagi (yoki istalgan avvalgi) loyihangizning eski <code class="inline">.css</code> faylini asos qilib, <code class="inline">styles.scss</code> fayl yarating.</li>
+      <li>Kamida <b>3 ta</b> rangni yoki takrorlanuvchi qiymatni (masalan asosiy rang, matn rangi, chekka radiusi) <code class="inline">$o'zgaruvchi</code>larga chiqaring va ularni faylda hamma joyda shu o'zgaruvchilar orqali ishlating.</li>
+      <li>Kamida bitta joyda <b>ichma-ich yozish (nesting)</b>dan foydalaning — masalan kartochka va uning ichidagi sarlavha/matn stillarini bitta blokka joylashtiring.</li>
+      <li>Ixtiyoriy, ammo tavsiya etiladi: kamida bitta <code class="inline">@mixin</code> yasang (masalan flex bilan markazlashtirish uchun) va uni kamida ikki joyda <code class="inline">@include</code> orqali chaqiring.</li>
+      <li>Tayyor bo'lgach, "Watch Sass"ni yoqib, <code class="inline">.scss</code> faylni saqlang va hosil bo'lgan <code class="inline">.css</code> fayl brauzerda eski dizaynni aynan bir xil ko'rsatayotganini tekshiring.</li>
+    </ol>
+    <div class="crit">
+      <b>Baholash mezoni:</b> <code class="inline">.scss</code> fayl kompilyatsiya bo'layapti (<code class="inline">.css</code> avtomatik yaratilyapti) ✓ · kamida 3 ta <code class="inline">$o'zgaruvchi</code> ishlatilgan ✓ · kamida bitta nesting bor ✓ · HTML faylga to'g'ri (kompilyatsiya qilingan) <code class="inline">.css</code> fayl ulangan, <code class="inline">.scss</code> emas ✓ · brauzerda dizayn buzilmagan — SCSS'ga o'tish faqat kodni tozalagan, ko'rinishni o'zgartirmagan ✓.
+    </div>
+  </div>
+</section>
+
+<!-- ===== 15 ===== -->
+<section class="slide">
+  <span class="eyebrow">Yakun</span>
+  <h2>Xulosa va o'z-o'zini tekshirish</h2>
+
+  <div class="recap">
+    <div><b>SASS/SCSS — preprosessor</b>CSS emas, CSS'ga kompilyatsiya bo'ladigan kengaytirilgan til. Brauzer faqat natija <code class="inline">.css</code> faylni o'qiydi.</div>
+    <div><b>Live Sass Compiler</b>VS Code kengaytmasi (muallifi Glenn Marks) — <code class="inline">.scss</code>ni avtomatik <code class="inline">.css</code>ga aylantiradi.</div>
+    <div><b>"Watch Sass"</b>Status bardagi tugma — bosilmasa, avtomatik kompilyatsiya ishlamaydi.</div>
+    <div><b><code class="inline">$o'zgaruvchi</code></b>Rang, o'lcham, shriftni bir joyda saqlab, hamma joyda ishlatish.</div>
+    <div><b>Nesting va <code class="inline">&amp;</code></b>Selektorlarni ichma-ich yozish; <code class="inline">&amp;</code> — ota selektorga ishora, 3 darajadan oshirmaslik.</div>
+    <div><b><code class="inline">@mixin</code> / <code class="inline">@include</code></b>Takrorlanuvchi xossalar to'plamini shablon qilib, qayta ishlatish.</div>
+    <div><b><code class="inline">@use</code></b>Katta loyihada stillarni bir necha faylga bo'lib, asosiy faylga birlashtirish.</div>
+  </div>
+
+  <h3 style="margin-top:30px">Savol-javob</h3>
+  <div class="quiz">
+    <div class="q">
+      <p>1. Brauzer <code class="inline">.scss</code> faylni to'g'ridan-to'g'ri tushunadimi?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">Yo'q. Brauzer faqat oddiy <code>.css</code> faylni tushunadi. <code>.scss</code> fayl avval kompilyator (masalan Live Sass Compiler) orqali <code>.css</code>ga aylantirilishi kerak, HTML'ga aynan shu <code>.css</code> fayl ulanadi.</div>
+    </div>
+    <div class="q">
+      <p>2. VS Code status baridagi "Watch Sass" tugmasi nima uchun kerak?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">U bosilganda "Watching..." holatiga o'tadi va shu daqiqadan boshlab, <code>.scss</code> fayl har safar saqlanganda (Cmd/Ctrl+S), kompilyator avtomatik ravishda <code>.css</code> faylni yaratadi yoki yangilaydi. Bosilmasa, avtomatik kompilyatsiya ishlamaydi.</div>
+    </div>
+    <div class="q">
+      <p>3. Nega kompilyatsiya qilingan <code class="inline">.css</code> faylni to'g'ridan-to'g'ri qo'lda tahrirlash yomon g'oya?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans"><code>.css</code> fayl — kompilyator tomonidan avtomatik yaratiladigan "natija" fayli. <code>.scss</code> manba fayl qayta saqlanganda, kompilyator <code>.css</code> faylni butunlay qayta yozadi va qo'lda kiritilgan barcha o'zgarish yo'qoladi.</div>
+    </div>
+    <div class="q">
+      <p>4. SCSS'da <code class="inline">&amp;:hover</code> yozish bilan oddiy <code class="inline">:hover</code> yozish o'rtasida nesting ichida qanday farq bor?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans"><code>&amp;</code> — ota selektorning o'zini bildiradi, shuning uchun <code>&amp;:hover</code> nesting ichida kompilyatsiyadan keyin <code>.card:hover</code> bo'ladi. Agar <code>&amp;</code>siz oddiy <code>:hover</code> yozilsa, u alohida, notog'ri selektor sifatida kompilyatsiya bo'ladi.</div>
+    </div>
+    <div class="q">
+      <p>5. Nesting'ni 5-6 daraja chuqur qilib yozishning kamchiligi nima?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">Kompilyatsiyadan keyin juda uzun va "og'ir" selektorlar hosil bo'ladi (masalan <code>.a .b .c .d .e</code>), ularni o'qish va keyinchalik o'zgartirish qiyinlashadi. Shuning uchun odatda 3 darajadan chuqur nesting qilmaslik tavsiya etiladi.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 16 ===== -->
+<section class="slide">
+  <span class="eyebrow">Yakuniy so'z</span>
+  <h2>Bugun nima o'rgandik, ertaga nima kutmoqda</h2>
+  <p>Ajoyib ish! Endi siz nafaqat CSS yoza olasiz, balki professional dasturchilar ishlatadigan asosiy vosita — SASS/SCSS preprosessori bilan ham ishlay olasiz: o'zgaruvchilar, nesting, mixin va fayllarni bo'lib-birlashtirish orqali kodingiz ancha toza va boshqarish oson bo'ldi. Shu bilan biz sof CSS va SCSS bosqichini — ranglar, layout, hover effektlar, gradientlar, animatsiyalar, responsive dizayn va endi SASS bilan — muvaffaqiyatli yakunladik.</p>
+  <p>Lekin savol tug'iladi: shuncha narsani har safar <code class="inline">$rang: #333;</code> deb qo'lda yozish, nesting va mixin bilan tuzatib o'tirish — vaqt oladi. Zamonaviy dasturchilar esa buni sezilarli tezlashtiradigan yo'l topishgan. Keyingi bosqichda butunlay yangi vositaga o'tamiz: hech qanday alohida CSS fayl yozmasdan, to'g'ridan-to'g'ri HTML ichida tayyor classlar bilan ishlaydigan <b>Tailwind CSS</b> bilan tanishishni boshlaymiz — bugun SCSS'da bir necha qatorda yozgan narsangizni ertaga bitta qatorda qilishni ko'rasiz.</p>
+
+  <div class="note tip">
+    <span class="note-t">Keyingi dars</span>
+    <p>Tailwind — alohida <code class="inline">.css</code> fayl yozmasdan, HTML ichida tayyor utility-classlar bilan stil berish usuli. SCSS bilan tanishgan miya endi Tailwind'ni tez tushunadi.</p>
+  </div>
+
+  <div class="lesson-jump">
+    <a href="../11-responsive-media-query/index.html"><b>Oldingi modul</b><span>← 11-modul: Adaptiv dizayn (Responsive) va Media Queries</span></a>
+    <a href="../13-tailwind-kirish/index.html"><b>Keyingi modul</b><span>13-modul: Tailwind CSS'ga kirish va sozlash →</span></a>
+  </div>
+</section>
+
+</main>
+
+<div class="deck-nav">
+  <button data-prev type="button" title="Oldingi (←)">‹</button>
+  <span class="hint">← → varaqlash · <kbd>O</kbd> ro'yxat · <kbd>F</kbd> to'liq ekran</span>
+  <button data-next type="button" title="Keyingi (→)">›</button>
+</div>
+
+<div class="deck-overview"><h3>Slaydlar ro'yxati</h3><div class="ov-grid"></div></div>
+
+<script src="../assets/js/deck.js"></script>
+</body>
+</html>

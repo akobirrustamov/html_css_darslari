@@ -1,0 +1,558 @@
+<!doctype html>
+<html lang="uz" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>14-modul · Tailwind CSS bilan Adaptiv UI va Komponentlar</title>
+<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body class="deck" data-lesson="14">
+
+<div class="deck-bar">
+  <a class="home" href="../index.html">← Kurs</a>
+  <span class="title">14-modul · Tailwind CSS bilan Adaptiv UI va Komponentlar</span>
+  <span class="spacer"></span>
+  <div class="deck-tools">
+    <button class="tool" data-overview type="button" title="Slaydlar ro'yxati (O)">☰</button>
+    <button class="tool" data-theme-toggle type="button" title="Mavzu">☾</button>
+    <span class="counter">1 / 17</span>
+  </div>
+</div>
+<div class="deck-progress"></div>
+
+<main class="deck-stage">
+
+<!-- ===== 1 ===== -->
+<section class="slide cover">
+  <div class="lesson-no">14-modul</div>
+  <h1>Tailwind CSS bilan<br>Adaptiv (responsive) UI va Komponentlar</h1>
+  <p>13-modulda Tailwind'ning utility-first tezligini o'rgandingiz. Bugun shu bilimga uchta kuchli qatlam qo'shamiz: ekran o'lchamiga moslashuvchi prefikslar, foydalanuvchi harakatiga (hover, focus) javob beruvchi holatlar va qorong'i rejim (dark mode) — bularsiz hech qanday zamonaviy sayt to'liq sanalmaydi.</p>
+  <div class="cover-plan">
+    <div><b>Reja 1</b>Responsive prefikslar — <code class="inline">sm:</code>, <code class="inline">md:</code>, <code class="inline">lg:</code>, <code class="inline">xl:</code></div>
+    <div><b>Reja 2</b>State prefikslari — <code class="inline">hover:</code>, <code class="inline">focus:</code>, <code class="inline">active:</code></div>
+    <div><b>Reja 3</b>Dark Mode — <code class="inline">dark:</code> bilan qorong'i rejim</div>
+    <div><b>Amaliyot</b>Jonli responsive navbar + kartochka komponenti, keyin uy vazifasi</div>
+  </div>
+</section>
+
+<!-- ===== 2 ===== -->
+<section class="slide">
+  <span class="eyebrow">Maqsad</span>
+  <h2>Dars oxirida siz nima qila olasiz</h2>
+  <p class="big">Bu darsdan keyin siz istalgan UI elementini — sarlavha, tugma, kartochka, navbar — telefon, planshet va kompyuterda bir xil darajada chiroyli ko'rinadigan, sichqoncha va klaviaturaga to'g'ri javob beradigan va qorong'i rejimni qo'llab-quvvatlaydigan qilib qura olasiz.</p>
+  <div class="cardset">
+    <div class="card">
+      <span class="ico">📱</span>
+      <h4>Responsive prefikslar</h4>
+      <p><code class="inline">sm:</code>, <code class="inline">md:</code>, <code class="inline">lg:</code>, <code class="inline">xl:</code> yordamida bitta elementni har xil ekranda boshqacha ko'rsatasiz — alohida CSS fayl yozmasdan.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🖱️</span>
+      <h4>State prefikslari</h4>
+      <p><code class="inline">hover:</code>, <code class="inline">focus:</code>, <code class="inline">active:</code> bilan tugma va inputlarga interaktivlik qo'shasiz.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🌙</span>
+      <h4>Dark Mode</h4>
+      <p><code class="inline">dark:</code> prefiksi bilan sahifangiz qorong'i rejimda ham to'g'ri va o'qishga qulay ko'rinishini ta'minlaysiz.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🧩</span>
+      <h4>Real komponent</h4>
+      <p>Haqiqiy logotip va ikonka rasmlaridan foydalanib, to'liq ishlaydigan responsive navbar va kartochka komponentini yig'asiz.</p>
+    </div>
+  </div>
+  <div class="note tip">
+    <span class="note-t">11 va 13-modulning davomi</span>
+    <p>11-modulda <code class="inline">@media</code> orqali breakpoint tushunchasini, 13-modulda esa Tailwind utility-first yondashuvini o'rgangansiz. Bugun ikkalasi birlashib, bitta so'z bilan butun responsive mantiqni yozishni ko'rasiz.</p>
+  </div>
+</section>
+
+<!-- ===== 3 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 1 · Nazariya</span>
+  <h2>Responsive prefikslar: <code class="inline">sm:</code> <code class="inline">md:</code> <code class="inline">lg:</code> <code class="inline">xl:</code></h2>
+  <p>11-darsda <code class="inline">@media (min-width: 768px) { ... }</code> deb yozib, ichiga kerakli stillarni qo'ygan edik. Tailwind'da bu tushuncha alohida qavs va faylsiz, to'g'ridan-to'g'ri elementning o'ziga <b>prefiks</b> sifatida yoziladi.</p>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th>Prefiks</th><th>Minimal kenglik</th><th>Odatda mos qurilma</th></tr>
+      <tr><td><code>sm:</code></td><td>640px va undan katta</td><td>Katta telefon (gorizontal)</td></tr>
+      <tr><td><code>md:</code></td><td>768px va undan katta</td><td>Planshet</td></tr>
+      <tr><td><code>lg:</code></td><td>1024px va undan katta</td><td>Kichik noutbuk</td></tr>
+      <tr><td><code>xl:</code></td><td>1280px va undan katta</td><td>Katta monitor</td></tr>
+    </table>
+  </div>
+
+  <div class="note warn">
+    <span class="note-t">Muhim tamoyil — mobile-first</span>
+    <p>Prefikssiz yozilgan qiymat har doim <b>boshlang'ich, mobil uchun holat</b> hisoblanadi. Prefikslar esa shundan kattaroq ekranlarda uni bekor qilib, o'z qiymatini qo'yadi. Ya'ni avval mobilga mo'ljallab yozasiz, keyin <code class="inline">sm:</code> → <code class="inline">md:</code> → <code class="inline">lg:</code> bilan kattalashtirib borasiz.</p>
+  </div>
+</section>
+
+<!-- ===== 4 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 1 · Solishtirish</span>
+  <h2>11-modul: <code class="inline">@media</code> vs Tailwind: bitta prefiks</h2>
+  <p>Bir xil natijaga erishish uchun sof CSS'da kamida 3–4 qator kerak: alohida class, alohida <code class="inline">@media</code> qoidasi, alohida selector. Tailwind'da esa bitta so'z yetarli.</p>
+
+  <div class="vs">
+    <div class="no">
+      <div class="vs-h">11-modul — sof CSS (4 qator)</div>
+<pre class="code" data-lang="css" data-label="style.css"><code>.baner { flex-direction: column; }
+
+@media (min-width: 768px) {
+  .baner { flex-direction: row; }
+}</code></pre>
+    </div>
+    <div class="ok">
+      <div class="vs-h">14-modul — Tailwind (bitta so'z)</div>
+<pre class="code" data-lang="html" data-label="index.html"><code>&lt;div class="flex flex-col md:flex-row gap-4"&gt;
+  &lt;div class="flex-1 bg-gray-100 p-4 rounded-lg"&gt;Chap qism&lt;/div&gt;
+  &lt;div class="flex-1 bg-gray-100 p-4 rounded-lg"&gt;O'ng qism&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+      <p style="margin-top:10px">Alohida CSS fayl yo'q, alohida qavs yo'q — <code class="inline">md:flex-row</code> o'zi barchasini bajaradi.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 5 ===== -->
+<section class="slide">
+  <span class="eyebrow">Amaliy · Kod</span>
+  <h2>Sarlavha o'lchamini ekranga qarab o'stirish</h2>
+  <p>Bir nechta prefiksni ketma-ket zanjir qilib yozish mumkin — har biri o'zidan oldingi qiymatni faqat o'z breakpoint'idan boshlab bekor qiladi.</p>
+
+<pre class="code" data-lang="html" data-label="index.html"><code>&lt;h1 class="text-base md:text-lg lg:text-xl"&gt;
+  Sarlavha
+&lt;/h1&gt;
+
+&lt;!-- Mobilda (prefikssiz):     text-base → 16px
+     768px dan boshlab (md:):  text-lg   → 18px
+     1024px dan boshlab (lg:): text-xl   → 20px --&gt;</code></pre>
+
+  <div class="cols">
+    <div>
+      <h3>Nima uchun ishlaydi</h3>
+      <p>Brauzer eng oxirida mos keladigan breakpoint qiymatini qo'llaydi. 1024px kenglikda <code class="inline">md:text-lg</code> ham, <code class="inline">lg:text-xl</code> ham "to'g'ri" bo'lib qoladi — lekin CSS tartibida keyingisi (<code class="inline">lg:</code>) g'olib chiqadi, chunki u kengroq breakpoint uchun yozilgan.</p>
+    </div>
+    <div>
+      <h3>Har qanday utility'ga qo'llanadi</h3>
+      <p><code class="inline">md:</code>, <code class="inline">lg:</code> kabi prefikslar faqat shriftga emas — <code class="inline">padding</code>, <code class="inline">width</code>, <code class="inline">grid-cols-*</code>, <code class="inline">hidden</code>/<code class="inline">flex</code> kabi deyarli barcha Tailwind class'lariga qo'shilishi mumkin.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 6 ===== -->
+<section class="slide">
+  <span class="eyebrow">Xato</span>
+  <h2>Talabalar ko'p adashadigan joy</h2>
+  <p>Prefikslarni noto'g'ri tartibda yoki chala o'ylashadi — masalan faqat <code class="inline">lg:</code> yozib, <code class="inline">md:</code>ni unutib qo'yishadi.</p>
+
+  <div class="vs">
+    <div class="no">
+      <div class="vs-h">Noto'g'ri — md: unutilgan</div>
+<pre class="code" data-lang="html"><code>&lt;div class="flex flex-col lg:flex-row"&gt;
+  ...
+&lt;/div&gt;
+
+&lt;!-- 768px–1024px oralig'ida (planshet)
+     dizayn hali ham vertikal —
+     "sinib" qolgandek ko'rinadi --&gt;</code></pre>
+    </div>
+    <div class="ok">
+      <div class="vs-h">To'g'ri — mobile-first ketma-ketlik</div>
+<pre class="code" data-lang="html"><code>&lt;div class="flex flex-col md:flex-row"&gt;
+  ...
+&lt;/div&gt;
+
+&lt;!-- Avval prefikssiz (mobil),
+     keyin sm: → md: → lg: qo'shib borasiz --&gt;</code></pre>
+    </div>
+  </div>
+
+  <div class="note bad">
+    <span class="note-t">Eslatma</span>
+    <p>768px–1024px oralig'ida foydalanuvchi ham bor — u qism unutilsa, aynan o'sha diapazonda dizayn buzilib qoladi. Har doim breakpoint'larni ketma-ket, birma-bir tekshirib chiqing.</p>
+  </div>
+</section>
+
+<!-- ===== 7 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 2 · State prefikslari</span>
+  <h2>Harakatga bog'liq stillar: <code class="inline">hover:</code> <code class="inline">focus:</code> <code class="inline">active:</code></h2>
+  <p>11-darsda <code class="inline">:hover</code> va <code class="inline">:focus</code> pseudo-klasslarini CSS'da alohida qator sifatida yozgan edik. Tailwind'da bu ham xuddi <code class="inline">md:</code> kabi prefiks orqali beriladi — farqi shuki, bu safar ekran o'lchamiga emas, <b>foydalanuvchi harakatiga</b> bog'liq.</p>
+
+<pre class="code" data-lang="html" data-label="index.html"><code>&lt;button class="bg-blue-600 hover:bg-blue-700 active:scale-95
+               text-white font-semibold px-6 py-3 rounded-lg
+               focus:ring-2 focus:ring-blue-300 focus:outline-none
+               transition duration-200"&gt;
+  Yuborish
+&lt;/button&gt;
+
+&lt;input type="text" placeholder="Ismingiz"
+       class="border border-gray-300 rounded-lg px-4 py-2
+              focus:border-blue-500 focus:ring-2 focus:ring-blue-200
+              focus:outline-none transition"&gt;</code></pre>
+
+  <div class="cardset">
+    <div class="card">
+      <h4><code class="inline">hover:</code></h4>
+      <p>Sichqoncha ustiga kelganda rang/ko'rinish o'zgaradi — masalan <code class="inline">hover:bg-blue-700</code>.</p>
+    </div>
+    <div class="card">
+      <h4><code class="inline">focus:</code></h4>
+      <p>Elementga fokus tushganda (klaviaturada <kbd>Tab</kbd> bosib o'tganda ham) atrofida halqa chiqadi — <code class="inline">focus:ring-2</code>.</p>
+    </div>
+    <div class="card">
+      <h4><code class="inline">active:</code></h4>
+      <p>Bosilayotgan paytda holat — <code class="inline">active:scale-95</code> biroz kichraytiradi.</p>
+    </div>
+  </div>
+  <div class="note">
+    <span class="note-t">Unutmang</span>
+    <p><code class="inline">transition</code> class'ini qo'shishni unutmaslik kerak — aks holda rang o'zgarishi sakrab o'tadi. Bu 11-darsdagi <code class="inline">transition: background 0.2s</code> ning Tailwind'dagi ko'rinishi.</p>
+  </div>
+</section>
+
+<!-- ===== 8 ===== -->
+<section class="slide">
+  <span class="eyebrow">Xato</span>
+  <h2>Fokusni butunlay o'chirib qo'ymang</h2>
+  <p><code class="inline">focus:outline-none</code> yozib, o'rniga hech qanday <code class="inline">focus:ring-*</code> qo'shmay qo'yishadi — natijada klaviatura bilan navigatsiya qilayotgan foydalanuvchi qaysi elementda turganini umuman ko'ra olmaydi.</p>
+
+  <div class="vs">
+    <div class="no">
+      <div class="vs-h">Noto'g'ri — fokus butunlay ko'rinmaydi</div>
+<pre class="code" data-lang="html"><code>&lt;button class="focus:outline-none"&gt;
+  Yuborish
+&lt;/button&gt;
+
+&lt;!-- Standart brauzer outline'i olib
+     tashlandi, lekin o'rniga hech
+     narsa qo'yilmadi --&gt;</code></pre>
+    </div>
+    <div class="ok">
+      <div class="vs-h">To'g'ri — o'z fokus stilingiz bilan</div>
+<pre class="code" data-lang="html"><code>&lt;button class="focus:outline-none
+               focus:ring-2 focus:ring-blue-300"&gt;
+  Yuborish
+&lt;/button&gt;
+
+&lt;!-- Standart outline o'rniga o'zimizning
+     ring stilimiz ko'rinadi --&gt;</code></pre>
+    </div>
+  </div>
+
+  <div class="note bad">
+    <span class="note-t">Qoida</span>
+    <p>Standart brauzer outline'ini olib tashlasangiz, albatta o'z fokus stilingizni (<code class="inline">ring</code> yoki <code class="inline">border</code>) bering. Bu — qulaylik (accessibility) bo'yicha eng muhim odatlardan biri.</p>
+  </div>
+</section>
+
+<!-- ===== 9 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 3 · Dark Mode</span>
+  <h2>Qorong'i rejim: <code class="inline">dark:</code></h2>
+  <p>Ko'p zamonaviy sayt va ilovalar foydalanuvchiga qorong'i (dark) va yorug' (light) rejim tanlash imkonini beradi. Tailwind'da bu ham prefiks orqali, <code class="inline">dark:</code> bilan yoziladi — standart holatda light-mode stillari qo'llanadi, <code class="inline">dark:</code> prefiksli class'lar esa faqat qorong'i rejim yoqilganda ishga tushadi.</p>
+
+<pre class="code" data-lang="html" data-label="index.html"><code>&lt;div class="bg-white dark:bg-gray-900
+            text-gray-900 dark:text-gray-100
+            p-6 rounded-xl transition-colors"&gt;
+  &lt;h2 class="text-xl font-bold"&gt;Sarlavha&lt;/h2&gt;
+  &lt;p class="text-gray-500 dark:text-gray-400"&gt;
+    Bu matn ham qorong'i rejimda o'qishga qulay rangga ega bo'ladi.
+  &lt;/p&gt;
+&lt;/div&gt;</code></pre>
+
+  <div class="note tip">
+    <span class="note-t">Analogiya</span>
+    <p>Xuddi <code class="inline">md:</code> ekran kengligiga qarab ishlagani kabi, <code class="inline">dark:</code> esa rejimga qarab ishlaydi. Tailwind CDN (v4) brauzerning tizim sozlamasidagi (<code class="inline">prefers-color-scheme</code>) qorong'i rejimni avtomatik aniqlaydi — qo'shimcha sozlash shart emas.</p>
+  </div>
+</section>
+
+<!-- ===== 10 ===== -->
+<section class="slide">
+  <span class="eyebrow">Xato</span>
+  <h2>Fonni o'zgartirib, matnni unutmang</h2>
+  <p>Faqat fon rangiga <code class="inline">dark:bg-gray-900</code> berib, matn rangini unutib qo'yishadi — natijada qorong'i fonda to'q matn butunlay o'qilmay qoladi.</p>
+
+  <div class="vs">
+    <div class="no">
+      <div class="vs-h">Noto'g'ri — matn rangi unutilgan</div>
+<pre class="code" data-lang="html"><code>&lt;div class="bg-white dark:bg-gray-900
+            text-gray-900"&gt;
+  Bu matn dark rejimda
+  deyarli ko'rinmay qoladi
+&lt;/div&gt;</code></pre>
+    </div>
+    <div class="ok">
+      <div class="vs-h">To'g'ri — fon va matn birga o'zgaradi</div>
+<pre class="code" data-lang="html"><code>&lt;div class="bg-white dark:bg-gray-900
+            text-gray-900 dark:text-gray-100"&gt;
+  Bu matn har ikkala rejimda
+  ham o'qishga qulay
+&lt;/div&gt;</code></pre>
+    </div>
+  </div>
+
+  <div class="note bad">
+    <span class="note-t">Qoida</span>
+    <p>Har doim fon va matn rangini juft holda, birga o'zgartiring — <code class="inline">bg-*</code> yozgan har joyda <code class="inline">dark:bg-*</code>ni, <code class="inline">text-*</code> yozgan har joyda <code class="inline">dark:text-*</code>ni ham eslang.</p>
+  </div>
+</section>
+
+<!-- ===== 11 ===== -->
+<section class="slide">
+  <span class="eyebrow">Amaliy · Komponent</span>
+  <h2>Responsive kartochkalar grid'i</h2>
+  <p>Uy vazifasida ham kerak bo'ladigan naqsh: mobilda 1 ustun, <code class="inline">sm:</code>da 2 ustun, <code class="inline">lg:</code>da 3 ustun. Haqiqiy ikonka rasmlaridan (<code class="inline">icon-1.png</code>–<code class="inline">icon-4.png</code>) foydalanamiz.</p>
+
+<pre class="code" data-lang="html" data-label="cards.html"><code>&lt;div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"&gt;
+
+  &lt;div class="p-6 rounded-xl border border-gray-200
+              dark:border-gray-700 dark:bg-gray-800
+              hover:shadow-lg hover:-translate-y-1 transition"&gt;
+    &lt;img src="images/icon-1.png" alt="" class="h-10 mb-4"&gt;
+    &lt;h3 class="font-semibold text-gray-900 dark:text-gray-100 mb-2"&gt;
+      Tezkor ishga tushirish
+    &lt;/h3&gt;
+    &lt;p class="text-sm text-gray-500 dark:text-gray-400"&gt;
+      Bir marta sozlab, istalgan loyihada qayta ishlating.
+    &lt;/p&gt;
+  &lt;/div&gt;
+  &lt;!-- icon-2, icon-3 bilan xuddi shu struktura takrorlanadi --&gt;
+
+&lt;/div&gt;</code></pre>
+
+  <div class="note">
+    <span class="note-t">Diqqat qiling</span>
+    <p>Bitta karta ichida uchta qatlam birga ishlatildi: <code class="inline">lg:grid-cols-3</code> (responsive), <code class="inline">hover:shadow-lg</code> (state) va <code class="inline">dark:bg-gray-800</code> (dark mode) — aynan shu uchtasi bugungi darsning markazi.</p>
+  </div>
+</section>
+
+<!-- ===== 12 ===== -->
+<section class="slide">
+  <span class="eyebrow">Jonli mashq</span>
+  <h2>Sinab ko'ring: responsive navbar + kartochka</h2>
+  <p>Pastda haqiqiy logotip (<code class="inline">logo.png</code>) bilan to'liq responsive navbar va bitta kartochka jonli ishlaydi (Tailwind CDN orqali — 13-modulda ko'rgan usul). Kodni o'zgartirib, natijani darhol kuzating.</p>
+
+  <div class="live">
+    <div class="live-head">
+      <span class="dot"></span> demo.html
+      <span class="sp"></span>
+      <button class="live-reset" type="button">↺ Qayta</button>
+    </div>
+    <div class="live-body">
+      <div class="live-editor">
+<textarea spellcheck="false">
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-white dark:bg-gray-900 transition-colors p-0">
+
+<header class="flex items-center justify-between px-6 py-4
+               border-b border-gray-100 dark:border-gray-800">
+  <img src="images/logo.png" alt="Logo" class="h-6">
+
+  <nav class="hidden md:flex items-center gap-8 text-sm
+              font-medium text-gray-600 dark:text-gray-300">
+    <a href="#" class="hover:text-gray-900 dark:hover:text-white transition">Mahsulot</a>
+    <a href="#" class="hover:text-gray-900 dark:hover:text-white transition">Narxlar</a>
+    <a href="#" class="hover:text-gray-900 dark:hover:text-white transition">Sharhlar</a>
+  </nav>
+
+  <button class="bg-blue-600 hover:bg-blue-700 active:scale-95
+                 text-white font-semibold px-5 py-2 rounded-lg
+                 focus:ring-2 focus:ring-blue-300 focus:outline-none
+                 transition duration-200 hidden md:inline-flex">
+    Ro'yxatdan o'tish
+  </button>
+
+  <button class="md:hidden text-2xl text-gray-700 dark:text-gray-200">☰</button>
+</header>
+
+<div class="p-6 max-w-sm">
+  <div class="p-6 rounded-xl border border-gray-200 dark:border-gray-700
+              dark:bg-gray-800 hover:shadow-lg hover:-translate-y-1 transition">
+    <img src="images/icon-1.png" alt="" class="h-10 mb-4">
+    <h3 class="font-semibold text-gray-900 dark:text-gray-100 mb-2">
+      Tezkor ishga tushirish
+    </h3>
+    <p class="text-sm text-gray-500 dark:text-gray-400">
+      Ekranni toraytirib-kattalashtirib, navbar qanday o'zgarishini kuzating.
+    </p>
+  </div>
+</div>
+
+</body>
+</html>
+</textarea>
+      </div>
+      <div class="live-preview"><iframe title="Natija"></iframe></div>
+    </div>
+  </div>
+
+  <div class="note tip">
+    <span class="note-t">Shuni sinab ko'ring</span>
+    <p>Natija oynasini (yoki brauzerni) torayting — 768px'dan pastda menyu va tugma yashirinib, o'rniga <code class="inline">☰</code> chiqadi. Keyin <code class="inline">bg-gray-900</code>ni <code class="inline">bg-gray-950</code>ga yoki <code class="inline">hover:shadow-lg</code>ni <code class="inline">hover:shadow-2xl</code>ga o'zgartirib ko'ring.</p>
+  </div>
+</section>
+
+<!-- ===== 13 ===== -->
+<section class="slide">
+  <span class="eyebrow">Xatolar</span>
+  <h2>Umumiy xatolar — bir joyda</h2>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th style="width:26%">Xato</th><th style="width:37%">Nima bo'ladi</th><th>Yechim</th></tr>
+      <tr>
+        <td><b>Prefiks tartibini buzish</b></td>
+        <td>Faqat <code>lg:</code> yozib <code>md:</code>ni unutish — 768–1024px oralig'ida dizayn "sinadi"</td>
+        <td>Har doim mobile-first ketma-ketlikda yozing: prefikssiz → <code>sm:</code> → <code>md:</code> → <code>lg:</code></td>
+      </tr>
+      <tr>
+        <td><b>Mobil menyuni yashirib, ochish tugmasini unutish</b></td>
+        <td><code>hidden md:flex</code> qo'yilgan, lekin burger (<code>☰</code>) tugmasi qo'shilmagan — mobilda menyu umuman ko'rinmaydi</td>
+        <td><code>hidden md:flex</code> bilan birga <code>md:hidden</code> burger tugmasini ham qo'shing</td>
+      </tr>
+      <tr>
+        <td><b><code>focus:outline-none</code> yolg'iz qoldirilgan</b></td>
+        <td>Klaviatura bilan yurgan foydalanuvchi qaysi elementda turganini ko'rmaydi</td>
+        <td><code>focus:outline-none</code>ga har doim <code>focus:ring-*</code> yoki <code>focus:border-*</code> qo'shing</td>
+      </tr>
+      <tr>
+        <td><b>Faqat fon rangiga <code>dark:</code> berish</b></td>
+        <td>Matn rangi o'zgarmay qoladi — qorong'i fonda to'q matn o'qilmaydi</td>
+        <td>Fon (<code>bg-*</code>) va matn (<code>text-*</code>) rangini har doim juft holda o'zgartiring</td>
+      </tr>
+      <tr>
+        <td><b><code>transition</code>ni unutish</b></td>
+        <td><code>hover:</code>/<code>dark:</code> o'zgarishlari sakrab, "qo'pol" ko'rinadi</td>
+        <td>Rang yoki holat o'zgaradigan har bir elementga <code>transition</code> qo'shing</td>
+      </tr>
+    </table>
+  </div>
+</section>
+
+<!-- ===== 14 ===== -->
+<section class="slide">
+  <span class="eyebrow">Best practice</span>
+  <h2>Yaxshi amaliyot — qisqacha</h2>
+  <div class="cols">
+    <div>
+      <ul>
+        <li>Har doim mobile-first fikrlang: avval prefikssiz (mobil) qiymatni yozing, keyin <code class="inline">sm:</code> → <code class="inline">md:</code> → <code class="inline">lg:</code> qo'shib boring.</li>
+        <li>Har bir interaktiv elementga (tugma, havola, karta) <code class="inline">hover:</code> va <code class="inline">transition</code> qo'shing.</li>
+        <li>Mobil menyu uchun <code class="inline">hidden md:flex</code> + <code class="inline">md:hidden</code> juftligini birga ishlating.</li>
+      </ul>
+    </div>
+    <div>
+      <ul>
+        <li><code class="inline">focus:outline-none</code> yozgan har joyda albatta <code class="inline">focus:ring-*</code> bilan almashtiring — klaviatura foydalanuvchisini unutmang.</li>
+        <li><code class="inline">dark:</code> qo'shganda fon va matn rangini birga o'zgartiring, faqat birontasini emas.</li>
+        <li>DevTools'da (01-modul) mobil, planshet va desktop o'lchamlarida natijani tekshirmasdan "tayyor" demang.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="note tip">
+    <span class="note-t">Keyingi darsga to'g'ridan-to'g'ri tayyorgarlik</span>
+    <p>15-modulda haqiqiy Figma dizaynini noldan, bosqichma-bosqich, to'liq Tailwind sahifasiga aylantirasiz — bugun o'rgangan responsive prefikslar, state va dark mode aynan o'sha loyihada ishlatiladi.</p>
+  </div>
+</section>
+
+<!-- ===== 15 ===== -->
+<section class="slide">
+  <span class="eyebrow">Amaliy vazifa</span>
+  <h2>Uyga vazifa</h2>
+
+  <div class="task">
+    <h4><span class="n">1</span> Tailwind CSS yordamida to'liq moslashuvchi (responsive) landing page qismini tayyorlash</h4>
+    <ol>
+      <li>13-darsda yaratgan Hero-section va Card komponentlaringizni oling.</li>
+      <li>Hero-section: mobilda matn va tugma vertikal (<code class="inline">flex-col</code>), <code class="inline">md:</code>dan boshlab kerak bo'lsa gorizontal joylashuvga o'ting; sarlavha o'lchamini <code class="inline">text-2xl md:text-4xl lg:text-5xl</code> qilib ekranga qarab o'stiring.</li>
+      <li>Kartalar grid'i: mobilda 1 ustun (<code class="inline">grid-cols-1</code>), <code class="inline">sm:</code>da 2 ustun, <code class="inline">lg:</code>da 3 ustun bo'lsin.</li>
+      <li>Har bir tugma va havolaga <code class="inline">hover:</code> va <code class="inline">focus:</code> holatlarini qo'shing, <code class="inline">transition</code> bilan.</li>
+      <li><b>Ixtiyoriy qiyinroq qism:</b> butun blokka <code class="inline">dark:</code> variantlarini ham qo'shing.</li>
+    </ol>
+    <div class="crit">
+      <b>Baholash mezoni:</b> kamida 3 xil elementda responsive prefiks (<code class="inline">sm:</code>/<code class="inline">md:</code>/<code class="inline">lg:</code>) ishlatilgan · mobile-first tartib buzilmagan · barcha interaktiv elementlarda <code class="inline">hover:</code> va <code class="inline">transition</code> mavjud · kamida bitta inputda yoki tugmada <code class="inline">focus:</code> holati ko'rinadi · brauzer toraytirilganda gorizontal skroll yoki siqilib qolgan matn yo'q.
+    </div>
+  </div>
+
+  <div class="note">
+    <span class="note-t">Qanday tekshirish kerak</span>
+    <p>Brauzer oynasini kichraytirib-kattalashtirib, breakpoint'lar qanday ishlashini o'zingiz kuzating; DevTools'dagi "Toggle device toolbar" bilan mobil ko'rinishni albatta tekshiring.</p>
+  </div>
+</section>
+
+<!-- ===== 16 ===== -->
+<section class="slide">
+  <span class="eyebrow">Yakun</span>
+  <h2>Xulosa</h2>
+
+  <div class="recap">
+    <div><b>Responsive prefikslar</b><code>sm:</code>/<code>md:</code>/<code>lg:</code>/<code>xl:</code> — bitta so'z bilan ekran o'lchamiga qarab stil o'zgaradi, mobile-first tartibda.</div>
+    <div><b>State prefikslari</b><code>hover:</code>/<code>focus:</code>/<code>active:</code> — foydalanuvchi harakatiga javob, <code>transition</code> bilan silliqlashtiriladi.</div>
+    <div><b>Dark Mode</b><code>dark:</code> — fon va matn rangini har doim juft holda o'zgartirib, qorong'i rejimni qo'llab-quvvatlaysiz.</div>
+    <div><b>Mobil menyu — juft class</b><code>hidden md:flex</code> va <code>md:hidden</code> doim birga ishlatiladi, aks holda menyu mobilda yo'qoladi.</div>
+    <div><b>Fokus — ko'rinmas qilmang</b><code>focus:outline-none</code> yolg'iz emas, har doim <code>focus:ring-*</code> bilan birga.</div>
+    <div><b>Keyingi qadam</b>15-modulda shu barcha bilim haqiqiy Figma dizaynini to'liq Tailwind sahifasiga aylantirishda ishlatiladi.</div>
+  </div>
+</section>
+
+<!-- ===== 17 ===== -->
+<section class="slide">
+  <span class="eyebrow">Savol-javob</span>
+  <h2>O'z-o'zini tekshirish</h2>
+
+  <div class="quiz">
+    <div class="q">
+      <p>1. Tailwind'da "mobile-first" tamoyili nimani anglatadi?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">Prefikssiz yozilgan qiymat har doim mobil (eng kichik ekran) uchun boshlang'ich holat hisoblanadi; <code>sm:</code>, <code>md:</code>, <code>lg:</code> kabi prefikslar esa shundan kattaroq ekranlarda uni bekor qilib, o'z qiymatini qo'yadi.</div>
+    </div>
+    <div class="q">
+      <p>2. <code class="inline">md:</code> prefiksi qaysi kenglikdan boshlab ishlay boshlaydi?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">768px va undan katta ekranlarda. <code>sm:</code> — 640px, <code>lg:</code> — 1024px, <code>xl:</code> — 1280px dan boshlab ishlaydi.</div>
+    </div>
+    <div class="q">
+      <p>3. <code class="inline">focus:outline-none</code>ni yolg'iz ishlatish nega xato hisoblanadi?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">Bu standart brauzer fokus chizig'ini butunlay olib tashlaydi. Agar o'rniga <code>focus:ring-*</code> yoki <code>focus:border-*</code> qo'yilmasa, klaviatura bilan (<kbd>Tab</kbd>) navigatsiya qilayotgan foydalanuvchi qaysi elementda turganini umuman ko'ra olmaydi.</div>
+    </div>
+    <div class="q">
+      <p>4. <code class="inline">dark:bg-gray-900</code> qo'shganda yana qaysi class'ni albatta qo'shish kerak?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">Mos <code>dark:text-*</code> class'ini (masalan <code>dark:text-gray-100</code>). Fon va matn rangi har doim juft holda o'zgartirilishi kerak, aks holda qorong'i fonda to'q matn o'qilmay qoladi.</div>
+    </div>
+    <div class="q">
+      <p>5. <code class="inline">hidden md:flex</code> bilan <code class="inline">md:hidden</code> nima uchun ko'pincha birga ishlatiladi?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">Birinchisi asosiy menyuni mobilda yashirib, 768px'dan boshlab ko'rsatadi; ikkinchisi esa burger tugmasini faqat mobilda ko'rsatib, kattaroq ekranda yashiradi. Ikkalasi birga bo'lmasa, mobil foydalanuvchi menyuga umuman kira olmay qoladi.</div>
+    </div>
+  </div>
+
+  <div class="lesson-jump">
+    <a href="../13-tailwind-kirish/index.html"><b>Oldingi modul</b><span>← 13-modul: Tailwind CSS'ga kirish va sozlash</span></a>
+    <a href="../15-figma-tailwind/index.html"><b>Keyingi modul</b><span>15-modul: Figma dizaynni Tailwind CSS'da nol qiymatdan yig'ish →</span></a>
+  </div>
+</section>
+
+</main>
+
+<div class="deck-nav">
+  <button data-prev type="button" title="Oldingi (←)">‹</button>
+  <span class="hint">← → varaqlash · <kbd>O</kbd> ro'yxat · <kbd>F</kbd> to'liq ekran</span>
+  <button data-next type="button" title="Keyingi (→)">›</button>
+</div>
+
+<div class="deck-overview"><h3>Slaydlar ro'yxati</h3><div class="ov-grid"></div></div>
+
+<script src="../assets/js/deck.js"></script>
+</body>
+</html>

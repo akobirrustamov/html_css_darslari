@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="uz" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>01-modul · Dasturchi muhiti va Internet qanday ishlaydi?</title>
+<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body class="deck" data-lesson="1">
+
+<div class="deck-bar">
+  <a class="home" href="../index.html">← Kurs</a>
+  <span class="title">01-modul · Dasturchi muhiti va Internet qanday ishlaydi?</span>
+  <span class="spacer"></span>
+  <div class="deck-tools">
+    <button class="tool" data-overview type="button" title="Slaydlar ro'yxati (O)">☰</button>
+    <button class="tool" data-theme-toggle type="button" title="Mavzu">☾</button>
+    <span class="counter">1 / 15</span>
+  </div>
+</div>
+<div class="deck-progress"></div>
+
+<main class="deck-stage">
+
+<!-- ===== 1 ===== -->
+<section class="slide cover">
+  <div class="lesson-no">01-modul</div>
+  <h1>Dasturchi muhiti va Internet<br>qanday ishlaydi?</h1>
+  <p>Bugun siz internet «ortida» nima borligini tushunasiz, kompyuteringizda dasturchi vositalarini sozlaysiz va o'z qo'lingiz bilan brauzerda ochiladigan birinchi HTML sahifangizni yozasiz.</p>
+  <div class="cover-plan">
+    <div><b>Reja 1</b>Internet arxitekturasi: Client-Server, IP, DNS, Provider, API, Domen</div>
+    <div><b>Reja 2</b>Muhitni sozlash: VS Code, Chrome va papkalar bilan ishlash</div>
+    <div><b>Reja 3</b>VS Code kengaytmalari: Live Server, Material Icon Theme, Auto Save</div>
+    <div><b>Reja 4</b>HTML5 ga kirish: juft/toq taglar, h1–h6, p, br</div>
+    <div><b>Amaliyot</b>Uy vazifasi: shaxsiy vizitka-sahifa (bio-page) yaratish</div>
+  </div>
+</section>
+
+<!-- ===== 2 ===== -->
+<section class="slide">
+  <span class="eyebrow">Maqsad</span>
+  <h2>Dars oxirida siz nima qila olasiz</h2>
+  <p class="big">Bu darsdan keyin siz internet qanday ishlashini tushunasiz va kompyuteringizda o'zingizning birinchi HTML sahifangizni yaratasiz.</p>
+  <div class="cardset">
+    <div class="card">
+      <span class="ico">🌐</span>
+      <h4>Tushunasiz</h4>
+      <p>Manzil satriga sayt nomini yozganingizdan sahifa chiqqunga qadar nima sodir bo'lishini — Client, Server, IP, DNS, Domen, API.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🛠</span>
+      <h4>Sozlaysiz</h4>
+      <p>VS Code va Chrome'ni o'rnatasiz, kerakli kengaytmalarni ulaysiz va toza papka tuzilmasini yaratasiz.</p>
+    </div>
+    <div class="card">
+      <span class="ico">📄</span>
+      <h4>Yozasiz</h4>
+      <p>Birinchi HTML tegingizni qo'lingiz bilan yozasiz: sarlavhalar (h1–h6), paragraf (p), qator ko'chirish (br).</p>
+    </div>
+    <div class="card">
+      <span class="ico">🚀</span>
+      <h4>Ishga tushurasiz</h4>
+      <p>Live Server orqali faylni brauzerda ochib, o'zgarishlarni real vaqtda ko'rasiz.</p>
+    </div>
+  </div>
+  <div class="note tip">
+    <span class="note-t">Muhim qoida</span>
+    <p>Bu kursda <b>faqat tomosha qilish yetarli emas</b>. Har bir slaydda kod bor — uni o'zgartiring, buzing, qayta tiklang. Qo'l bilan yozilmagan kod esda qolmaydi.</p>
+  </div>
+</section>
+
+<!-- ===== 3 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 1 · Nazariya</span>
+  <h2>Brauzer va server — mijoz-oshxona metaforasi</h2>
+  <p><b>Brauzer</b> (browser) — Chrome, Safari, Edge kabi dasturlar bo'lib, ular internetdagi sahifalarni o'qib, ekranda chiroyli ko'rinishda ko'rsatib beradi. Internet esa katta restoran kabi ishlaydi.</p>
+
+  <div class="cols">
+    <div>
+      <h3>Restoran metaforasi</h3>
+      <ul>
+        <li><b>Siz</b> — mijoz (<b>Client</b>), ya'ni brauzeringiz.</li>
+        <li><b>Ofitsiant</b> — sizning so'rovingizni oshxonaga yetkazadi.</li>
+        <li><b>Oshxona</b> — server (<b>Server</b>), taomni (sahifani) tayyorlaydi.</li>
+        <li>Taom orqaga qaytadi — bu <b>javob</b> (response).</li>
+      </ul>
+      <p>Xuddi shunday: brauzer serverga <i>«menga shu sahifani ber»</i> deb <b>so'rov</b> (request) yuboradi, server esa HTML faylni qaytaradi. Bu — <b>Client-Server modeli</b>.</p>
+    </div>
+    <div class="card">
+      <h4>Nima uchun bu muhim?</h4>
+      <p>Frontend dasturchi bo'lish uchun aynan shu jarayonni — brauzeringiz bilan uzoqdagi server o'rtasidagi «muloqotni» — tushunish kerak. Bugundan boshlab siz yozadigan har bir HTML sahifa aynan shu yo'l orqali dunyodagi millionlab odamlarga yetib boradi.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 4 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 1 · Nazariya</span>
+  <h2>So'rov zanjiri: brauzerdan serverga va orqaga</h2>
+  <p>Manzil satriga sayt nomini yozib Enter bosganingizda, aynan shu qadamlar sodir bo'ladi.</p>
+
+<pre class="code" data-lang="html" data-label="so'rov-javob"><code>BRAUZER (Client)                         SERVER
+   |                                         |
+   |  1. "google.com" ga so'rov (Request)    |
+   |----------------------------------------->
+   |                                         |
+   |          (avval DNS: domen -> IP)       |
+   |                                         |
+   |  2. HTML fayl bilan javob (Response)    |
+   |<-----------------------------------------
+   |                                         |
+   v
+Ekranda sahifa chiqadi</code></pre>
+
+  <div class="note">
+    <span class="note-t">Talabalar ko'p adashadigan joy</span>
+    <p>Ko'p talabalar «Domen» va «IP manzil»ni bir xil narsa deb o'ylashadi. Ta'kidlab o'tamiz: Domen — bu odam uchun qulay ism, IP — bu kompyuter tushunadigan haqiqiy manzil, DNS esa ikkovini bir-biriga bog'lovchi «tarjimon». Buni keyingi slaydda batafsil ko'ramiz.</p>
+  </div>
+</section>
+
+<!-- ===== 5 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 1 · Nazariya</span>
+  <h2>IP manzil, Domen va DNS</h2>
+  <p>Internetdagi har bir qurilma (kompyuter, telefon, server) o'ziga xos raqamli manzilga ega — xuddi har bir uyning pochta manzili bo'lgani kabi.</p>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th>Tushuncha</th><th>Misol</th><th>Ma'nosi</th></tr>
+      <tr><td><b>IP manzil</b> (IP Address)</td><td><code>172.217.16.142</code></td><td>Qurilmaning tarmoqdagi haqiqiy, raqamli manzili.</td></tr>
+      <tr><td><b>Domen</b> (Domain)</td><td><code>google.com</code></td><td>Odam eslab qolishi oson bo'lgan, o'qiladigan nom.</td></tr>
+      <tr><td><b>DNS</b> (Domain Name System)</td><td>«google.com → 172.217.16.142»</td><td>Domen nomini IP manzilga aylantiruvchi tizim — internetning telefon kitobi.</td></tr>
+    </table>
+  </div>
+
+  <div class="note tip">
+    <span class="note-t">Oddiy tilda</span>
+    <p>Siz brauzerga <code class="inline">google.com</code> deb yozganingizda, DNS tizimi orqaga «bu domenning haqiqiy IP manzili shu» deb javob beradi, shundan keyingina brauzer to'g'ri serverga ulanadi. Odamlar raqamlarni eslab qolishni yoqtirmaydi — shuning uchun domen nomi o'ylab topilgan.</p>
+  </div>
+</section>
+
+<!-- ===== 6 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 1 · Nazariya</span>
+  <h2>Provider (ISP) va API tushunchalari</h2>
+
+  <div class="cols">
+    <div class="card">
+      <span class="ico">📡</span>
+      <h4>Provider (ISP)</h4>
+      <p><b>Internet Service Provider</b> — bu sizga internetni «yetkazib beruvchi» kompaniya (masalan, Beeline, Uzmobile, TPS). Ular sizning uyingizni katta internet tarmog'iga ulaydi — xuddi suv kompaniyasi uyingizga suv quvurini ulagani kabi.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🔌</span>
+      <h4>API</h4>
+      <p><b>Application Programming Interface</b> — ikki dastur bir-biri bilan «gaplashishi» uchun kelishilgan qoidalar to'plami. Masalan, ob-havo ilovasi o'zi ob-havoni «bilmaydi», u boshqa serverdan API orqali ma'lumot so'raydi va javobni ko'rsatadi.</p>
+    </div>
+  </div>
+
+  <div class="note">
+    <span class="note-t">Hozircha shu yetarli</span>
+    <p>Bu tushunchalarga keyingi darslarda qayta-qayta qaytamiz — hozircha faqat umumiy tasavvur kifoya. Muhimi: internet yagona bo'sh tushuncha emas, balki bir nechta aniq qismlardan (qurilma, tarmoq, kompaniya, tizim) tashkil topgan.</p>
+  </div>
+</section>
+
+<!-- ===== 7 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 1 · Nazariya</span>
+  <h2>Domen nomining tuzilishi</h2>
+  <p>Kelajakda havolalar va manzillar bilan ishlashda bu tuzilmani tanish juda asqotadi.</p>
+
+<pre class="code" data-lang="html" data-label="domen"><code>https://www.google.com
+└─┬─┘   └──────┬──────┘
+  │            │
+protokol      domen (DNS orqali IP ga aylanadi)</code></pre>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th>Qism</th><th>Misol</th><th>Vazifasi</th></tr>
+      <tr><td><b>Protokol</b></td><td><code>https://</code></td><td>Ma'lumot qanday uzatiladi. <code>https</code> — shifrlangan, bugungi standart.</td></tr>
+      <tr><td><b>Domen</b></td><td><code>www.google.com</code></td><td>Sayt nomi. DNS uni IP manzilga aylantiradi.</td></tr>
+    </table>
+  </div>
+
+  <div class="note warn">
+    <span class="note-t">Yodda tuting</span>
+    <p>Domen — bu odam uchun qulay ism, IP — kompyuter tushunadigan haqiqiy manzil, DNS esa ikkovini bog'lovchi tarjimon. Bu uchtasini ajrata bilish — internetni tushunishning kaliti.</p>
+  </div>
+</section>
+
+<!-- ===== 8 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 2 · Amaliyot</span>
+  <h2>Muhitni sozlaymiz: VS Code va Chrome</h2>
+
+  <div class="cols">
+    <div>
+      <h3>1. VS Code o'rnatish</h3>
+      <p>Kod yozish uchun matn muharriri (kod editor) kerak — biz <b>Visual Studio Code</b> (qisqacha VS Code) dan foydalanamiz, chunki u bepul, tez va deyarli barcha frontend dasturchilar shu bilan ishlaydi.</p>
+      <p><a href="https://code.visualstudio.com/" target="_blank" rel="noopener">code.visualstudio.com</a> → Download → o'rnatish. Windows/macOS/Linux uchun bepul.</p>
+
+      <h3>2. Chrome brauzeri</h3>
+      <p>Bu — bizning HTML sahifalarimizni ko'rish uchun ishlatadigan oyna, ya'ni mijoz (Client) tomonini biz shu yerda ko'ramiz.</p>
+    </div>
+    <div>
+      <h3>3. Papka tuzilishi — eng muhim qism</h3>
+      <p>Kompyuteringizda (Ish stoli yoki Hujjatlar ichida) <code class="inline">html-course</code> nomli bitta asosiy papka yarating va har bir dars uchun ichida alohida papkacha oching.</p>
+<pre class="code" data-lang="html" data-label="papkalar"><code>html-course/
+  01-dars/
+    index.html
+  02-dars/
+    index.html</code></pre>
+      <p>Nega bu muhim: loyihalar tartibsiz bo'lsa, fayllarni topish qiyinlashadi, HTML fayl esa rasm yoki boshqa fayllarga nisbiy yo'l (relative path) orqali murojaat qiladi — shuning uchun tuzilma toza bo'lishi shart.</p>
+    </div>
+  </div>
+
+  <div class="note warn">
+    <span class="note-t">Talabalar ko'p adashadigan joy</span>
+    <p>Ko'p talabalar fayllarni Ish stoli bo'ylab tartibsiz sochib tashlaydi yoki papka nomlarida probel va katta harflar ishlatadi (masalan, <code class="inline">Mening Loyiham</code>). Tavsiya: papka va fayl nomlarini har doim <b>kichik harflar va tire (-)</b> bilan yozing — bu keyinchalik saytni internetga joylashda muammo tug'dirmaydi.</p>
+  </div>
+</section>
+
+<!-- ===== 9 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 3 · Amaliyot</span>
+  <h2>VS Code kengaytmalari (Extensions)</h2>
+  <p>VS Code-ning kuchli tomoni — uni kengaytmalar bilan boyitish mumkinligi. Chap tarafdagi Extensions belgisini bosib (yoki <kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>X</kbd> / <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>X</kbd>), qidiruv orqali uchta muhim kengaytmani o'rnatamiz.</p>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th>Kengaytma</th><th>Nima qiladi</th></tr>
+      <tr><td><b>Live Server</b></td><td>HTML faylni brauzerda ochish bilan bir qatorda, faylga o'zgartirish kiritganingizda sahifani avtomatik yangilab turadi. Fayl → saqlash → brauzer o'zi refresh bo'ladi. O'rnatgandan keyin HTML faylga o'ng tugma bosib «Open with Live Server» ni tanlang.</td></tr>
+      <tr><td><b>Material Icon Theme</b></td><td>Papka va fayllarga chiroyli, rangli ikonkalar qo'shadi — shunda <code class="inline">.html</code>, <code class="inline">.css</code>, <code class="inline">.js</code> fayllarini ko'z bilan tezda farqlash mumkin bo'ladi.</td></tr>
+      <tr><td><b>Auto Save</b></td><td>VS Code-ning o'zida bor sozlama, <b>File</b> menyusidan «Auto Save» ni yoqish orqali faollashtiriladi. Yoqilgandan keyin har safar <kbd>Ctrl</kbd>+<kbd>S</kbd> bosish shart bo'lmaydi — fayl o'zgarishlar bilan avtomatik saqlanadi.</td></tr>
+    </table>
+  </div>
+
+<pre class="code" data-lang="json" data-label="settings.json"><code>// Auto Save qo'lda yozilsa shunday ko'rinadi
+{
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 1000
+}</code></pre>
+
+  <div class="note">
+    <span class="note-t">Talabalar ko'p adashadigan joy</span>
+    <p>Ba'zi talabalar Live Server o'rniga HTML faylni to'g'ridan-to'g'ri ikki marta bosib (double-click) ochadi. Bu ham ishlaydi, lekin har safar o'zgarish kiritganda qo'lda <kbd>F5</kbd> bosish kerak bo'ladi — shuning uchun Live Server-dan foydalanishni doim odat qiling.</p>
+  </div>
+</section>
+
+<!-- ===== 10 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 4 · Nazariya</span>
+  <h2>HTML nima? Juft va toq taglar</h2>
+  <p><b>HTML</b> (HyperText Markup Language) — bu dasturlash tili emas, <b>belgilash</b> (markup) tili, ya'ni u sahifaning mazmuni va tuzilmasini belgilaydi. Har bir HTML element — <b>teg</b> (tag) deb ataladi va qavs ichida yoziladi: <code class="inline">&lt;teg-nomi&gt;</code>.</p>
+
+  <div class="cols">
+    <div class="card">
+      <h4>Juft taglar (paired)</h4>
+      <p>Ochuvchi va yopuvchi qismdan iborat: <code class="inline">&lt;p&gt;matn&lt;/p&gt;</code>. Yopuvchi tagda qo'shimcha slash (<code class="inline">/</code>) belgisi bo'ladi.</p>
+    </div>
+    <div class="card">
+      <h4>Toq taglar (unpaired)</h4>
+      <p>Yopuvchi juftlik talab qilmaydi, masalan <code class="inline">&lt;br&gt;</code> (qator ko'chirish) yoki <code class="inline">&lt;hr&gt;</code> (chiziq).</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 11 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 4 · Nazariya</span>
+  <h2>Sarlavhalar (h1–h6), paragraf (p) va br</h2>
+  <p>Sarlavha taglarini gazeta bilan solishtiring: gazetaning bosh sahifasidagi katta sarlavha — <code class="inline">h1</code>, kichikroq bo'lim nomlari — <code class="inline">h2</code>, <code class="inline">h3</code> va hokazo.</p>
+
+  <div class="cols">
+    <div>
+      <h3><code class="inline">&lt;h1&gt;</code>–<code class="inline">&lt;h6&gt;</code> — sarlavhalar</h3>
+      <p><code class="inline">h1</code> — eng katta va eng muhim sarlavha (odatda sahifada bitta bo'ladi), <code class="inline">h6</code> — eng kichigi.</p>
+      <h3><code class="inline">&lt;p&gt;</code> — paragraf</h3>
+      <p>Oddiy matn bo'lagi, xatboshi uchun ishlatiladi.</p>
+    </div>
+    <div>
+      <h3><code class="inline">&lt;br&gt;</code> — qator ko'chirish</h3>
+      <p>Xatboshi ochmasdan, faqat qatorni yangi qatorga ko'chiradi — masalan, she'r yozayotganda yoki manzilni bir necha qatorga bo'lib yozayotganda.</p>
+    </div>
+  </div>
+
+<pre class="code" data-lang="html" data-label="index.html"><code>&lt;h1&gt;Salom, men Aziz&lt;/h1&gt;
+&lt;h2&gt;Frontend dasturchi bo'lishga intilyapman&lt;/h2&gt;
+&lt;p&gt;Men hozirda HTML va CSS o'rganyapman.&lt;/p&gt;
+&lt;p&gt;
+  Manzilim:&lt;br&gt;
+  Toshkent shahri,&lt;br&gt;
+  Chilonzor tumani
+&lt;/p&gt;</code></pre>
+
+  <div class="note warn">
+    <span class="note-t">Talabalar ko'p adashadigan joy</span>
+    <p>Ko'pchilik yopuvchi tagni yozishni unutadi (masalan, <code class="inline">&lt;p&gt;matn</code> deb yozib, <code class="inline">&lt;/p&gt;</code> qo'ymaydi) yoki <code class="inline">h1</code> ni sahifada bir necha marta ishlatib yuboradi. <b>h1 — sahifada faqat bitta bo'lishi tavsiya etiladi</b>, chunki u sahifaning asosiy mavzusini bildiradi.</p>
+  </div>
+</section>
+
+<!-- ===== 12 ===== -->
+<section class="slide">
+  <span class="eyebrow">Jonli mashq</span>
+  <h2>Birinchi HTML kodingizni yozing</h2>
+  <p>Chapdagi kodni to'g'ridan-to'g'ri o'zgartiring — o'ng tomonda natija darhol yangilanadi. Ismingiz va shahringizni yozib ko'ring.</p>
+
+  <div class="live">
+    <div class="live-head">
+      <span class="dot"></span> index.html
+      <span class="sp"></span>
+      <button class="live-reset" type="button">↺ Qayta</button>
+    </div>
+    <div class="live-body">
+      <div class="live-editor">
+<textarea spellcheck="false">
+<h1>Salom, men Aziz</h1>
+<h2>Frontend dasturchi bo'lishga intilyapman</h2>
+<p>Men hozirda HTML va CSS o'rganyapman.</p>
+<p>
+  Manzilim:<br>
+  Toshkent shahri,<br>
+  Chilonzor tumani
+</p>
+</textarea>
+      </div>
+      <div class="live-preview"><iframe title="Natija"></iframe></div>
+    </div>
+  </div>
+
+  <div class="note tip">
+    <span class="note-t">Sinab ko'ring</span>
+    <p><code class="inline">&lt;h1&gt;</code> ni <code class="inline">&lt;h3&gt;</code> ga o'zgartiring — shrift kichrayadi. Yopilish tegini (<code class="inline">&lt;/p&gt;</code>) o'chirib ko'ring va nima bo'lishini kuzating. Yana bitta <code class="inline">&lt;p&gt;</code> band qo'shib ko'ring.</p>
+  </div>
+</section>
+
+<!-- ===== 13 ===== -->
+<section class="slide">
+  <span class="eyebrow">Xatolar</span>
+  <h2>Umumiy xatolar va to'g'ri yozish odati</h2>
+
+  <div class="vs">
+    <div class="ok">
+      <div class="vs-h">✓ TO'G'RI</div>
+<pre class="code" data-lang="html"><code>&lt;h1&gt;Salom, men Aziz&lt;/h1&gt;
+&lt;p&gt;Bu paragraf to'liq yopilgan.&lt;/p&gt;
+&lt;p&gt;
+  Birinchi qator&lt;br&gt;
+  Ikkinchi qator
+&lt;/p&gt;</code></pre>
+    </div>
+    <div class="no">
+      <div class="vs-h">✗ NOTO'G'RI</div>
+<pre class="code" data-lang="html"><code>&lt;h1&gt;Salom, men Aziz
+&lt;p&gt;Bu paragraf yopilmagan.
+&lt;h1&gt;Ikkinchi h1 (xato)&lt;/h1&gt;</code></pre>
+    </div>
+  </div>
+
+  <div class="cardset">
+    <div class="card">
+      <span class="ico">🔖</span>
+      <h4>Yopilmagan teg</h4>
+      <p>Har bir juft tegning yopilishi shart. Aks holda keyingi kontent ham shu teg ichida qolib ketadi.</p>
+    </div>
+    <div class="card">
+      <span class="ico">1️⃣</span>
+      <h4>Bir nechta h1</h4>
+      <p>Sahifada faqat bitta <code class="inline">h1</code> bo'lsin — u sahifaning asosiy mavzusini bildiradi.</p>
+    </div>
+    <div class="card">
+      <span class="ico">📁</span>
+      <h4>Noto'g'ri fayl nomi</h4>
+      <p>Katta harf, probel yoki kirill harflar ishlatmang — faqat kichik lotin harflari va tire.</p>
+    </div>
+  </div>
+
+  <div class="note bad">
+    <span class="note-t">Doim eslab qoling</span>
+    <p>Kod ishlamasa — birinchi navbatda barcha taglar to'g'ri yopilganini tekshiring. Bu birinchi kunning eng ko'p uchraydigan xatosi.</p>
+  </div>
+</section>
+
+<!-- ===== 14 ===== -->
+<section class="slide">
+  <span class="eyebrow">Amaliy vazifa</span>
+  <h2>Uyga vazifa: vizitka-sahifa (bio-page)</h2>
+
+  <div class="task">
+    <h4><span class="n">1</span> O'zingiz haqingizda vizitka-sahifa yarating</h4>
+    <ol>
+      <li>Kompyuteringizda <code class="inline">01-dars</code> nomli papka yarating (kichik harf, defis bilan).</li>
+      <li>Ichida <code class="inline">index.html</code> faylini yarating.</li>
+      <li>Bitta <code class="inline">&lt;h1&gt;</code> — ism-familiyangiz.</li>
+      <li>Bitta <code class="inline">&lt;h2&gt;</code> — kasb yoki maqsad (masalan, «Bo'lajak frontend dasturchi»).</li>
+      <li>Kamida uchta <code class="inline">&lt;p&gt;</code> — o'zingiz haqingizda: qayerdansiz, nima bilan qiziqasiz, nima uchun dasturlashni o'rganmoqchisiz.</li>
+      <li>Kamida bir joyda <code class="inline">&lt;br&gt;</code> ishlating (masalan, manzil yoki kontakt ma'lumotida).</li>
+      <li>Live Server orqali oching va brauzerda tekshiring.</li>
+    </ol>
+    <div class="crit">
+      <b>Baholash mezoni:</b> fayl <code>index.html</code> nomida, o'z <code>01-dars</code> papkasida saqlangan · kamida bitta <code>h1</code>, bitta <code>h2</code> va uchta <code>p</code> ishlatilgan · kamida bir joyda <code>br</code> bor · barcha taglar yopilgan · sahifa Live Server orqali ochilganda xatosiz ko'rinadi.
+    </div>
+  </div>
+
+  <div class="note">
+    <span class="note-t">Diqqat</span>
+    <p>Bu sahifada faqat sarlavhalar (<code class="inline">h1</code>, <code class="inline">h2</code>, <code class="inline">h3</code>) va paragraflar (<code class="inline">p</code>) bo'lishi kerak — hech qanday rasm yoki boshqa teglar shart emas, chunki biz hali HTML-ning eng boshlang'ich qismini o'rgandik. Rasm, havola va ro'yxatlar haqida keyingi darsda gaplashamiz.</p>
+  </div>
+</section>
+
+<!-- ===== 15 ===== -->
+<section class="slide">
+  <span class="eyebrow">Yakun</span>
+  <h2>Xulosa</h2>
+  <div class="recap">
+    <div><b>Client-Server</b>Brauzer (mijoz) serverga so'rov yuboradi, server HTML fayl bilan javob qaytaradi.</div>
+    <div><b>IP, Domen, DNS</b>IP — haqiqiy manzil, Domen — odam uchun qulay ism, DNS — ikkovini bog'lovchi tarjimon.</div>
+    <div><b>Provider va API</b>Provider internetni yetkazadi, API dasturlarni bir-biri bilan «gaplashtiradi».</div>
+    <div><b>Muhit sozlandi</b>VS Code, Chrome, toza papka tuzilmasi — kichik harf, lotin, defis.</div>
+    <div><b>Kengaytmalar</b>Live Server, Material Icon Theme, Auto Save — ishni tezlashtiradi.</div>
+    <div><b>Birinchi HTML</b>Juft/toq taglar, h1–h6, p, br — birinchi sahifangiz tayyor.</div>
+  </div>
+
+  <h3 style="margin-top:30px">Savol-javob</h3>
+  <div class="quiz">
+    <div class="q">
+      <p>1. Client-Server modelida brauzer va server qanday rol o'ynaydi?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">Brauzer — mijoz (Client), u serverga so'rov (request) yuboradi. Server esa so'ralgan HTML faylni javob (response) sifatida qaytaradi. Xuddi restoranda mijoz va oshxona kabi.</div>
+    </div>
+    <div class="q">
+      <p>2. Domen va IP manzil o'rtasidagi farq nima?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">IP manzil — qurilmaning tarmoqdagi haqiqiy, raqamli manzili (masalan 172.217.16.142). Domen — odam eslab qolishi oson bo'lgan nom (masalan google.com). DNS ikkovini bog'lab beradi.</div>
+    </div>
+    <div class="q">
+      <p>3. Live Server kengaytmasi nima uchun kerak?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">Fayl saqlanganda brauzerni avtomatik yangilaydi, shuning uchun har safar qo'lda F5 bosish shart bo'lmaydi. Bu ishni sezilarli tezlashtiradi.</div>
+    </div>
+    <div class="q">
+      <p>4. Qaysi teglar toq (yopilmaydigan) hisoblanadi? Ikkitasini ayting.</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans"><code>&lt;br&gt;</code> (qator ko'chirish) va <code>&lt;hr&gt;</code> (gorizontal chiziq). Ularning ichida kontent bo'lmagani uchun yopilish tegi kerak emas.</div>
+    </div>
+    <div class="q">
+      <p>5. Nega sahifada faqat bitta <code class="inline">&lt;h1&gt;</code> bo'lishi tavsiya etiladi?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">Chunki h1 sahifaning asosiy mavzusini (eng muhim sarlavhasini) bildiradi. Bir nechta h1 ishlatish sahifaning mazmun tuzilmasini chalkashtirib yuboradi.</div>
+    </div>
+  </div>
+
+  <div class="lesson-jump">
+    <a href="../02-html-struktura-media/index.html"><b>Keyingi modul</b><span>02-modul: HTML Struktura, Media va Havolalar →</span></a>
+  </div>
+</section>
+
+</main>
+
+<div class="deck-nav">
+  <button data-prev type="button" title="Oldingi (←)">‹</button>
+  <span class="hint">← → varaqlash · <kbd>O</kbd> ro'yxat · <kbd>F</kbd> to'liq ekran</span>
+  <button data-next type="button" title="Keyingi (→)">›</button>
+</div>
+
+<div class="deck-overview"><h3>Slaydlar ro'yxati</h3><div class="ov-grid"></div></div>
+
+<script src="../assets/js/deck.js"></script>
+</body>
+</html>

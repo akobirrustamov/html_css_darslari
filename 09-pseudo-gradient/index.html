@@ -1,0 +1,759 @@
+<!doctype html>
+<html lang="uz" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>09-modul · CSS Pseudo-classes, Pseudo-elements va Gradientlar</title>
+<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body class="deck" data-lesson="9">
+
+<div class="deck-bar">
+  <a class="home" href="../index.html">← Kurs</a>
+  <span class="title">09-modul · CSS Pseudo-classes, Pseudo-elements va Gradientlar</span>
+  <span class="spacer"></span>
+  <div class="deck-tools">
+    <button class="tool" data-overview type="button" title="Slaydlar ro'yxati (O)">☰</button>
+    <button class="tool" data-theme-toggle type="button" title="Mavzu">☾</button>
+    <span class="counter">1 / 17</span>
+  </div>
+</div>
+<div class="deck-progress"></div>
+
+<main class="deck-stage">
+
+<!-- ===== 1 ===== -->
+<section class="slide cover">
+  <div class="lesson-no">09-modul</div>
+  <h1>CSS Pseudo-classes, Pseudo-elements va Gradientlar:<br>elementlarga hayot kiritish</h1>
+  <p>08-modulda hero section va fixed navbar yasagan edik, lekin ular butunlay statik edi — sichqonchani ustiga olib borsangiz ham hech narsa sodir bo'lmasdi. Bugun aynan shu navbar va kartochkalarga «hayot» kiritamiz: holatga qarab (<code class="inline">:hover</code>, <code class="inline">:focus</code>) o'zgaradigan, HTML'ga tegmasdan bezaklar qo'shiladigan va zamonaviy gradient fonli bo'ladigan qilamiz.</p>
+  <div class="cover-plan">
+    <div><b>Reja 1</b>Holat psevdo-klasslari — <code class="inline">:hover</code>, <code class="inline">:active</code>, <code class="inline">:focus</code> va struktura psevdo-klasslari <code class="inline">:first-child</code>, <code class="inline">:last-child</code>, <code class="inline">:nth-child()</code></div>
+    <div><b>Reja 2</b>Pseudo-elementlar — <code class="inline">::before</code>, <code class="inline">::after</code></div>
+    <div><b>Reja 3</b>Gradientlar — <code class="inline">linear-gradient</code> fonlar, tugmalar va rasm ustiga overlay</div>
+    <div><b>Amaliyot</b>Kamida 3 ta gradient fonli, hover effektli kartochka yasaymiz</div>
+  </div>
+</section>
+
+<!-- ===== 2 ===== -->
+<section class="slide">
+  <span class="eyebrow">Maqsad</span>
+  <h2>Dars oxirida siz nima qila olasiz</h2>
+  <p class="big">Bu darsdan keyin siz elementlarning turli holatlarini (<code class="inline">hover</code>, <code class="inline">focus</code>, <code class="inline">nth-child</code> va h.k.) boshqarishni, <code class="inline">::before</code>/<code class="inline">::after</code> yordamida HTML'ga tegmasdan dekorativ elementlar qo'shishni va <code class="inline">linear-gradient</code> bilan zamonaviy fonlar/tugmalar yasashni bilasiz.</p>
+  <div class="cardset">
+    <div class="card">
+      <span class="ico">🖱️</span>
+      <h4>Holatni boshqarasiz</h4>
+      <p><code class="inline">:hover</code>, <code class="inline">:active</code>, <code class="inline">:focus</code> — foydalanuvchi harakatiga javob beruvchi element.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🔢</span>
+      <h4>O'rniga qarab stillaysiz</h4>
+      <p><code class="inline">:first-child</code>, <code class="inline">:last-child</code>, <code class="inline">:nth-child()</code> — class yozmasdan tartibga qarab tanlash.</p>
+    </div>
+    <div class="card">
+      <span class="ico">✨</span>
+      <h4>Bezak qo'shasiz</h4>
+      <p><code class="inline">::before</code>/<code class="inline">::after</code> — HTML'ni «iflos» qilmasdan dekorativ kontent.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🎨</span>
+      <h4>Gradient yasaysiz</h4>
+      <p><code class="inline">linear-gradient()</code> — zamonaviy fon, tugma va rasm ustiga overlay.</p>
+    </div>
+  </div>
+  <div class="note tip">
+    <span class="note-t">Savol</span>
+    <p>Agar sizda 10 ta kartochka bo'lsa va faqat birinchisiga boshqacharoq stil kerak bo'lsa — har biriga alohida class yozasizmi? Yo'q! Bugun buni bittagina qatorda CSS orqali hal qilamiz.</p>
+  </div>
+</section>
+
+<!-- ===== 3 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 1 · Holat psevdo-klasslari</span>
+  <h2><code class="inline">:hover</code>, <code class="inline">:active</code>, <code class="inline">:focus</code> — elementning «hayoti»</h2>
+  <p>Eng ko'p ishlatiladigan uchta holat psevdo-klassi bor. <code class="inline">:hover</code> — sichqoncha element ustiga kelganda ishga tushadi, masalan tugma rangi o'zgarishi. <code class="inline">:active</code> — sichqoncha tugmasini bosib, hali qo'yib yubormagan aniq lahzadagi holat — odatda tugma biroz «botib» ketganday ko'rinadi, bu foydalanuvchiga «bosilmoqda» degan tuyg'u beradi. <code class="inline">:focus</code> esa element klaviatura (<kbd>Tab</kbd>) yoki bosish orqali «faollashtirilganda» ishga tushadi — bu ayniqsa klaviatura orqali saytdan foydalanadigan odamlar uchun juda muhim, chunki ular qaysi elementda turganini ko'rishlari kerak.</p>
+
+<pre class="code" data-lang="css" data-label="tugma holatlari"><code>.btn {
+  padding: 12px 24px;
+  background: #4a6cf7;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: #3a56d4;
+}
+
+.btn:active {
+  background: #2f46b0;
+}
+
+.btn:focus {
+  outline: 3px solid #a3b8ff;
+}</code></pre>
+
+  <div class="note warn">
+    <span class="note-t">Ko'p uchraydigan xato</span>
+    <p>Ko'pchilik <code class="inline">:focus</code>ni umuman e'tiborsiz qoldiradi yoki <code class="inline">outline: none;</code> deb o'chirib qo'yadi — bu klaviatura bilan foydalanuvchilar uchun saytni «ko'rmas» qilib qo'yadi. Agar outline'ni o'chirsangiz, albatta o'rniga boshqa ko'rinadigan stil (masalan <code class="inline">border</code> yoki <code class="inline">box-shadow</code>) qo'ying.</p>
+  </div>
+</section>
+
+<!-- ===== 4 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 1 · Jonli mashq</span>
+  <h2>Tugma va menyu holatlarini sinab ko'ring</h2>
+  <p>Pastdagi menyuda uchala holat psevdo-klassi ham ishlatilgan. <kbd>Tab</kbd> tugmasi bilan havolalar orasida o'ting va <code class="inline">:focus</code> holatini ko'ring, sichqonchani bosib turib <code class="inline">:active</code> rangini kuzating.</p>
+
+  <div class="live">
+    <div class="live-head">
+      <span class="dot"></span> holatlar.html
+      <span class="sp"></span>
+      <button class="live-reset" type="button">↺ Qayta</button>
+    </div>
+    <div class="live-body">
+      <div class="live-editor">
+<textarea spellcheck="false">
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: Arial, sans-serif; padding: 20px; }
+
+  .menyu { list-style: none; margin: 0; padding: 0; max-width: 260px; border: 1px solid #dfe3ec; border-radius: 10px; overflow: hidden; }
+
+  .menyu a {
+    display: block;
+    padding: 14px 16px;
+    text-decoration: none;
+    color: #16181d;
+    border-bottom: 1px solid #dfe3ec;
+  }
+
+  .menyu li:last-child a { border-bottom: none; }
+
+  .menyu a:hover  { background: #e7ecff; color: #2f5cff; }
+  .menyu a:focus  { outline: 2px solid #2f5cff; outline-offset: -2px; }
+  .menyu a:active { background: #2f5cff; color: #fff; }
+</style>
+
+<ul class="menyu">
+  <li><a href="#">Bosh sahifa</a></li>
+  <li><a href="#">Kurslar</a></li>
+  <li><a href="#">Modullar</a></li>
+  <li><a href="#">Aloqa</a></li>
+</ul>
+</textarea>
+      </div>
+      <div class="live-preview"><iframe title="Natija"></iframe></div>
+    </div>
+  </div>
+
+  <div class="note tip">
+    <span class="note-t">Sinab ko'ring</span>
+    <p><code class="inline">.menyu a:hover</code> ichidagi rangni o'zgartiring va natijani darhol ko'ring. Diqqat qiling — hozircha o'zgarish bir zumda, «sakrab» sodir bo'lyapti.</p>
+  </div>
+</section>
+
+<!-- ===== 5 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 1 · Struktura psevdo-klasslari</span>
+  <h2><code class="inline">:first-child</code>, <code class="inline">:last-child</code>, <code class="inline">:nth-child()</code></h2>
+  <p>Tasavvur qiling — sizda menyu bor va oxirgi elementdan keyin chiziq chizilmasligi kerak, faqat oldingilaridan keyin bo'lsin. Aynan shu joyda <code class="inline">:last-child</code> yordam beradi — «menga class kerak emas, sen ro'yxatdagi oxirgi element ekaningni CSS o'zi bilib oladi» deymiz. Xuddi shunday <code class="inline">:first-child</code> — ro'yxatdagi birinchi elementga. Eng kuchlisi — <code class="inline">:nth-child()</code>: qavs ichiga raqam yoki formula yozib, masalan har 2-elementni tanlash mumkin — jadvalda qator-qator rang berish uchun juda mashhur usul, «zebra» effekt deb ataladi.</p>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th>Pseudo-klass</th><th>Qachon ishga tushadi</th><th>Qayerda foydali</th></tr>
+      <tr><td><code>:first-child</code></td><td>Ota ichidagi <b>birinchi</b> element</td><td>Ro'yxat boshini boshqacha stillash</td></tr>
+      <tr><td><code>:last-child</code></td><td>Ota ichidagi <b>oxirgi</b> element</td><td>Oxirgi elementdan ortiqcha chegarani olib tashlash</td></tr>
+      <tr><td><code>:nth-child(n)</code></td><td>n-tartibdagi element; formula ham bo'ladi</td><td><code class="inline">nth-child(2n)</code> — jadvalda «zebra» qatorlar (juft)</td></tr>
+      <tr><td><code>:nth-child(odd)</code></td><td>Toq tartibdagi elementlar: 1, 3, 5...</td><td><code class="inline">2n+1</code> bilan bir xil natija</td></tr>
+    </table>
+  </div>
+
+  <div class="note tip">
+    <span class="note-t">Formula qanday o'qiladi</span>
+    <p><code class="inline">nth-child(2n)</code> — juft elementlar (2, 4, 6...). <code class="inline">nth-child(odd)</code> yoki <code class="inline">nth-child(2n+1)</code> — toq elementlar (1, 3, 5...). <code class="inline">nth-child(3)</code> — aynan uchinchi element, formula shart emas.</p>
+  </div>
+
+  <div class="note warn">
+    <span class="note-t">Adashtirmaslik kerak</span>
+    <p><code class="inline">:nth-child()</code> — bu ota-ona ichidagi elementning tartib raqami, «shu turdagi elementning nechinchisi» emas (u uchun <code class="inline">:nth-of-type()</code> bor). Ota ichida turli xil teglar aralash bo'lsa, bu ikkisi boshqa-boshqa natija berishi mumkin.</p>
+  </div>
+</section>
+
+<!-- ===== 6 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 1 · Jonli mashq</span>
+  <h2>Ro'yxatga struktura psevdo-klasslarini qo'llang</h2>
+  <p><code class="inline">nth-child(odd)</code>ni <code class="inline">nth-child(2n)</code>ga o'zgartiring va zebra qatorlar o'rin almashishini kuzating. Keyin <code class="inline">:first-child</code> qoidasini o'chirib, farqni ko'ring.</p>
+
+  <div class="live">
+    <div class="live-head">
+      <span class="dot"></span> struktura.html
+      <span class="sp"></span>
+      <button class="live-reset" type="button">↺ Qayta</button>
+    </div>
+    <div class="live-body">
+      <div class="live-editor">
+<textarea spellcheck="false">
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: Arial, sans-serif; padding: 20px; }
+
+  .list { list-style: none; margin: 0; padding: 0; max-width: 280px; border: 1px solid #eee; border-radius: 8px; overflow: hidden; }
+
+  .list li {
+    padding: 10px 14px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .list li:last-child {
+    border-bottom: none;
+  }
+
+  .list li:nth-child(odd) {
+    background: #f7f7fa;
+  }
+
+  .list li:first-child {
+    font-weight: bold;
+  }
+</style>
+
+<ul class="list">
+  <li>Element 1</li>
+  <li>Element 2</li>
+  <li>Element 3</li>
+  <li>Element 4</li>
+</ul>
+</textarea>
+      </div>
+      <div class="live-preview"><iframe title="Natija"></iframe></div>
+    </div>
+  </div>
+
+  <div class="note tip">
+    <span class="note-t">Sinab ko'ring</span>
+    <p>Ro'yxatga yana ikkita <code class="inline">&lt;li&gt;</code> qo'shing (jami 6 ta) va <code class="inline">nth-child(odd)</code> naqshi qanday davom etishini kuzating.</p>
+  </div>
+</section>
+
+<!-- ===== 7 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 2 · Pseudo-elementlar</span>
+  <h2><code class="inline">::before</code> va <code class="inline">::after</code>: HTML'ga tegmasdan bezak qo'shish</h2>
+  <p>Ba'zan dizaynda dekorativ narsa kerak bo'ladi — masalan sarlavha oldida kichkina belgi, yoki kartochka burchagida «Yangi» yorlig'i. Buni HTML'ga qo'shimcha <code class="inline">&lt;span&gt;</code> yozib ham qilsa bo'ladi, lekin bu — sof dizayn uchun HTML'ni «iflos» qiladi, chunki bu elementning hech qanday mazmuni yo'q, faqat ko'rinish uchun. Shuning uchun CSS'ning o'ziga «sen mendan avval yoki keyin qo'shimcha bir narsa yasab qo'y» deymiz: <code class="inline">::before</code> element mazmunidan OLDIN, <code class="inline">::after</code> esa mazmundan KEYIN «virtual» element yasaydi.</p>
+
+  <div class="cols">
+    <div>
+      <h3>Majburiy shart: <code class="inline">content</code></h3>
+      <p>Ishlashi uchun <code class="inline">content</code> xossasi <b>albatta</b> yozilishi shart — hatto bo'sh qiymat (<code class="inline">content: "";</code>) bo'lsa ham. Aks holda pseudo-element umuman ko'rinmaydi.</p>
+<pre class="code" data-lang="css" data-label="sarlavha oldiga belgi"><code>.title::before {
+  content: "★ ";
+  color: #f5a623;
+}</code></pre>
+    </div>
+    <div>
+      <h3>Misol: kartochka burchagidagi yorliq</h3>
+      <p>HTML'ga qo'lda «Yangi» yozuvi qo'shish o'rniga, kartochkaga bitta CSS qoidasi bilan avtomatik yorliq qo'shamiz.</p>
+<pre class="code" data-lang="css" data-label="'Yangi' yorlig'i"><code>.card {
+  position: relative;
+}
+
+.card::after {
+  content: "Yangi";
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: #ff4757;
+  color: white;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 20px;
+}</code></pre>
+    </div>
+  </div>
+
+  <div class="note bad">
+    <span class="note-t">Eng ko'p uchraydigan xato</span>
+    <p><code class="inline">content: "";</code>ni unutib qoldirish — natijada boshqa hamma CSS to'g'ri yozilgan bo'lsa ham, pseudo-element sahifada <b>umuman ko'rinmaydi</b>, chunki brauzer uni «bo'sh, demak ko'rsatmayman» deb hisoblaydi.</p>
+  </div>
+</section>
+
+<!-- ===== 8 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 2 · Jonli mashq</span>
+  <h2>Rasmli kartochkaga <code class="inline">::after</code> bilan yorliq qo'shing</h2>
+  <p>Quyidagi kartochkada haqiqiy rasmdan foydalanilgan. <code class="inline">::after</code> orqali qo'shilgan «Yangi» yorlig'iga e'tibor bering — HTML ichida bunday <code class="inline">&lt;span&gt;</code> umuman yo'q. Kartochka ustiga sichqonchani olib boring va chegara rangi o'zgarishini kuzating.</p>
+
+  <div class="live">
+    <div class="live-head">
+      <span class="dot"></span> kartochka-yorliq.html
+      <span class="sp"></span>
+      <button class="live-reset" type="button">↺ Qayta</button>
+    </div>
+    <div class="live-body">
+      <div class="live-editor">
+<textarea spellcheck="false">
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: Arial, sans-serif; padding: 30px; display: flex; justify-content: center; }
+
+  .karta {
+    position: relative;
+    max-width: 260px;
+    background: #fff;
+    border: 2px solid #e2e5ea;
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  .karta img { width: 100%; height: 150px; object-fit: cover; display: block; }
+  .karta-matn { padding: 16px 20px 20px; }
+  .karta h4 { margin: 0 0 8px; }
+  .karta p  { margin: 0; color: #6b7280; font-size: 14px; }
+
+  /* "Yangi" yorlig'i - HTML'ga tegmasdan qo'shildi */
+  .karta::after {
+    content: "Yangi";
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: #ff4757;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+
+  /* hover holatida chegara rangi o'zgaradi - hozircha bir zumda */
+  .karta:hover {
+    border-color: #4a6cf7;
+    background: #f7f9ff;
+  }
+</style>
+
+<div class="karta">
+  <img src="images/kartochka-foto.jpg" alt="Frontend dasturchi ish stolida">
+  <div class="karta-matn">
+    <h4>Kartochka ustiga suring</h4>
+    <p>::after bilan qo'shilgan "Yangi" belgisi va :hover holatidagi chegara o'zgarishini kuzating.</p>
+  </div>
+</div>
+</textarea>
+      </div>
+      <div class="live-preview"><iframe title="Natija"></iframe></div>
+    </div>
+  </div>
+
+  <div class="note tip">
+    <span class="note-t">Sinab ko'ring</span>
+    <p><code class="inline">content: "Yangi";</code>ni <code class="inline">content: "";</code>ga o'zgartirib ko'ring — yorliq butunlay yo'qolib qolishini his qiling, keyin matnni qaytaring.</p>
+  </div>
+</section>
+
+<!-- ===== 9 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 3 · Gradientlar</span>
+  <h2><code class="inline">linear-gradient()</code>: fon va tugmalar uchun rang o'tishi</h2>
+  <p>Bitta tekis rang o'rniga ikkita yoki undan ko'p rangning bir-biriga silliq o'tishini xohlasak — <code class="inline">linear-gradient()</code> funksiyasi ishlatiladi. Unga yo'nalish (masalan <code class="inline">to right</code>, <code class="inline">45deg</code>) va ranglar ro'yxati beriladi. Bu funksiya nafaqat fon uchun, balki tugmalarga zamonaviy ko'rinish berish uchun ham juda ko'p ishlatiladi.</p>
+
+<pre class="code" data-lang="css" data-label="gradient tugma"><code>.gradient-btn {
+  padding: 14px 28px;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  background: linear-gradient(to right, #ff6a00, #ee0979);
+}</code></pre>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th>Yo'nalish</th><th>Natija</th></tr>
+      <tr><td><code>to right</code></td><td>Chapdan o'ngga o'tish</td></tr>
+      <tr><td><code>to bottom</code></td><td>Yuqoridan pastga o'tish (standart yo'nalish)</td></tr>
+      <tr><td><code>45deg</code></td><td>Aniq gradus bo'yicha diagonal o'tish</td></tr>
+      <tr><td><code>linear-gradient(to right, red, yellow, green)</code></td><td>Ikkitadan ortiq rang — bir nechta o'tish nuqtasi</td></tr>
+    </table>
+  </div>
+
+  <div class="note tip">
+    <span class="note-t">Maslahat</span>
+    <p>Odatda 2-3 tadan ortiq rang ishlatilmaydi — aks holda gradient «iflos» va tartibsiz ko'rinadi.</p>
+  </div>
+</section>
+
+<!-- ===== 10 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 3 · Jonli mashq</span>
+  <h2>Gradient tugmalarni sinab ko'ring</h2>
+  <p>Uchta tugmada har xil gradient ishlatilgan. Ranglarni yoki yo'nalishni (<code class="inline">to right</code> → <code class="inline">45deg</code>) o'zgartirib, natijani kuzating.</p>
+
+  <div class="live">
+    <div class="live-head">
+      <span class="dot"></span> gradient-tugmalar.html
+      <span class="sp"></span>
+      <button class="live-reset" type="button">↺ Qayta</button>
+    </div>
+    <div class="live-body">
+      <div class="live-editor">
+<textarea spellcheck="false">
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: Arial, sans-serif; padding: 30px; display: flex; gap: 14px; flex-wrap: wrap; }
+
+  .gradient-btn {
+    padding: 14px 28px;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .sunset { background: linear-gradient(to right, #ff6a00, #ee0979); }
+  .ocean  { background: linear-gradient(to right, #00c6ff, #0072ff); }
+  .forest { background: linear-gradient(135deg, #11998e, #38ef7d); }
+</style>
+
+<button class="gradient-btn sunset">Sunset</button>
+<button class="gradient-btn ocean">Ocean</button>
+<button class="gradient-btn forest">Forest</button>
+</textarea>
+      </div>
+      <div class="live-preview"><iframe title="Natija"></iframe></div>
+    </div>
+  </div>
+
+  <div class="note tip">
+    <span class="note-t">Sinab ko'ring</span>
+    <p><code class="inline">.forest</code>dagi <code class="inline">135deg</code>ni <code class="inline">to bottom</code>ga o'zgartiring — gradient yo'nalishi vertikalga aylanadi.</p>
+  </div>
+</section>
+
+<!-- ===== 11 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 3 · Rasm ustiga overlay</span>
+  <h2>Rasm ustiga gradient overlay: matnni o'qiladigan qilish</h2>
+  <p>Agar orqa fonda rasm bo'lib, uning ustiga matn yozish kerak bo'lsa, matn o'qilishi qiyinlashadi. Shuning uchun rasm ustiga yarim shaffof gradient «qatlam» (overlay) qo'yiladi — bu <code class="inline">background-image</code> ichida ikkita qiymatni vergul bilan yozib, gradientni rasmdan OLDIN ko'rsatish orqali qilinadi (birinchi qatlam tepada chiqadi).</p>
+
+<pre class="code" data-lang="css" data-label="hero + overlay"><code>.hero {
+  height: 300px;
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("hero.jpg");
+  background-size: cover;
+  background-position: center;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}</code></pre>
+
+  <div class="note warn">
+    <span class="note-t">Ko'p uchraydigan xato</span>
+    <p><code class="inline">background-image</code> ichida gradient va <code class="inline">url()</code> yozilganda tartib muhim — gradient birinchi yozilsa, u rasm USTIDA ko'rinadi (chunki CSS'da birinchi qatlam eng tepada chiqadi). Rasm «nega ko'rinmayapti» degan savol tug'ilsa — javob: rangni shaffofroq (masalan <code class="inline">0.5</code> emas, <code class="inline">0.9</code>dan kam) qilib qo'yish kerak.</p>
+  </div>
+</section>
+
+<!-- ===== 12 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 3 · Jonli mashq</span>
+  <h2>Haqiqiy rasm ustiga overlay qo'ying</h2>
+  <p>Quyida haqiqiy rasm (<code class="inline">images/kartochka-foto.jpg</code>) fon sifatida ishlatilgan. Gradient overlay tufayli oq matn rasm ustida ham aniq o'qiladi. Qorong'ilik darajasini (<code class="inline">rgba(...,0.55)</code>) o'zgartirib ko'ring.</p>
+
+  <div class="live">
+    <div class="live-head">
+      <span class="dot"></span> hero-overlay.html
+      <span class="sp"></span>
+      <button class="live-reset" type="button">↺ Qayta</button>
+    </div>
+    <div class="live-body">
+      <div class="live-editor">
+<textarea spellcheck="false">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: Arial, sans-serif; }
+
+  .hero {
+    height: 260px;
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
+      url("images/kartochka-foto.jpg");
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+  }
+
+  .hero h2 { margin: 0 0 8px; font-size: 26px; }
+  .hero p  { margin: 0; font-size: 15px; }
+</style>
+
+<div class="hero">
+  <div>
+    <h2>Frontend dasturchi bo'ling</h2>
+    <p>Gradient overlay matnni har qanday rasm ustida ham o'qiladigan qiladi.</p>
+  </div>
+</div>
+</textarea>
+      </div>
+      <div class="live-preview"><iframe title="Natija"></iframe></div>
+    </div>
+  </div>
+
+  <div class="note tip">
+    <span class="note-t">Sinab ko'ring</span>
+    <p><code class="inline">0.55</code> qiymatini <code class="inline">0.15</code>ga tushiring — matn o'qilishi qiyinlashadi. Keyin <code class="inline">0.85</code>ga ko'taring — rasm deyarli ko'rinmay qoladi.</p>
+  </div>
+</section>
+
+<!-- ===== 13 ===== -->
+<section class="slide">
+  <span class="eyebrow">Amaliyot · Hammasini birlashtiramiz</span>
+  <h2>Gradient fonli kartochkalar: hover + <code class="inline">::after</code> + <code class="inline">nth-child</code> birga</h2>
+  <p>Endi bugungi barcha mavzuni bitta komponentda ko'ramiz: har bir kartochka <code class="inline">nth-child</code> orqali o'zining gradientini oladi, birinchisida <code class="inline">::after</code> bilan yorliq bor, hover holatida esa chegara paydo bo'ladi.</p>
+
+  <div class="live">
+    <div class="live-head">
+      <span class="dot"></span> reja-kartochkalari.html
+      <span class="sp"></span>
+      <button class="live-reset" type="button">↺ Qayta</button>
+    </div>
+    <div class="live-body">
+      <div class="live-editor">
+<textarea spellcheck="false">
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: Arial, sans-serif; padding: 24px; background: #f5f6fa; }
+
+  .cards { display: flex; gap: 16px; flex-wrap: wrap; }
+
+  .karta {
+    position: relative;
+    flex: 1 1 220px;
+    border-radius: 14px;
+    padding: 22px;
+    color: #fff;
+    border: 2px solid transparent;
+  }
+  .karta h4 { margin: 0 0 8px; }
+  .karta p  { margin: 0 0 14px; font-size: 14px; opacity: .9; }
+  .karta button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255,255,255,.25);
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  /* har bir kartochkaga nth-child orqali boshqa gradient */
+  .karta:nth-child(1) { background: linear-gradient(135deg, #ff6a00, #ee0979); }
+  .karta:nth-child(2) { background: linear-gradient(135deg, #00c6ff, #0072ff); }
+  .karta:nth-child(3) { background: linear-gradient(135deg, #11998e, #38ef7d); }
+
+  /* birinchi kartochkaga ::after bilan yorliq */
+  .karta:first-child::after {
+    content: "Yangi";
+    position: absolute;
+    top: -10px;
+    right: 14px;
+    background: #fff;
+    color: #ee0979;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+
+  /* hover'da chegara ko'rinadi - hozircha bir zumda o'zgaradi */
+  .karta:hover { border-color: #fff; }
+</style>
+
+<div class="cards">
+  <div class="karta">
+    <h4>Boshlang'ich reja</h4>
+    <p>Kichik loyihalar uchun mos.</p>
+    <button>Tanlash</button>
+  </div>
+  <div class="karta">
+    <h4>Standart reja</h4>
+    <p>Eng ko'p tanlanadigan variant.</p>
+    <button>Tanlash</button>
+  </div>
+  <div class="karta">
+    <h4>Premium reja</h4>
+    <p>Cheklovsiz imkoniyatlar.</p>
+    <button>Tanlash</button>
+  </div>
+</div>
+</textarea>
+      </div>
+      <div class="live-preview"><iframe title="Natija"></iframe></div>
+    </div>
+  </div>
+
+  <div class="note tip">
+    <span class="note-t">Sinab ko'ring</span>
+    <p>Vazifadagi talab shu — aynan shu uchtala mavzuni (gradient, hover, <code class="inline">::after</code>/<code class="inline">nth-child</code>) bitta komponentda ko'rish. Ranglarni o'zingizga moslab o'zgartiring.</p>
+  </div>
+</section>
+
+<!-- ===== 14 ===== -->
+<section class="slide">
+  <span class="eyebrow">Xatolar</span>
+  <h2>Eng ko'p uchraydigan xatolar</h2>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th style="width:26%">Xato</th><th style="width:37%">Nima bo'ladi</th><th>Yechim</th></tr>
+      <tr>
+        <td><b><code>:focus</code>ga <code>outline: none;</code></b></td>
+        <td>Klaviatura bilan foydalanuvchi qaysi elementda turganini ko'ra olmaydi</td>
+        <td>Outline'ni o'chirsangiz, o'rniga <code>border</code> yoki <code>box-shadow</code> kabi ko'rinadigan stil qo'ying</td>
+      </tr>
+      <tr>
+        <td><b><code>::before</code>/<code>::after</code>da <code>content</code> unutilgan</b></td>
+        <td>Pseudo-element sahifada <b>umuman ko'rinmaydi</b></td>
+        <td>Kamida <code>content: "";</code> yozing — bu majburiy xossa</td>
+      </tr>
+      <tr>
+        <td><b><code>:nth-child()</code> bilan <code>:nth-of-type()</code>ni aralashtirish</b></td>
+        <td>Ota ichida turli teglar aralash bo'lsa, kutilmagan element tanlanadi</td>
+        <td>«Shu turdagi elementning nechinchisi» kerak bo'lsa — <code>:nth-of-type()</code> ishlating</td>
+      </tr>
+      <tr>
+        <td><b>Hover o'zgarishi bir zumda, «sakrab» sodir bo'lishi</b></td>
+        <td>Interfeys qo'pol va tayyor bo'lmagan his qildiradi</td>
+        <td>Bu — keyingi darsning mavzusi: <code>transition</code> bilan silliq animatsiya qilamiz</td>
+      </tr>
+      <tr>
+        <td><b><code>background-image</code>da gradient va <code>url()</code> tartibi chalkash</b></td>
+        <td>Rasm ko'rinmay qoladi yoki gradient uni to'liq yopib qo'yadi</td>
+        <td>Gradientni birinchi yozing va rangni shaffofroq (masalan 0.5) qilib bering</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="note bad">
+    <span class="note-t">Eng muhim maslahat</span>
+    <p>Pseudo-element «yo'qolgan» bo'lsa — birinchi tekshiring: <code class="inline">content</code> xossasi yozilganmi. Hover effekti «qo'pol» ko'rinsa — bu normal, chunki <code class="inline">transition</code>ni hali o'rganmadik.</p>
+  </div>
+</section>
+
+<!-- ===== 15 ===== -->
+<section class="slide">
+  <span class="eyebrow">Best practice</span>
+  <h2>Yaxshi amaliyot — qisqacha</h2>
+  <div class="cols">
+    <div>
+      <ul>
+        <li>Har doim <code class="inline">:focus</code> uchun ko'rinadigan stil qoldiring — foydalanuvchi klaviatura bilan yurganida ko'rishi kerak.</li>
+        <li><code class="inline">::before</code>/<code class="inline">::after</code>ga albatta <code class="inline">content</code> yozing, hatto bo'sh bo'lsa ham.</li>
+        <li><code class="inline">:nth-child()</code>ni avval oddiy holatlarda (<code class="inline">odd</code>/<code class="inline">even</code>) sinab ko'ring, keyin murakkab formulaga o'ting.</li>
+      </ul>
+    </div>
+    <div>
+      <ul>
+        <li>Gradientda 2-3 tadan ortiq rang ishlatmang — oshib ketsa dizayn «iflos» ko'rinadi.</li>
+        <li>Rasm ustiga matn qo'yishda har doim gradient overlay qo'shing va matn kontrastini tekshiring.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="note tip">
+    <span class="note-t">Keyingi qadam — silliqlik</span>
+    <p>Bugun qo'lda qurgan hover effektlari, pseudo-elementlar va gradientlar — hammasi hozircha «statik» sodir bo'ladi. Keyingi modulda aynan shu effektlarni <code class="inline">transition</code> va <code class="inline">transform</code> bilan jonli, silliq animatsiyaga aylantiramiz.</p>
+  </div>
+</section>
+
+<!-- ===== 16 ===== -->
+<section class="slide">
+  <span class="eyebrow">Amaliy vazifa</span>
+  <h2>Uyga vazifa</h2>
+
+  <div class="task">
+    <h4><span class="n">1</span> Gradient fonli, hover effektli kartochkalar bo'limi</h4>
+    <ol>
+      <li><code class="inline">dars-09</code> papkasida <code class="inline">index.html</code> yarating va kamida 3 ta kartochkadan (cards) iborat bo'lim yasang.</li>
+      <li>Har bir kartochkada — sarlavha, qisqacha matn va bitta tugma bo'lsin.</li>
+      <li>Kartochka fonida <code class="inline">linear-gradient</code> ishlatilgan bo'lsin (yoki kamida kartochka ichidagi tugmada gradient bo'lsin).</li>
+      <li>Kartochkaga sichqoncha olib borilganda (<code class="inline">:hover</code>) biror o'zgarish sodir bo'lsin — masalan chegara yoki fon rangi o'zgarishi.</li>
+      <li>Kamida bitta joyda <code class="inline">::before</code> yoki <code class="inline">::after</code> ishlatib, dekorativ element (masalan «Yangi» yorlig'i yoki sarlavha oldidagi belgi) qo'shing.</li>
+      <li>Agar kartochkalar bir xil konteyner ichida bo'lsa, <code class="inline">:nth-child()</code> yordamida kamida ikkita kartochkaga har xil fon rang variantini bering.</li>
+    </ol>
+    <p>Namuna sifatida papkangizdagi <code class="inline">images/kartochka-foto.jpg</code> rasmidan foydalanishingiz mumkin — masalan bitta kartochkani shu rasm bilan bezashingiz mumkin.</p>
+    <div class="crit">
+      <b>Baholash mezoni:</b> gradient bor ✓ · hover effekti ishlaydi ✓ · psevdo-element (<code>::before</code>/<code>::after</code>) ko'rinadi ✓ · kamida 2 kartochkada <code>nth-child</code> orqali har xil gradient bor ✓ · brauzer konsolida xato yo'q ✓.
+    </div>
+  </div>
+</section>
+
+<!-- ===== 17 ===== -->
+<section class="slide">
+  <span class="eyebrow">Yakun</span>
+  <h2>Xulosa va o'z-o'zini tekshirish</h2>
+
+  <div class="recap">
+    <div><b>Holat psevdo-klasslari</b><code class="inline">:hover</code> — sichqoncha ustida, <code class="inline">:active</code> — bosib turganda, <code class="inline">:focus</code> — faollashtirilganda.</div>
+    <div><b>Struktura psevdo-klasslari</b><code class="inline">:first-child</code>, <code class="inline">:last-child</code>, <code class="inline">:nth-child()</code> — class yozmasdan tartibga qarab tanlash.</div>
+    <div><b>Pseudo-elementlar</b><code class="inline">::before</code>/<code class="inline">::after</code> — HTML'ga tegmasdan dekorativ kontent. <code class="inline">content</code> majburiy.</div>
+    <div><b><code class="inline">linear-gradient()</code></b> — chiziqli rang o'tishi, fon va tugmalar uchun.</div>
+    <div><b>Rasm ustiga overlay</b><code class="inline">background-image</code>da gradient birinchi, <code class="inline">url()</code> ikkinchi yoziladi.</div>
+    <div><b>Keyingi qadam</b>Bugungi statik o'zgarishlarni <code class="inline">transition</code>/<code class="inline">transform</code> bilan silliq qilamiz.</div>
+  </div>
+
+  <h3 style="margin-top:30px">Savol-javob</h3>
+  <div class="quiz">
+    <div class="q">
+      <p>1. <code class="inline">:hover</code> va <code class="inline">:active</code> orasidagi farq nima?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans"><code>:hover</code> sichqoncha element ustida turgan har qanday paytda ishlaydi. <code>:active</code> esa faqat sichqoncha tugmasi bosilib, hali qo'yib yuborilmagan aniq lahzada ishlaydi — bosilish tugagach, holat <code>:hover</code>ga qaytadi.</div>
+    </div>
+    <div class="q">
+      <p>2. Nega <code class="inline">:focus</code>ni <code class="inline">outline: none;</code> bilan o'chirib qo'yish xato hisoblanadi?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">Chunki klaviatura orqali (<code>Tab</code> bilan) saytdan foydalanuvchilar qaysi elementda turganini faqat shu vizual belgi orqali bilishadi. Outline'ni o'chirsangiz, o'rniga boshqa ko'rinadigan stil (border, box-shadow) qo'yish shart.</div>
+    </div>
+    <div class="q">
+      <p>3. <code class="inline">::before</code>/<code class="inline">::after</code> ishlashi uchun qaysi xossa majburiy?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans"><code>content</code> xossasi — hatto <code>content: "";</code> kabi bo'sh qiymat bo'lsa ham albatta yozilishi kerak. Aks holda brauzer pseudo-elementni umuman ko'rsatmaydi.</div>
+    </div>
+    <div class="q">
+      <p>4. <code class="inline">nth-child(2n)</code> qaysi elementlarni tanlaydi?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans"><b>Juft</b> tartib raqamli elementlarni: 2, 4, 6... Toq elementlar uchun <code>nth-child(odd)</code> yoki <code>nth-child(2n+1)</code> ishlatiladi. Bu ko'pincha ro'yxatlarda «zebra» qatorlar yasashda qo'llaniladi.</div>
+    </div>
+    <div class="q">
+      <p>5. Rasm fon ustiga matn yozilganda o'qilishi qiyin bo'lsa, qanday yechim bor va u qanday yoziladi?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">Gradient overlay qo'shiladi: <code>background-image</code>da vergul bilan avval yarim shaffof <code>linear-gradient(rgba(...), rgba(...))</code>, keyin <code>url("rasm.jpg")</code> yoziladi — birinchi yozilgan qatlam rasm ustida chiqadi.</div>
+    </div>
+  </div>
+
+  <div class="lesson-jump">
+    <a href="../08-css-position/index.html"><b>Oldingi modul</b><span>← 08-modul: CSS Position moduli</span></a>
+    <a href="../10-transform-transition-animation/index.html"><b>Keyingi modul</b><span>10-modul: CSS Transform, Transition va Animatsiyalar →</span></a>
+  </div>
+</section>
+
+</main>
+
+<div class="deck-nav">
+  <button data-prev type="button" title="Oldingi (←)">‹</button>
+  <span class="hint">← → varaqlash · <kbd>O</kbd> ro'yxat · <kbd>F</kbd> to'liq ekran</span>
+  <button data-next type="button" title="Keyingi (→)">›</button>
+</div>
+
+<div class="deck-overview"><h3>Slaydlar ro'yxati</h3><div class="ov-grid"></div></div>
+
+<script src="../assets/js/deck.js"></script>
+</body>
+</html>

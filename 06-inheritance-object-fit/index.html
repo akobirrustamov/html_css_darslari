@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="uz" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>06-modul · CSS Inheritance, Object-fit va Retina Display</title>
+<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body class="deck" data-lesson="6">
+
+<div class="deck-bar">
+  <a class="home" href="../index.html">← Kurs</a>
+  <span class="title">06-modul · CSS Inheritance, Object-fit va Retina Display</span>
+  <span class="spacer"></span>
+  <div class="deck-tools">
+    <button class="tool" data-overview type="button" title="Slaydlar ro'yxati (O)">☰</button>
+    <button class="tool" data-theme-toggle type="button" title="Mavzu">☾</button>
+    <span class="counter">1 / 14</span>
+  </div>
+</div>
+<div class="deck-progress"></div>
+
+<main class="deck-stage">
+
+<!-- ===== 1 ===== -->
+<section class="slide cover">
+  <div class="lesson-no">06-modul</div>
+  <h1>Inheritance, Object-fit va Retina Display:<br>rasmlaringizni professional ko'rsating</h1>
+  <p>05-modulda ranglar va o'lchamlarni o'rgandingiz. Bugun ikkita amaliy muammoni hal qilamiz: CSS xususiyatlari otadan bolaga qachon o'tadi va rasmlar konteynerga sig'masa nima qilish kerak — shu bilan birga zamonaviy telefon va monitorlar uchun sifatli rasm berishni ham o'rganasiz.</p>
+  <div class="cover-plan">
+    <div><b>Reja 1</b>Inheritance (meros) — qaysi xususiyatlar bolaga o'tadi</div>
+    <div><b>Reja 2</b><code>object-fit</code> — rasmni konteynerga to'g'ri joylashtirish</div>
+    <div><b>Reja 3</b>Retina displaylar uchun <code>srcset</code> va 1x/2x</div>
+    <div><b>Amaliyot</b>Adaptiv va yuqori sifatli rasm galereyasi yaratish</div>
+  </div>
+</section>
+
+<!-- ===== 2 ===== -->
+<section class="slide">
+  <span class="eyebrow">Maqsad</span>
+  <h2>Dars oxirida siz nima qila olasiz</h2>
+  <p class="big">Bu darsdan keyin siz qaysi CSS xususiyatlari ota elementdan bolaga o'tishini tushuntira olasiz, <code class="inline">object-fit</code> yordamida istalgan rasmni konteynerga cho'zilmasdan joylashtira olasiz va <code class="inline">srcset</code> bilan Retina ekranlar uchun sifatli rasm bera olasiz.</p>
+  <div class="cardset">
+    <div class="card">
+      <span class="ico">🧬</span>
+      <h4>Tushunasiz</h4>
+      <p>Nega <code class="inline">color</code> bolaga o'tadi-yu, <code class="inline">border</code> o'tmaydi — inheritance mantig'ini.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🖼</span>
+      <h4>Joylashtirasiz</h4>
+      <p><code class="inline">cover</code>, <code class="inline">contain</code> va <code class="inline">fill</code> qiymatlari orasidagi farqni va qachon qaysi birini tanlashni.</p>
+    </div>
+    <div class="card">
+      <span class="ico">📱</span>
+      <h4>Sifat berasiz</h4>
+      <p><code class="inline">srcset</code> orqali oddiy va Retina ekranlarga mos rasm variantlarini taqdim etasiz.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🖼️</span>
+      <h4>Quradi</h4>
+      <p>Bir xil o'lchamdagi konteynerlarga joylashgan, cho'zilmagan rasm galereyasini o'zingiz yasaysiz.</p>
+    </div>
+  </div>
+  <div class="note tip">
+    <span class="note-t">Muhim eslatma</span>
+    <p>Bugungi darsda nazariya kam, amaliyot ko'p: real rasmlar bilan ishlaymiz, ikkita jonli mashq va uyga vazifada ham haqiqiy rasm galereyasi tuzasiz.</p>
+  </div>
+</section>
+
+<!-- ===== 3 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 1 · Nazariya</span>
+  <h2>Inheritance (merosxo'rlik) nima</h2>
+  <p>CSS'da ba'zi xususiyatlar ota elementdan (parent) uning ichidagi bola elementlarga (child) avtomatik o'tadi — bunga <b>inheritance</b>, ya'ni <b>meros</b> deyiladi. Asosan matn bilan bog'liq xususiyatlar meros bo'ladi: <code class="inline">color</code>, <code class="inline">font-family</code>, <code class="inline">font-size</code>, <code class="inline">line-height</code>. Mantiq oddiy — butun sahifaning shriftini bitta joyda o'zgartirmoqchi bo'lsangiz, har bir elementga alohida yozib chiqmasligingiz kerak.</p>
+
+  <div class="cols">
+    <div>
+      <h3>Nega ba'zilari meros bo'lmaydi</h3>
+      <p>Box model bilan bog'liq xususiyatlar — <code class="inline">border</code>, <code class="inline">padding</code>, <code class="inline">margin</code>, <code class="inline">width</code>, <code class="inline">height</code>, <code class="inline">background</code> — meros <b>BO'LMAYDI</b>. Buning ham mantig'i bor: agar <code class="inline">border</code> meros bo'lganida, sahifadagi barcha ichki elementlar ham chegaraga ega bo'lib, hammasi chiziqlar bilan to'lib ketgan, chalkash ko'rinishga aylanardi.</p>
+    </div>
+    <div>
+      <h3>Oilaviy misol</h3>
+      <div class="note tip">
+        <span class="note-t">Analogiya</span>
+        <p>Ota-onaning ko'z rangi (<code class="inline">color</code> kabi) bolaga o'tishi mumkin, lekin ota-onaning kiyimi (<code class="inline">border</code> kabi) bolaga avtomatik "kiyilib" qolmaydi — har biri o'zinikini kiyadi.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th>Meros bo'ladi (inherited)</th><th>Meros bo'lmaydi</th></tr>
+      <tr><td><code>color</code></td><td><code>border</code></td></tr>
+      <tr><td><code>font-family</code></td><td><code>padding</code></td></tr>
+      <tr><td><code>font-size</code></td><td><code>margin</code></td></tr>
+      <tr><td><code>line-height</code></td><td><code>background</code></td></tr>
+      <tr><td><code>text-align</code></td><td><code>width</code> / <code>height</code></td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ===== 4 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 1 · Asosiy</span>
+  <h2>Inheritance'ni kodda ko'ramiz</h2>
+  <p>Quyidagi misolda <code class="inline">.parent</code>ga to'rtta xususiyat berilgan. Ikkitasi bolalarga o'tadi, ikkitasi o'tmaydi.</p>
+
+<pre class="code" data-lang="html"><code>&lt;div class="parent"&gt;
+  Ota element matni
+  &lt;p&gt;Bu paragraf&lt;/p&gt;
+  &lt;span&gt;Bu span&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+
+<pre class="code" data-lang="css"><code>.parent {
+  color: darkblue;              /* meros bo'ladi: p va span ham ko'k bo'ladi */
+  font-family: Georgia, serif;  /* meros bo'ladi */
+  border: 3px solid red;        /* meros BO'LMAYDI: faqat .parent atrofida chizadi */
+  padding: 20px;                /* meros BO'LMAYDI */
+}</code></pre>
+
+  <div class="note warn">
+    <span class="note-t">Talabalar ko'p adashadigan joy</span>
+    <p><code class="inline">border</code> yoki <code class="inline">padding</code>ni ham ichki elementlarga "o'tadi" deb o'ylab, keyin nega ichkaridagi <code class="inline">&lt;p&gt;</code> yoki <code class="inline">&lt;span&gt;</code>da chegara ko'rinmayotganini tushunolmay qolishadi. Chegara faqat <code class="inline">.parent</code>ning tashqi chetiga chiziladi, ichidagi elementlarga emas.</p>
+  </div>
+</section>
+
+<!-- ===== 5 ===== -->
+<section class="slide">
+  <span class="eyebrow">Jonli mashq</span>
+  <h2>Inheritance'ni sinab ko'ring</h2>
+  <p><code class="inline">.parent</code>dagi <code class="inline">color</code> qiymatini o'zgartiring — <code class="inline">&lt;p&gt;</code> va <code class="inline">&lt;span&gt;</code> ham avtomatik o'zgarishini ko'rasiz. Keyin <code class="inline">border</code>ni <code class="inline">&lt;p&gt;</code>ga qo'shib ko'ring — u faqat o'sha elementga tegishli bo'ladi.</p>
+
+  <div class="live">
+    <div class="live-head">
+      <span class="dot"></span> inheritance.html
+      <span class="sp"></span>
+      <button class="live-reset" type="button">↺ Qayta</button>
+    </div>
+    <div class="live-body">
+      <div class="live-editor">
+<textarea spellcheck="false">
+<style>
+  .parent {
+    color: darkblue;
+    font-family: Georgia, serif;
+    border: 3px solid red;
+    padding: 20px;
+  }
+</style>
+
+<div class="parent">
+  Ota element matni (rang va shrift shu yerda berilgan)
+  <p>Bu paragraf — rang va shrift meros bo'lib keladi</p>
+  <span>Bu span — u ham xuddi shunday ko'k va Georgia shriftida</span>
+</div>
+</textarea>
+      </div>
+      <div class="live-preview"><iframe title="Natija"></iframe></div>
+    </div>
+  </div>
+
+  <div class="note tip">
+    <span class="note-t">Diqqat bilan kuzating</span>
+    <p><code class="inline">&lt;p&gt;</code> va <code class="inline">&lt;span&gt;</code> atrofida qizil chegara <b>yo'q</b> — chunki <code class="inline">border</code> meros bo'lmaydi. Lekin ularning matni ham ko'k, ham Georgia shriftida — chunki <code class="inline">color</code> va <code class="inline">font-family</code> meros bo'ladi.</p>
+  </div>
+</section>
+
+<!-- ===== 6 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 2 · Nazariya</span>
+  <h2>object-fit — rasmlar bilan ishlash muammosi</h2>
+  <p>Rasm o'lchami konteyner o'lchamiga to'g'ri kelmasa, brauzer uni default holda cho'zib yuboradi — natijada odamning yuzi yoki tabiat manzarasi nomutanosib ko'rinadi. <code class="inline">object-fit</code> xususiyati buni to'liq boshqarish imkonini beradi.</p>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th>Qiymat</th><th>Natija</th></tr>
+      <tr><td><code>cover</code></td><td>Rasm butun konteynerni to'ldiradi, nisbatini (aspect ratio) saqlaydi, lekin kerak bo'lsa chetlari kesib tashlanadi (crop). Portret rasmlar, profil suratlari, galereyalar uchun eng mos variant.</td></tr>
+      <tr><td><code>contain</code></td><td>Rasm butunlay, hech qismi kesilmasdan ko'rinadi, nisbatini saqlaydi, lekin konteynerni to'liq to'ldirmasligi mumkin (bo'sh joy qolishi mumkin).</td></tr>
+      <tr><td><code>fill</code></td><td>Default qiymat. Rasm konteynerni to'liq to'ldiradi, lekin nisbati buzilishi mumkin — ya'ni rasm cho'ziladi yoki torayadi.</td></tr>
+    </table>
+  </div>
+
+  <div class="note tip">
+    <span class="note-t">Analogiya</span>
+    <p>Telefondagi fotosuratlar ilovasini eslang: rasmni "to'ldirib kesish" (<code class="inline">cover</code>) yoki "to'liq ko'rsatish, atrofida bo'sh joy bilan" (<code class="inline">contain</code>) rejimlari xuddi shunday ishlaydi.</p>
+  </div>
+</section>
+
+<!-- ===== 7 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 2 · Asosiy</span>
+  <h2>cover, contain, fill — real rasmda solishtiramiz</h2>
+  <p>Bitta rasm (<code class="inline">nature1.jpg</code>), bitta 220×160px konteyner — faqat <code class="inline">object-fit</code> qiymati o'zgargan. Farqni o'zingiz ko'ring:</p>
+
+  <div class="cols-3">
+    <div>
+      <h3><code class="inline">object-fit: cover</code></h3>
+      <img src="images/nature1.jpg" alt="Tabiat manzarasi, cover rejimida" style="width:220px;height:160px;object-fit:cover;border-radius:8px;display:block">
+      <p>Konteynerni to'liq to'ldiradi, chetlari kesilgan, nisbat buzilmagan.</p>
+    </div>
+    <div>
+      <h3><code class="inline">object-fit: contain</code></h3>
+      <img src="images/nature1.jpg" alt="Tabiat manzarasi, contain rejimida" style="width:220px;height:160px;object-fit:contain;background:#e5e7eb;border-radius:8px;display:block">
+      <p>Rasm to'liq ko'rinadi, yon tomonlarda bo'sh joy qolgan.</p>
+    </div>
+    <div>
+      <h3><code class="inline">object-fit: fill</code></h3>
+      <img src="images/nature1.jpg" alt="Tabiat manzarasi, fill rejimida" style="width:220px;height:160px;object-fit:fill;border-radius:8px;display:block">
+      <p>Konteynerni to'ldirgan, lekin rasm nisbati buzilib, cho'zilib qolgan.</p>
+    </div>
+  </div>
+
+<pre class="code" data-lang="html"><code>&lt;div class="img-box"&gt;
+  &lt;img src="images/nature1.jpg" alt="Tabiat manzarasi" class="cover-img"&gt;
+&lt;/div&gt;</code></pre>
+<pre class="code" data-lang="css"><code>.img-box {
+  width: 220px;
+  height: 160px;
+}
+
+.cover-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* rasm to'ldiradi, kerak bo'lsa chetlari kesiladi */
+}</code></pre>
+
+  <div class="note warn">
+    <span class="note-t">Talabalar ko'p adashadigan joy</span>
+    <p><code class="inline">object-fit</code> ishlashi uchun <code class="inline">img</code> elementiga aniq <code class="inline">width</code> va <code class="inline">height</code> berilishi shart — aks holda hech narsa o'zgarmagandek tuyuladi va "ishlamayapti" deb o'ylab qolasiz.</p>
+  </div>
+</section>
+
+<!-- ===== 8 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 3 · Nazariya</span>
+  <h2>Retina displaylar uchun sifatli rasm: srcset va 1x/2x</h2>
+  <p>Zamonaviy telefon va monitorlarning ko'pchiligi (<b>Retina</b> yoki <i>high-DPI</i> ekranlar deb ataladi) bir fizik piksel joyiga bir nechta nuqta chizadi — ya'ni piksel zichligi oddiy ekrandan yuqori. Agar shunday ekranda oddiy, past piksellik rasmni ko'rsatsak, u xiralashib (blurry) ko'rinadi.</p>
+
+  <p>Shuning uchun bitta rasmning ikki versiyasi tayyorlanadi: <code class="inline">1x</code> (oddiy ekran uchun) va <code class="inline">2x</code> (Retina ekran uchun, xuddi shu rasm, lekin 2 barobar ko'p piksel bilan saqlangan). <code class="inline">srcset</code> atributi orqali brauzerga ikkala variant ham beriladi, va brauzer foydalanuvchining ekraniga qarab qaysi birini yuklashni o'zi hal qiladi.</p>
+
+<pre class="code" data-lang="html"><code>&lt;img
+  src="images/nature1.jpg"
+  srcset="images/nature1.jpg 1x, images/nature1-2x.jpg 2x"
+  alt="Tabiat manzarasi"&gt;</code></pre>
+
+  <div class="note tip">
+    <span class="note-t">Analogiya</span>
+    <p>Oddiy qog'ozga bosilgan rasm va yuqori sifatli, zich chop etilgan poster — ikkalasida ham bir xil surat, lekin biri sezilarli darajada aniqroq va tiniqroq.</p>
+  </div>
+
+  <div class="note warn">
+    <span class="note-t">Talabalar ko'p adashadigan joy</span>
+    <p><code class="inline">2x</code> rasmni tayyorlashda uni shunchaki dasturda kattalashtirish (stretch qilish) — bu foyda bermaydi, aksincha sifatni yomonlashtiradi. <code class="inline">2x</code> rasm asl, yuqori sifatli fayldan to'g'ridan-to'g'ri kattaroq o'lchamda eksport qilinishi kerak.</p>
+  </div>
+</section>
+
+<!-- ===== 9 ===== -->
+<section class="slide">
+  <span class="eyebrow">Jonli mashq</span>
+  <h2>Rasm galereyasi: object-fit amalda</h2>
+  <p>Quyida uchta har xil o'lchamdagi rasm bor. <code class="inline">.galereya img</code>dagi <code class="inline">object-fit</code> qiymatini <code class="inline">contain</code>ga yoki <code class="inline">fill</code>ga o'zgartirib, farqni ko'ring.</p>
+
+  <div class="live stack">
+    <div class="live-head">
+      <span class="dot"></span> galereya.html
+      <span class="sp"></span>
+      <button class="live-reset" type="button">↺ Qayta</button>
+    </div>
+    <div class="live-body">
+      <div class="live-editor">
+<textarea spellcheck="false">
+<style>
+  .galereya {
+    display: flex;
+    gap: 10px;
+  }
+  .galereya img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+</style>
+
+<div class="galereya">
+  <img src="images/nature2.jpg" alt="Tabiat manzarasi 1">
+  <img src="images/nature3.jpg" alt="Tabiat manzarasi 2">
+  <img src="images/nature5.jpg" alt="Tabiat manzarasi 3">
+</div>
+</textarea>
+      </div>
+      <div class="live-preview"><iframe title="Natija"></iframe></div>
+    </div>
+  </div>
+
+  <div class="note tip">
+    <span class="note-t">Sinab ko'ring</span>
+    <p><code class="inline">object-fit: cover</code>ni <code class="inline">contain</code>ga almashtiring — rasmlar orasida bo'sh joy paydo bo'ladi, lekin hech biri kesilmaydi. Keyin <code class="inline">fill</code>ni sinab ko'ring — rasmlar nomutanosib cho'zilib qoladi.</p>
+  </div>
+</section>
+
+<!-- ===== 10 ===== -->
+<section class="slide">
+  <span class="eyebrow">Bonus</span>
+  <h2>Bonus: avatar — object-fit + border-radius</h2>
+  <p>Ikkita xususiyatni birlashtirish orqali istalgan to'rtburchak rasmdan mukammal doira profil surat (avatar) yasash mumkin: <code class="inline">object-fit: cover</code> rasmni kesib joylashtiradi, <code class="inline">border-radius: 50%</code> esa uni doiraga aylantiradi.</p>
+
+  <div class="cols">
+    <div>
+<pre class="code" data-lang="html"><code>&lt;img src="images/avatar.png" alt="Foydalanuvchi avatari" class="avatar"&gt;</code></pre>
+<pre class="code" data-lang="css"><code>.avatar {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+}</code></pre>
+    </div>
+    <div>
+      <img src="images/avatar.png" alt="Foydalanuvchi avatari" style="width:100px;height:100px;object-fit:cover;border-radius:50%;display:block">
+    </div>
+  </div>
+
+  <div class="note">
+    <span class="note-t">Qayerda foydali</span>
+    <p>Bu kombinatsiya foydalanuvchi profillari, komanda a'zolari sahifalari va sharh (comment) bloklarida doimiy ishlatiladi — rasm qanday o'lchamda yuklangan bo'lishidan qat'iy nazar, natija har doim tekis doira bo'ladi.</p>
+  </div>
+</section>
+
+<!-- ===== 11 ===== -->
+<section class="slide">
+  <span class="eyebrow">Xatolar</span>
+  <h2>Eng ko'p uchraydigan xatolar</h2>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th style="width:26%">Xato</th><th style="width:37%">Nima bo'ladi</th><th>Yechim</th></tr>
+      <tr>
+        <td><b><code>object-fit</code> qo'yilgan, lekin <code>width</code>/<code>height</code> yo'q</b></td>
+        <td>Rasm o'lchami o'zgarmaydi, xususiyat "ishlamayotgandek" tuyuladi</td>
+        <td><code>img</code> elementiga aniq <code>width</code> va <code>height</code> bering</td>
+      </tr>
+      <tr>
+        <td><b><code>object-fit</code> umuman unutilgan</b></td>
+        <td>Rasm konteynerga cho'ziladi yoki torayadi, nomutanosib va "cho'zilgan yuz" ko'rinishi paydo bo'ladi</td>
+        <td>O'lchami sobit konteynerdagi har bir rasmga <code>object-fit: cover</code> yoki <code>contain</code> bering</td>
+      </tr>
+      <tr>
+        <td><b><code>srcset</code> sintaksisida vergul yoki bo'shliq xatosi</b></td>
+        <td>Brauzer ro'yxatni to'g'ri o'qiy olmaydi, ba'zan faqat <code>src</code> ishlatiladi</td>
+        <td><code>"rasm.png 1x, rasm@2x.png 2x"</code> — har bir variantdan keyin vergul, descriptor oldidan bo'shliq</td>
+      </tr>
+      <tr>
+        <td><b><code>2x</code> rasm dasturda cho'zib kattalashtirilgan</b></td>
+        <td>Fayl kattaroq, lekin sifat asl <code>1x</code>dan yaxshi emas — xiralik yo'qolmaydi</td>
+        <td><code>2x</code> versiyani asl, yuqori piksellik fayldan to'g'ridan-to'g'ri eksport qiling</td>
+      </tr>
+    </table>
+  </div>
+</section>
+
+<!-- ===== 12 ===== -->
+<section class="slide">
+  <span class="eyebrow">Best practice</span>
+  <h2>Oltin qoida: har doim o'lcham + object-fit birga</h2>
+
+  <div class="vs">
+    <div class="ok">
+      <div class="vs-h">✓ TAVSIYA ETILADI</div>
+<pre class="code" data-lang="css"><code>.karta-rasm {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}</code></pre>
+      <p>Konteyner o'lchami aniq belgilangan, <code class="inline">object-fit</code> qo'shilgan — rasm har qanday manba o'lchamida ham tekis va nisbatli chiqadi.</p>
+    </div>
+    <div class="no">
+      <div class="vs-h">✗ TAVSIYA ETILMAYDI</div>
+<pre class="code" data-lang="css"><code>.karta-rasm {
+  width: 100%;
+}</code></pre>
+      <p><code class="inline">height</code> va <code class="inline">object-fit</code> yo'q — rasm o'z tabiiy nisbatida cho'ziladi, galereyada har bir karta boshqa balandlikda chiqadi.</p>
+    </div>
+  </div>
+
+  <div class="note warn">
+    <span class="note-t">Nega aynan shunday</span>
+    <p>Real loyihalarda foydalanuvchilar turli o'lchamdagi rasm yuklaydi — siz esa dizaynni bir xilda ko'rsatishga majbursiz. Sobit <code class="inline">width</code>/<code class="inline">height</code> + <code class="inline">object-fit: cover</code> kombinatsiyasi shu muammoni doimiy hal qiladi.</p>
+  </div>
+</section>
+
+<!-- ===== 13 ===== -->
+<section class="slide">
+  <span class="eyebrow">Amaliy vazifa</span>
+  <h2>Uyga vazifa — rasm galereyasi</h2>
+
+  <div class="task">
+    <h4><span class="n">1</span> Adaptiv va yuqori sifatli rasm galereyasi</h4>
+    <ol>
+      <li>4–6 ta rasmdan iborat galereya tuzing (masalan <code class="inline">images/nature1.jpg</code> dan <code class="inline">nature7.jpg</code> gacha bo'lganlaridan tanlang).</li>
+      <li>Har bir rasmni bir xil o'lchamdagi konteynerga joylashtiring — masalan <code class="inline">250x250px</code>.</li>
+      <li>Barcha rasmlarga <code class="inline">object-fit: cover</code> qo'llang — shunda turli o'lchamdagi rasmlar ham galereyada tekis, bir xil ko'rinishda chiqadi.</li>
+      <li>Kamida bitta rasmda <code class="inline">srcset</code> yordamida <code class="inline">1x</code>/<code class="inline">2x</code> versiyalarini ko'rsating.</li>
+    </ol>
+<pre class="code" data-lang="html" data-label="namuna"><code>&lt;div class="galereya"&gt;
+  &lt;img src="images/nature1.jpg"
+       srcset="images/nature1.jpg 1x, images/nature1.jpg 2x"
+       alt="Tabiat manzarasi"
+       class="galereya-rasm"&gt;
+  &lt;!-- yana 3-5 ta shu kabi img --&gt;
+&lt;/div&gt;</code></pre>
+<pre class="code" data-lang="css"><code>.galereya {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.galereya-rasm {
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 8px;
+}</code></pre>
+    <div class="crit">
+      <b>Baholash mezoni:</b> barcha rasmlar bir xil o'lchamda, cho'zilmasdan ko'rinadimi · <code>object-fit</code> to'g'ri qo'llanganmi · kamida bitta rasmda <code>srcset</code> sintaksisi xatosiz yozilganmi · galereya kamida 4 ta rasmdan iborat.
+    </div>
+  </div>
+</section>
+
+<!-- ===== 14 ===== -->
+<section class="slide">
+  <span class="eyebrow">Yakun</span>
+  <h2>Xulosa va o'z-o'zini tekshirish</h2>
+
+  <div class="recap">
+    <div><b>Inheritance tanlab ishlaydi</b><code>color</code>, <code>font-family</code> kabi matn xususiyatlari bolaga o'tadi; <code>border</code>, <code>padding</code>, <code>margin</code> — yo'q.</div>
+    <div><b>object-fit: cover</b>Rasm konteynerni to'ldiradi, nisbat saqlanadi, chetlari kesiladi — galereyalar uchun eng mos.</div>
+    <div><b>object-fit: contain</b>Rasm to'liq ko'rinadi, lekin bo'sh joy qolishi mumkin.</div>
+    <div><b>object-fit: fill (default)</b>Rasm konteynerga cho'ziladi, nisbat buziladi — odatda kerak emas.</div>
+    <div><b>width/height shart</b><code>object-fit</code> ishlashi uchun <code>img</code>ga aniq o'lcham berilishi kerak.</div>
+    <div><b>srcset — Retina uchun</b><code>"rasm.png 1x, rasm@2x.png 2x"</code> — brauzer ekran zichligiga qarab tanlaydi.</div>
+  </div>
+
+  <h3 style="margin-top:30px">Savol-javob</h3>
+  <div class="quiz">
+    <div class="q">
+      <p>1. Quyidagi xususiyatlardan qaysilari bolaga meros (inherit) bo'lib o'tadi: <code class="inline">color</code>, <code class="inline">font-family</code>, <code class="inline">border</code>, <code class="inline">padding</code>?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans"><code>color</code> va <code>font-family</code> — meros bo'ladi. <code>border</code> va <code>padding</code> — meros bo'lmaydi, har bir elementda alohida belgilanishi kerak.</div>
+    </div>
+    <div class="q">
+      <p>2. <code class="inline">object-fit: cover</code> bilan <code class="inline">object-fit: contain</code> orasidagi asosiy farq nima?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans"><code>cover</code> — rasm butun konteynerni to'ldiradi, kerak bo'lsa chetlari kesiladi, bo'sh joy qolmaydi. <code>contain</code> — rasm butunlay, kesilmasdan ko'rinadi, lekin konteynerni to'liq to'ldirmasligi (bo'sh joy qolishi) mumkin.</div>
+    </div>
+    <div class="q">
+      <p>3. <code class="inline">object-fit</code> qo'yilgan, lekin rasm hech qanday o'zgarmagandek tuyulmoqda. Sabab nima bo'lishi mumkin?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans"><code>img</code> elementiga aniq <code>width</code> va <code>height</code> berilmagan. <code>object-fit</code> faqat konteyner o'lchami sobit bo'lganda ta'sir ko'rsatadi.</div>
+    </div>
+    <div class="q">
+      <p>4. <code class="inline">srcset="logo.png 1x, logo@2x.png 2x"</code> yozuvida <code class="inline">2x</code> rasm qanday tayyorlanishi kerak?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">Asl, yuqori piksellik fayldan to'g'ridan-to'g'ri kattaroq o'lchamda eksport qilinishi kerak — oddiy <code>1x</code> rasmni dasturda cho'zib kattalashtirish sifatni yaxshilamaydi.</div>
+    </div>
+    <div class="q">
+      <p>5. Nega <code class="inline">object-fit: fill</code> (default qiymat) ko'pincha rasm galereyalarida ishlatilmaydi?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">Chunki u rasmning asl nisbatini (aspect ratio) hisobga olmaydi — rasm konteynerga moslab cho'ziladi yoki torayadi, natijada odam yuzi yoki manzara nomutanosib ko'rinishga keladi.</div>
+    </div>
+  </div>
+
+  <p style="margin-top:20px">Bugun biz otadan bolaga qaysi xususiyatlar o'tishini, rasmlarni konteynerga to'g'ri joylashtirishni va Retina ekranlar uchun sifatli rasm berishni o'rgandik. Lekin hali javobsiz qolgan savol bor: nega ba'zi elementlar, masalan <code class="inline">&lt;div&gt;</code>, har doim yangi qatordan boshlanadi-yu, <code class="inline">&lt;span&gt;</code> esa matn ichida oqib qolib ketaveradi? Keyingi darsda CSS Display tizimini — <code class="inline">block</code>, <code class="inline">inline</code>, <code class="inline">inline-block</code> farqini — misollar bilan to'liq ochib beramiz.</p>
+
+  <div class="lesson-jump">
+    <a href="../05-ranglar-olchamlar/index.html"><b>Oldingi modul</b><span>← 05-modul: CSS Ranglar va O'lchamlar bilan ishlash</span></a>
+    <a href="../07-css-display/index.html"><b>Keyingi modul</b><span>07-modul: CSS Display moduli →</span></a>
+  </div>
+</section>
+
+</main>
+
+<div class="deck-nav">
+  <button data-prev type="button" title="Oldingi (←)">‹</button>
+  <span class="hint">← → varaqlash · <kbd>O</kbd> ro'yxat · <kbd>F</kbd> to'liq ekran</span>
+  <button data-next type="button" title="Keyingi (→)">›</button>
+</div>
+
+<div class="deck-overview"><h3>Slaydlar ro'yxati</h3><div class="ov-grid"></div></div>
+
+<script src="../assets/js/deck.js"></script>
+</body>
+</html>

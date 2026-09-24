@@ -1,0 +1,667 @@
+<!doctype html>
+<html lang="uz" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>15-modul · Figma dizaynni Tailwind CSS'da nol qiymatdan yig'ish</title>
+<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body class="deck" data-lesson="15">
+
+<div class="deck-bar">
+  <a class="home" href="../index.html">← Kurs</a>
+  <span class="title">15-modul · Figma dizaynni Tailwind CSS'da nol qiymatdan yig'ish</span>
+  <span class="spacer"></span>
+  <div class="deck-tools">
+    <button class="tool" data-overview type="button" title="Slaydlar ro'yxati (O)">☰</button>
+    <button class="tool" data-theme-toggle type="button" title="Mavzu">☾</button>
+    <span class="counter">1 / 18</span>
+  </div>
+</div>
+<div class="deck-progress"></div>
+
+<main class="deck-stage">
+
+<!-- ===== 1 ===== -->
+<section class="slide cover">
+  <div class="lesson-no">15-modul</div>
+  <h1>Figma dizaynni Tailwind CSS'da<br>nol qiymatdan yig'ish</h1>
+  <p>Sizga hozir shunday vaziyat kelib tushdi deb tasavvur qiling: mijoz Figma havolasini yuboradi va aytadi — «ana shu dizaynni saytga aylantirib bering, ertaga kerak». Hech qanday tayyor kod yo'q, faqat rasmlar va o'lchamlar. Bugun siz aynan shu muammoni hal qiladigan aniq, tartibli ish jarayonini (workflow) — Figma'dan tayyor, responsive Tailwind kodigacha — bosqichma-bosqich real loyiha ustida qo'llaysiz.</p>
+  <div class="cover-plan">
+    <div><b>Reja 1</b>Figma bilan ishlash — o'lcham, rang va assetlarni ko'chirib olish</div>
+    <div><b>Reja 2</b>Real loyihani bosqichma-bosqich layout qilish (Navbar → Hero → Kartochkalar)</div>
+    <div><b>Reja 3</b>Kodni optimallashtirish va toza arxitektura</div>
+    <div><b>Amaliyot</b>Real dizayn-brifdan (Figma skrinshotidan) sahifani noldan Tailwind'da qurasiz</div>
+  </div>
+</section>
+
+<!-- ===== 2 ===== -->
+<section class="slide">
+  <span class="eyebrow">Maqsad</span>
+  <h2>Dars oxirida siz nima qila olasiz</h2>
+  <p class="big">Video oxirida siz real Figma maketini (yoki undan olingan skrinshotni) Dev Mode paneli mantig'i orqali tahlil qilib, undan olingan o'lcham, rang va assetlar asosida to'liq bir sahifa blokini — navbar + hero + feature-kartochkalar — Tailwind CSS'da toza va tartibli kod bilan qura olasiz.</p>
+  <div class="cardset">
+    <div class="card">
+      <span class="ico">🔎</span>
+      <h4>Tahlil qilasiz</h4>
+      <p>Dizaynni ko'rgan zahoti uni flex qatorlarga, komponentlarga va bo'shliqlarga ajratib «o'qiy» olasiz.</p>
+    </div>
+    <div class="card">
+      <span class="ico">📐</span>
+      <h4>Aniq qiymat olasiz</h4>
+      <p>Inspect/Dev Mode panelidan piksel, rang va shrift qiymatlarini taxmin qilmay, aynan o'zini olib, Tailwind classiga aylantirasiz.</p>
+    </div>
+    <div class="card">
+      <span class="ico">⚡</span>
+      <h4>Real loyiha qurasiz</h4>
+      <p>Navbar, Hero va feature-kartochkalarni real rasm-assetlar (logo, hero, ikonkalar) bilan bitta faylda yig'asiz.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🧩</span>
+      <h4>Kodni toza tutasiz</h4>
+      <p>Takrorlanadigan class to'plamini «shablon» sifatida ko'chirib, izchil konteyner patternini butun sahifa bo'ylab saqlaysiz.</p>
+    </div>
+  </div>
+  <div class="note tip">
+    <span class="note-t">Bu — kursning eng «amaliy» darsi</span>
+    <p>Nazariya minimal — bugungi 15 daqiqaning katta qismi jonli kod yozishga sarflanadi. Bu, aslida, sizni real ish joyida kutayotgan aynan shu vazifa: 16-modulda esa sizga alohida, shaxsiy dizayn-brif beriladi va butun kursda o'rgangan hamma narsani birlashtirib, mustaqil yakuniy loyiha qurishingiz kerak bo'ladi.</p>
+  </div>
+</section>
+
+<!-- ===== 3 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 1 · Nega Tailwind</span>
+  <h2>Bir xil dizayn, ikki xil yo'l</h2>
+  <p>12-modulda SCSS, 13–14-modullarda Tailwind'ning utility-first tezligini o'rgandingiz. Bugun aynan shu tezlikdan foydalanib, Figma'dan olingan bitta navbar'ni sof CSS bilan emas, balki to'g'ridan-to'g'ri Tailwind class'lari bilan — alohida CSS fayl yozmasdan — qurib olamiz.</p>
+
+  <div class="vs">
+    <div class="no">
+      <div class="vs-h">Sof CSS — 2 fayl</div>
+<pre class="code" data-lang="html" data-label="index.html"><code>&lt;header class="header"&gt;
+  &lt;img src="images/logo.png" class="logo"&gt;
+  &lt;nav class="menu"&gt;
+    &lt;p class="menu-text"&gt;Mahsulot&lt;/p&gt;
+    &lt;button class="singup"&gt;Ro'yxatdan o'tish&lt;/button&gt;
+  &lt;/nav&gt;
+&lt;/header&gt;</code></pre>
+<pre class="code" data-lang="css" data-label="style.css"><code>.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+}
+.menu { display: flex; align-items: center; gap: 24px; }</code></pre>
+    </div>
+    <div class="ok">
+      <div class="vs-h">Tailwind — 1 fayl, responsive bonus bilan</div>
+<pre class="code" data-lang="html" data-label="index.html"><code>&lt;header class="flex justify-between items-center py-5"&gt;
+  &lt;img src="images/logo.png" class="h-7"&gt;
+  &lt;nav class="hidden md:flex items-center gap-8 text-sm"&gt;
+    &lt;a href="#"&gt;Mahsulot&lt;/a&gt;
+    &lt;button class="bg-emerald-600 text-white px-4 py-2
+                   rounded-lg"&gt;Ro'yxatdan o'tish&lt;/button&gt;
+  &lt;/nav&gt;
+&lt;/header&gt;</code></pre>
+      <p style="margin-top:10px">Alohida CSS fayl yo'q, va <code class="inline">hidden md:flex</code> tufayli mobilda menyu avtomatik yashiriladi.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 4 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 1 · Figma</span>
+  <h2>Figma bilan ishlash — Inspect / Dev Mode paneli</h2>
+  <p>Real loyihada dasturchi hech qachon to'g'ridan-to'g'ri kod yozishdan boshlamaydi. Figma faylini ochib, o'ng panelda «Inspect» yoki «Dev Mode» bo'limi ko'rsatiladi — bu yerda istalgan elementni bosganda uning aniq o'lchami, rangi, shrift o'lchami va bo'shliqlari avtomatik ko'rsatiladi. Endi piksellarni ko'z bilan taxmin qilish shart emas — Figma sizga aniq raqamlarni beradi.</p>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th>Inspect panelida ko'rinadi</th><th>Tailwind classida ishlatiladi</th></tr>
+      <tr><td>Aniq piksel o'lchamlari (width/height)</td><td><code>w-10</code>, <code>h-7</code>, <code>max-w-6xl</code></td></tr>
+      <tr><td>Rang kodi (HEX, masalan <code>#059669</code>)</td><td><code>bg-emerald-600</code> yoki <code>bg-[#059669]</code></td></tr>
+      <tr><td>Shrift o'lchami va qalinligi</td><td><code>text-lg</code>, <code>font-semibold</code></td></tr>
+      <tr><td>Elementlar orasidagi bo'shliq (spacing/gap)</td><td><code>px-6 py-3</code>, <code>gap-8</code></td></tr>
+      <tr><td>Burchak radiusi</td><td><code>rounded-lg</code>, <code>rounded-xl</code></td></tr>
+    </table>
+  </div>
+
+  <div class="note warn">
+    <span class="note-t">Oltin qoida</span>
+    <p>Biror qiymatni «ko'zga chiroyli ko'rinadi» deb o'zingizdan qo'ysangiz — bu dizayn bilan mos kelmasligi mumkin. Har doim Inspect panelidagi (yoki berilgan rasmdan imkon qadar aniq o'qilgan) <b>asl qiymatni</b> oling.</p>
+  </div>
+</section>
+
+<!-- ===== 5 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 1 · Rang va assetlar</span>
+  <h2>HEX rang → Tailwind palitrasi, asset eksport</h2>
+  <div class="cols-2-1">
+    <div>
+      <p>Rangni Figma'da bosganda HEX kod nusxalanadi (masalan <code class="inline">#059669</code>). Buni keyin Tailwind'ning tayyor rang skalasidan eng yaqinini topib ishlatasiz (masalan <code class="inline">emerald-600</code>), yoki aynan mos kelmasa arbitrary value (<code class="inline">bg-[#059669]</code>) bilan yozasiz.</p>
+<pre class="code" data-lang="html" data-label="tugma.html"><code>&lt;!-- Figma Inspect'da ko'rgan qiymatlar: --&gt;
+&lt;!-- Tugma: padding 12px 24px, border-radius 8px, rang #059669 --&gt;
+&lt;button class="px-6 py-3 rounded-lg bg-emerald-600
+               hover:bg-emerald-700 text-white
+               font-semibold transition"&gt;
+  Ro'yxatdan o'tish
+&lt;/button&gt;</code></pre>
+    </div>
+    <div>
+      <h3>Asset eksport</h3>
+      <ul>
+        <li><b>SVG</b> — logotip, ikonka kabi vektor grafikalar uchun.</li>
+        <li><b>PNG</b> — foni shaffof kerak bo'lgan rasmlar uchun.</li>
+        <li><b>JPG</b> — fotosurat, foni to'liq to'ldirilgan rasmlar uchun.</li>
+      </ul>
+      <p>Figma'da elementni tanlab, pastdagi «Export» tugmasi shu formatlarda yuklab beradi. Bu darsda esa allaqachon tayyor <code class="inline">logo.png</code>, <code class="inline">hero.png</code>, <code class="inline">icon-1.png</code>–<code class="inline">icon-4.png</code> fayllaridan foydalanamiz — xuddi haqiqiy loyihada eksport qilingandek.</p>
+    </div>
+  </div>
+
+  <div class="note bad">
+    <span class="note-t">Talabalar ko'p adashadigan joy</span>
+    <p>Figma'dagi har bir noyob rangni arbitrary value (<code class="inline">bg-[#059f6c]</code>) bilan aynan nusxalashga urinishadi. Bu konsistentlikni yo'qotadi — avval Tailwind'ning standart palitrasidan eng yaqinini tanlang, arbitrary value'ni esa faqat brend rangi standart skalada mutlaqo yo'q bo'lgandagina ishlating.</p>
+  </div>
+</section>
+
+<!-- ===== 6 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 2 · Metodika</span>
+  <h2>Real loyihani tahlil qilish metodikasi — qanday fikrlash kerak</h2>
+  <p>Har qanday yangi maketni ko'rganingizda, kodlashni boshlashdan oldin o'zingizga quyidagi savollarni bering — bosqichma-bosqich. Bugun bitta SaaS-landing sahifasining bir necha bo'limini — Navbar, Hero va feature-kartochkalarni — aynan shu tartibda quramiz.</p>
+
+  <ol>
+    <li><b>Bu qator (row)mi yoki ustun (column)mi?</b> Elementlar yonma-yon joylashganmi yoki tepa-past? Bu <code class="inline">flex-direction</code>ni aniqlaydi.</li>
+    <li><b>Qaysi qismlar takrorlanadi (komponent)?</b> Masalan bir xil ko'rinishdagi kartochkalar yoki tugmalar. Ular uchun bitta ishonchli class to'plamini yozib, faqat mazmunini almashtiring.</li>
+    <li><b>Rang, shrift, spacing qiymatlari qancha?</b> Inspect panelidan (yoki berilgan rasmdan imkon qadar aniq) o'qing.</li>
+    <li><b>Qaysi HTML tegi semantik jihatdan to'g'ri keladi?</b> <code class="inline">header</code>, <code class="inline">nav</code>, <code class="inline">section</code>, <code class="inline">button</code>.</li>
+    <li><b>Mobilda ko'rinish qanday o'zgaradi?</b> Nima yashiriladi (<code class="inline">hidden</code>), nima <code class="inline">md:</code>dan boshlab paydo bo'ladi?</li>
+    <li><b>Rasm yoki ikonka kerakmi?</b> Bo'lsa, <code class="inline">images/</code> papkasidagi tayyor faylni ulang.</li>
+  </ol>
+
+  <div class="note">
+    <span class="note-t">Endi amaliyotga</span>
+    <p>Ushbu ro'yxat keyingi slaydlarda — Navbar, Hero va Feature-kartochkalar ustida — aynan shu tartibda qo'llanadi.</p>
+  </div>
+</section>
+
+<!-- ===== 7 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 2 · Ish oqimi</span>
+  <h2>Figma → Tailwind: 6 bosqichli ish oqimi (workflow)</h2>
+  <p>Tahlildan keyingi qadam — struktura. Real loyihada quyidagi 6 bosqich har doim ketma-ket bosib o'tiladi:</p>
+
+  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:18px;border:1px solid #e2e5ea;border-radius:12px;font-size:14px;margin:16px 0">
+    <span style="padding:9px 14px;border-radius:8px;background:#eff6ff;font-weight:600;white-space:nowrap">1. Figma dizayn</span>
+    <span style="color:#9ca3af;font-weight:700">→</span>
+    <span style="padding:9px 14px;border-radius:8px;background:#eff6ff;font-weight:600;white-space:nowrap">2. Tahlil</span>
+    <span style="color:#9ca3af;font-weight:700">→</span>
+    <span style="padding:9px 14px;border-radius:8px;background:#eff6ff;font-weight:600;white-space:nowrap">3. Struktura (HTML)</span>
+    <span style="color:#9ca3af;font-weight:700">→</span>
+    <span style="padding:9px 14px;border-radius:8px;background:#eff6ff;font-weight:600;white-space:nowrap">4. Tailwind class'lar</span>
+    <span style="color:#9ca3af;font-weight:700">→</span>
+    <span style="padding:9px 14px;border-radius:8px;background:#eff6ff;font-weight:600;white-space:nowrap">5. Responsive tekshiruv</span>
+    <span style="color:#9ca3af;font-weight:700">→</span>
+    <span style="padding:9px 14px;border-radius:8px;background:#eff6ff;font-weight:600;white-space:nowrap">6. Komponentlarga ajratish</span>
+  </div>
+
+  <div class="cols-3">
+    <div>
+      <h3>1–2. Dizayn va tahlil</h3>
+      <p>Oldingi slayddagi metodika: qator/ustunmi, qaysi qism takrorlanadi, rang/shrift qancha — kodlashdan oldin javob beriladi.</p>
+    </div>
+    <div>
+      <h3>3–4. Struktura va Tailwind</h3>
+      <p>Avval semantik HTML skeleti (<code class="inline">header</code>, <code class="inline">section</code>, <code class="inline">footer</code>) quriladi, keyin har bir elementga Tailwind utility class'lari yoziladi.</p>
+    </div>
+    <div>
+      <h3>5–6. Tekshiruv va komponent</h3>
+      <p>DevTools'da turli ekranlarda tekshiriladi, so'ng takrorlanadigan bloklar (kartochka, tugma) «shablon»ga aylantiriladi.</p>
+    </div>
+  </div>
+
+  <div class="note">
+    <span class="note-t">Bugun aynan shu tartibda ishlaymiz</span>
+    <p>Keyingi slaydlarda Navbar, Hero va Feature-kartochkalar bo'limlari aynan shu 6 bosqich asosida quriladi.</p>
+  </div>
+</section>
+
+<!-- ===== 8 ===== -->
+<section class="slide">
+  <span class="eyebrow">Amaliy · Navbar</span>
+  <h2>Amaliy: Navbar — logo, menyu, tugmalar</h2>
+  <p>Tahlil: logotip chapda, menyu havolalari o'rtada/o'ngda, ikkita tugma eng o'ngda — demak konteynerga <code class="inline">flex justify-between items-center</code> kerak. Mobilda menyuni yashirib (<code class="inline">hidden</code>), <code class="inline">md:</code>dan boshlab ko'rsatamiz (<code class="inline">md:flex</code>) — o'rniga mobilda burger tugma (<code class="inline">md:hidden</code>) chiqadi.</p>
+
+<pre class="code" data-lang="html" data-label="navbar.html"><code>&lt;header class="max-w-6xl mx-auto flex items-center
+               justify-between px-6 py-5"&gt;
+  &lt;img src="images/logo.png" alt="Logo" class="h-7"&gt;
+
+  &lt;nav class="hidden md:flex items-center gap-8
+              text-sm font-medium text-gray-600"&gt;
+    &lt;a href="#" class="hover:text-gray-900 transition"&gt;Mahsulot&lt;/a&gt;
+    &lt;a href="#" class="hover:text-gray-900 transition"&gt;Narxlar&lt;/a&gt;
+    &lt;a href="#" class="hover:text-gray-900 transition"&gt;Sharhlar&lt;/a&gt;
+  &lt;/nav&gt;
+
+  &lt;div class="hidden md:flex items-center gap-3"&gt;
+    &lt;button class="px-4 py-2 rounded-lg border-2
+                   border-gray-200 font-semibold text-sm
+                   hover:border-gray-400 transition"&gt;Kirish&lt;/button&gt;
+    &lt;button class="px-4 py-2 rounded-lg bg-emerald-600
+                   hover:bg-emerald-700 text-white
+                   font-semibold text-sm transition"&gt;Ro'yxatdan o'tish&lt;/button&gt;
+  &lt;/div&gt;
+
+  &lt;button class="md:hidden text-2xl"&gt;☰&lt;/button&gt;
+&lt;/header&gt;</code></pre>
+
+  <div class="note warn">
+    <span class="note-t">Talabalar ko'p adashadigan joy</span>
+    <p><code class="inline">hidden md:flex</code> qo'yiladi, lekin burger tugmasi (<code class="inline">md:hidden</code>) qo'shilmaydi — natijada mobilda na menyu, na uni ochish imkoniyati ko'rinadi. Ikkalasi har doim juft ishlatilishi kerak.</p>
+  </div>
+</section>
+
+<!-- ===== 9 ===== -->
+<section class="slide">
+  <span class="eyebrow">Amaliy · Hero</span>
+  <h2>Amaliy: Hero — sarlavha, tavsif, CTA, rasm</h2>
+  <p>Tahlil: mobilda matn va rasm ustma-ust (<code class="inline">flex-col</code>), <code class="inline">md:</code>dan boshlab yonma-yon (<code class="inline">md:flex-row</code>); sarlavha o'lchami ham ekranga qarab o'sishi kerak (<code class="inline">text-3xl md:text-5xl</code>) — bu 11-modulda o'rgangan mobile-first tamoyilining Tailwind'dagi ko'rinishi.</p>
+
+<pre class="code" data-lang="html" data-label="hero.html"><code>&lt;section class="max-w-6xl mx-auto px-6 py-16 flex
+                flex-col md:flex-row items-center gap-12"&gt;
+  &lt;div class="flex-1 text-center md:text-left"&gt;
+    &lt;h1 class="text-3xl md:text-5xl font-bold leading-tight
+               text-gray-900"&gt;
+      Fikringiz tezligida ishlang
+    &lt;/h1&gt;
+    &lt;p class="mt-4 text-gray-500 text-base md:text-lg"&gt;
+      Vositalar, darsliklar va dizayn ekspertlari — barchasi bir joyda.
+    &lt;/p&gt;
+    &lt;div class="mt-8 flex flex-col sm:flex-row gap-3
+                justify-center md:justify-start"&gt;
+      &lt;button class="px-6 py-3 rounded-lg bg-emerald-600
+                     hover:bg-emerald-700 text-white
+                     font-semibold transition"&gt;Boshlash&lt;/button&gt;
+      &lt;button class="px-6 py-3 rounded-lg text-emerald-700
+                     font-semibold hover:bg-emerald-50
+                     transition"&gt;▷ Videoni ko'rish&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="flex-1"&gt;
+    &lt;img src="images/hero.png" alt="Mahsulot ko'rinishi"
+         class="w-full max-w-md mx-auto"&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+
+  <div class="note tip">
+    <span class="note-t">Diqqat qiling</span>
+    <p><code class="inline">text-3xl md:text-5xl</code> — mobilda kichikroq shrift, katta ekranda kattaroq. Konteynerning <code class="inline">max-w-6xl mx-auto px-6 py-16</code> patterni Navbar'dagi bilan bir xil — bu tasodif emas, keyingi bo'limlarda ham shu pattern takrorlanadi.</p>
+  </div>
+</section>
+
+<!-- ===== 10 ===== -->
+<section class="slide">
+  <span class="eyebrow">Amaliy · Feature-kartochkalar</span>
+  <h2>Amaliy: Feature bo'limi — 4 ta kartochka</h2>
+  <p>Tahlil: 4 ta bir xil o'lchamdagi karta — bu grid uchun ideal holat. Har bir kartochka bir xil struktura: ikonka, sarlavha, matn. Hover'da yengil ko'tarilish effekti qo'shiladi.</p>
+
+<pre class="code" data-lang="html" data-label="features.html"><code>&lt;section class="max-w-6xl mx-auto px-6 py-16"&gt;
+  &lt;h2 class="text-2xl md:text-3xl font-bold text-center
+             text-gray-900 mb-10"&gt;Aynan siz uchun yaratilgan&lt;/h2&gt;
+
+  &lt;div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"&gt;
+    &lt;div class="p-6 rounded-xl border border-gray-100
+                hover:shadow-lg hover:-translate-y-1 transition"&gt;
+      &lt;img src="images/icon-1.png" alt="" class="h-10 mb-4"&gt;
+      &lt;h3 class="font-semibold text-gray-900 mb-2"&gt;Birinchi bosim testlari&lt;/h3&gt;
+      &lt;p class="text-sm text-gray-500"&gt;Foydalanuvchi birinchi marta nimaga bosishini bilib oling.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;!-- icon-2, icon-3, icon-4 bilan xuddi shu struktura takrorlanadi --&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+
+  <div class="note tip">
+    <span class="note-t">DRY eslatmasi</span>
+    <p>Har bir kartochka bir xil class to'plamiga ega — faqat rasm, sarlavha va matn farq qiladi. Buni «shablon» sifatida qanday ko'chirish kerakligini 13-slaydda batafsil ko'ramiz.</p>
+  </div>
+</section>
+
+<!-- ===== 11 ===== -->
+<section class="slide">
+  <span class="eyebrow">Amaliy · Qolgan bo'limlar</span>
+  <h2>Pricing, Testimonials, Footer — bir xil pattern bilan davom etadi</h2>
+  <p>Real loyihada landing sahifa Navbar/Hero/Cards bilan tugamaydi — lekin qolgan bo'limlarning har biri aynan shu 6 bosqichli metodika bilan quriladi, faqat joylashuv turi farqlanadi:</p>
+
+  <div class="cols-3">
+    <div class="card">
+      <h4>Pricing</h4>
+      <p><code class="inline">grid grid-cols-1 md:grid-cols-3 gap-6</code> — 3 ta reja, o'rtadagisi <code class="inline">border-2 border-emerald-600 shadow-xl</code> bilan ajratiladi.</p>
+    </div>
+    <div class="card">
+      <h4>Testimonials</h4>
+      <p><code class="inline">grid grid-cols-1 md:grid-cols-3 gap-6</code> — mijoz fikri kartochkalari, avatar o'rniga rangli doira + bosh harf.</p>
+    </div>
+    <div class="card">
+      <h4>Footer</h4>
+      <p><code class="inline">grid grid-cols-2 md:grid-cols-4 gap-8</code> — logo+tavsif va havolalar guruhlari, pastda copyright qatori.</p>
+    </div>
+  </div>
+
+  <p>Barchasini yig'ganda, real loyihada bo'limlar shunchaki ketma-ket, bitta semantik skelet ichiga joylashadi:</p>
+
+<pre class="code" data-lang="html" data-label="index.html (skelet)"><code>&lt;body class="text-gray-800"&gt;
+  &lt;header class="max-w-6xl mx-auto flex ..."&gt;&lt;!-- Navbar --&gt;&lt;/header&gt;
+  &lt;section class="max-w-6xl mx-auto px-6 py-16 flex ..."&gt;&lt;!-- Hero --&gt;&lt;/section&gt;
+  &lt;section class="max-w-6xl mx-auto px-6 py-16"&gt;&lt;!-- Feature-kartochkalar --&gt;&lt;/section&gt;
+  &lt;section class="max-w-6xl mx-auto px-6 py-16"&gt;&lt;!-- Pricing --&gt;&lt;/section&gt;
+  &lt;section class="max-w-6xl mx-auto px-6 py-16"&gt;&lt;!-- Testimonials --&gt;&lt;/section&gt;
+  &lt;footer class="border-t border-gray-100"&gt;&lt;!-- Footer --&gt;&lt;/footer&gt;
+&lt;/body&gt;</code></pre>
+
+  <div class="note">
+    <span class="note-t">E'tibor bering</span>
+    <p>Har bir bo'limda takrorlanadigan <code class="inline">max-w-6xl mx-auto px-6 py-16</code> — bu tasodif emas, 12-slaydda buni «izchil konteyner pattern» sifatida ko'ramiz.</p>
+  </div>
+</section>
+
+<!-- ===== 12 ===== -->
+<section class="slide">
+  <span class="eyebrow">Jonli mashq</span>
+  <h2>Jonli natija: to'liq sahifani sinab ko'ring</h2>
+  <p>Pastda yuqorida qurgan uchta bo'lim (Navbar + Hero + Feature-kartochkalar) real rasm-assetlar bilan birga to'liq ishlaydi. Kodni o'zgartiring — matnni, rangni yoki grid ustunlar sonini almashtirib ko'ring.</p>
+
+  <div class="live">
+    <div class="live-head">
+      <span class="dot"></span> saas-landing.html
+      <span class="sp"></span>
+      <button class="live-reset" type="button">↺ Qayta</button>
+    </div>
+    <div class="live-body">
+      <div class="live-editor">
+<textarea spellcheck="false">
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="text-gray-800">
+
+<header class="max-w-4xl mx-auto flex items-center justify-between px-6 py-5">
+  <img src="images/logo.png" alt="Logo" class="h-7">
+  <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
+    <a href="#" class="hover:text-gray-900 transition">Mahsulot</a>
+    <a href="#" class="hover:text-gray-900 transition">Narxlar</a>
+    <a href="#" class="hover:text-gray-900 transition">Sharhlar</a>
+  </nav>
+  <div class="hidden md:flex items-center gap-3">
+    <button class="px-4 py-2 rounded-lg border-2 border-gray-200 font-semibold text-sm hover:border-gray-400 transition">Kirish</button>
+    <button class="px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm transition">Ro'yxatdan o'tish</button>
+  </div>
+  <button class="md:hidden text-2xl">☰</button>
+</header>
+
+<section class="max-w-4xl mx-auto px-6 py-16 flex flex-col md:flex-row items-center gap-12">
+  <div class="flex-1 text-center md:text-left">
+    <h1 class="text-3xl md:text-5xl font-bold leading-tight text-gray-900">Fikringiz tezligida ishlang</h1>
+    <p class="mt-4 text-gray-500 text-base md:text-lg">Vositalar, darsliklar va dizayn ekspertlari — barchasi bir joyda.</p>
+    <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
+      <button class="px-6 py-3 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-semibold transition">Boshlash</button>
+      <button class="px-6 py-3 rounded-lg text-emerald-700 font-semibold hover:bg-emerald-50 transition">▷ Videoni ko'rish</button>
+    </div>
+  </div>
+  <div class="flex-1">
+    <img src="images/hero.png" alt="Mahsulot ko'rinishi" class="w-full max-w-md mx-auto">
+  </div>
+</section>
+
+<section class="max-w-4xl mx-auto px-6 py-16">
+  <h2 class="text-2xl md:text-3xl font-bold text-center text-gray-900 mb-10">Aynan siz uchun yaratilgan</h2>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div class="p-6 rounded-xl border border-gray-100 hover:shadow-lg hover:-translate-y-1 transition">
+      <img src="images/icon-1.png" alt="" class="h-10 mb-4">
+      <h3 class="font-semibold text-gray-900 mb-2">Birinchi bosim testlari</h3>
+      <p class="text-sm text-gray-500">Foydalanuvchi birinchi marta nimaga bosishini bilib oling.</p>
+    </div>
+    <div class="p-6 rounded-xl border border-gray-100 hover:shadow-lg hover:-translate-y-1 transition">
+      <img src="images/icon-2.png" alt="" class="h-10 mb-4">
+      <h3 class="font-semibold text-gray-900 mb-2">Dizayn so'rovnomalari</h3>
+      <p class="text-sm text-gray-500">Foydalanuvchilardan tezkor fikr-mulohaza yig'ing.</p>
+    </div>
+    <div class="p-6 rounded-xl border border-gray-100 hover:shadow-lg hover:-translate-y-1 transition">
+      <img src="images/icon-3.png" alt="" class="h-10 mb-4">
+      <h3 class="font-semibold text-gray-900 mb-2">Afzallik testlari</h3>
+      <p class="text-sm text-gray-500">Ikki variantdan qaysi biri yaxshi ishlashini aniqlang.</p>
+    </div>
+    <div class="p-6 rounded-xl border border-gray-100 hover:shadow-lg hover:-translate-y-1 transition">
+      <img src="images/icon-4.png" alt="" class="h-10 mb-4">
+      <h3 class="font-semibold text-gray-900 mb-2">Besh soniyalik testlar</h3>
+      <p class="text-sm text-gray-500">Birinchi taassurot qanday shakllanishini o'lchang.</p>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
+</textarea>
+      </div>
+      <div class="live-preview"><iframe title="Natija"></iframe></div>
+    </div>
+  </div>
+
+  <div class="note tip">
+    <span class="note-t">Sinab ko'ring</span>
+    <p><code class="inline">lg:grid-cols-4</code>ni <code class="inline">lg:grid-cols-2</code>ga, <code class="inline">bg-emerald-600</code>ni <code class="inline">bg-indigo-600</code>ga o'zgartiring — natija darhol yangilanadi.</p>
+  </div>
+</section>
+
+<!-- ===== 13 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 2 · Tekshiruv</span>
+  <h2>DevTools bilan responsiv tekshiruv — 375 / 768 / 1280</h2>
+  <p>Har bir bo'lim qurilgach, uni darhol uch xil kenglikda tekshirish — professional dasturchining kundalik odati.</p>
+
+  <ol>
+    <li><b>DevTools'ni oching</b> (<kbd>F12</kbd> yoki <kbd>Cmd</kbd>+<kbd>Opt</kbd>+<kbd>I</kbd>) va «Device Toolbar»ni yoqing.</li>
+    <li><b>375px'da tekshiring</b> — navbar burger tugmasi chiqyaptimi, matn siqilib qolmayaptimi?</li>
+    <li><b>768px'da tekshiring</b> — <code class="inline">md:</code> breakpoint atrofida joylashuv birdaniga o'zgarishini kuzating.</li>
+    <li><b>1280px'da tekshiring</b> — konteyner <code class="inline">max-w-6xl</code>da to'xtab, ekranning qolgan qismi bo'sh (yoki fon rangi bilan) qolyaptimi?</li>
+    <li><b>Gorizontal skroll yo'qligini tasdiqlang</b> — istalgan kenglikda sahifa yon tomonga siljimasligi kerak.</li>
+  </ol>
+
+  <div class="note bad">
+    <span class="note-t">Kichik ekran — katta muammo manbai</span>
+    <p>Aksariyat «responsiv emas» xatolar aynan 375–420px oralig'ida ko'zga tashlanadi. Faqat kattaroq monitorda tekshirib, «chiroyli ko'rinyapti» deb xulosa chiqarmang — bu keyingi vazifaning ham baholash mezoni.</p>
+  </div>
+</section>
+
+<!-- ===== 14 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 3 · Arxitektura</span>
+  <h2>Kodni optimallashtirish va toza arxitektura</h2>
+  <p>9–10-modullarda gradient-kartochka va spinner/modal komponentlarini yaratganda «bir xil ko'rinishga bitta umumiy CSS class» degan DRY qoidasini qo'llagan edingiz. Tailwind'da alohida class yozilmagani uchun bu qoida boshqacha ko'rinishda qo'llaniladi: <b>butun class to'plamini «shablon» (reusable pattern) sifatida ko'chirasiz.</b></p>
+
+  <div class="cols">
+    <div>
+<pre class="code" data-lang="html" data-label="card-shablon (nusxa uchun)"><code>&lt;div class="p-6 rounded-xl border border-gray-100
+            hover:shadow-lg hover:-translate-y-1 transition"&gt;
+  &lt;img src="images/ICON.png" class="h-10 mb-4"&gt;
+  &lt;h3 class="font-semibold text-gray-900 mb-2"&gt;SARLAVHA&lt;/h3&gt;
+  &lt;p class="text-sm text-gray-500"&gt;MATN&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+      <p>Feature-kartochkaning butun class ro'yxatini bir marta ishonchli yozib, keyin har bir yangi kartochka uchun shu blokni butunligicha nusxa ko'chirasiz — faqat ikonka, sarlavha va matnni almashtirasiz.</p>
+    </div>
+    <div>
+<pre class="code" data-lang="html" data-label="izchil konteyner pattern"><code>&lt;section class="max-w-6xl mx-auto px-6 py-16"&gt;
+  ...
+&lt;/section&gt;</code></pre>
+      <p>Yana bir muhim arxitektura odati: har bir <code class="inline">section</code> uchun bitta standart konteyner pattern ishlatish — shunday qilib butun sahifa bo'ylab bo'shliq va kenglik izchil qoladi, bitta bo'limda <code class="inline">py-16</code>, boshqasida tasodifan <code class="inline">py-10</code> bo'lib qolmaydi.</p>
+    </div>
+  </div>
+
+  <div class="note">
+    <span class="note-t">Real loyihada bu qadam qanday</span>
+    <p>Real (React/Vue kabi) loyihalarda bu shablon haqiqiy komponentga aylanadi, lekin fikrlash tarzi bir xil qoladi — bitta ishonchli namuna, ko'p marta ko'chirish. Classlarni doim mantiqiy guruhda yozish tavsiya etiladi: layout → spacing → rang → holat (<code class="inline">hover:</code>/<code class="inline">focus:</code>).</p>
+  </div>
+</section>
+
+<!-- ===== 15 ===== -->
+<section class="slide">
+  <span class="eyebrow">Xatolar</span>
+  <h2>Umumiy xatolar — Figma + Tailwind loyihasida</h2>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th style="width:26%">Xato</th><th style="width:37%">Nima bo'ladi</th><th>Yechim</th></tr>
+      <tr>
+        <td><b>Figma rangini arbitrary value bilan aynan nusxalash</b></td>
+        <td>Har bir noyob HEX rang <code>bg-[#...]</code> bilan yozilib, konsistentlik yo'qoladi</td>
+        <td>Avval standart Tailwind palitrasidan eng yaqinini tanlang, arbitrary value'ni istisno qiling</td>
+      </tr>
+      <tr>
+        <td><b>Mobil menyuni yashirib, ochish tugmasini unutish</b></td>
+        <td><code>hidden md:flex</code> qo'yiladi, lekin <code>md:hidden</code> burger tugmasi qo'shilmaydi — mobilda menyu umuman ko'rinmaydi</td>
+        <td>Ikkalasini har doim juft ishlating: <code>hidden md:flex</code> + <code>md:hidden</code></td>
+      </tr>
+      <tr>
+        <td><b>Bo'limlar orasidagi bo'shliq nomuvofiq</b></td>
+        <td>Bir bo'limda <code>py-16</code>, boshqasida <code>py-10</code> — sahifa «notekis» his qiladi</td>
+        <td>Barcha asosiy bo'limlar uchun bitta standart konteyner pattern (<code>max-w-6xl mx-auto px-6 py-16</code>) ishlating</td>
+      </tr>
+      <tr>
+        <td><b>Har bir bo'limni «noldan» yozish</b></td>
+        <td>Class tartibi har safar boshqacha ketma-ketlikda terilib, kod o'qish qiyinlashadi</td>
+        <td>Classlarni mantiqiy guruhda yozing: layout → spacing → rang → holat</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="note bad">
+    <span class="note-t">Eng muhim maslahat</span>
+    <p>5-slayddagi tahlil metodikasi savollariga kod yozishdan oldin javob bering — bu keyingi 30 daqiqani tejaydi.</p>
+  </div>
+</section>
+
+<!-- ===== 16 ===== -->
+<section class="slide">
+  <span class="eyebrow">Best practice</span>
+  <h2>Yaxshi amaliyot — qisqacha</h2>
+  <div class="cols">
+    <div>
+      <ul>
+        <li>Kodlashdan oldin har doim tahlil metodikasidan o'ting: qator/ustun, komponent, rang/shrift.</li>
+        <li>Har bir bo'lim uchun bitta standart vertikal padding (<code class="inline">py-16</code>) va bitta konteyner kengligi (<code class="inline">max-w-6xl mx-auto</code>) ishlating.</li>
+        <li>Takrorlanadigan blokni (kartochka, tugma) «shablon» sifatida ko'chiring.</li>
+      </ul>
+    </div>
+    <div>
+      <ul>
+        <li>Har bir interaktiv elementga (tugma, havola) <code class="inline">hover:</code> va <code class="inline">transition</code> qo'shishni unutmang.</li>
+        <li>Mobil menyu uchun har doim <code class="inline">hidden md:flex</code> + <code class="inline">md:hidden</code> juftligini birga ishlating.</li>
+        <li>DevTools'da 375px, 768px va 1280px kengliklarida tekshirmasdan «tayyor» demang.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="note tip">
+    <span class="note-t">Bu — 16-modulga to'g'ridan-to'g'ri tayyorgarlik</span>
+    <p>Yakuniy loyihada sizdan aynan shu ko'nikmalar kutiladi: dizayn-brifni tahlil qilish, Tailwind bilan tez qurish va DevTools'da responsiv tekshiruv.</p>
+  </div>
+</section>
+
+<!-- ===== 17 ===== -->
+<section class="slide">
+  <span class="eyebrow">Amaliy vazifa</span>
+  <h2>Uyga vazifa</h2>
+
+  <div class="task">
+    <h4><span class="n">1</span> Oson: «Task Manager» dizaynini Tailwind'da qurish</h4>
+    <img src="images/figma-brief-vazifalar.jpg" alt="Task Manager dizayni" style="max-width:320px;border-radius:10px;margin-bottom:12px;display:block">
+    <ol>
+      <li>Yuqoridagi rasmni tahlil qiling: sarlavha, input + tugma qatori, har bir vazifa qatori (checkbox + matn + Remove tugma).</li>
+      <li><code class="inline">uy-vazifa-1.html</code> yarating, <code class="inline">&lt;head&gt;</code>ga Tailwind CDN <code class="inline">&lt;script&gt;</code>ini ulang.</li>
+      <li>Kartochkani ekran markazida (<code class="inline">max-w-md mx-auto</code>) joylashtiring, input + tugmani <code class="inline">flex gap-2</code> bilan bitta qatorga qo'ying.</li>
+      <li>Har bir vazifa qatorini <code class="inline">flex items-center justify-between</code> bilan joylashtiring; bajarilgan band uchun <code class="inline">line-through text-gray-400</code> qo'llang.</li>
+      <li>375px va 768px kengliklarida DevTools'da tekshiring.</li>
+    </ol>
+    <div class="crit">
+      <b>Baholash mezoni:</b> kartochka <code class="inline">max-w-md mx-auto</code> bilan markazda · input+tugma bir qatorda (<code class="inline">flex</code>) · checkbox+matn+tugma har bir qatorda flex bilan joylashgan · bajarilgan band uchun <code class="inline">line-through</code> qo'llangan · 375px'da gorizontal skroll yo'q.
+    </div>
+  </div>
+
+  <div class="task">
+    <h4><span class="n">2</span> Qiyin: soat mahsulot sahifasini to'liq qurish</h4>
+    <img src="images/figma-brief-soat.jpg" alt="Soat mahsulot sahifasi dizayni" style="max-width:420px;border-radius:10px;margin-bottom:12px;display:block">
+    <ol>
+      <li>Yuqoridagi rasmni tahlil qiling: chapda katta rasm + pastda kichik galereya (thumbnail), o'ngda sarlavha, narx (eski + yangi + chegirma foizi), reyting (yulduzcha + son), tavsif, miqdor tanlagich (<code class="inline">-</code>/<code class="inline">+</code> tugmalar), «Add to Bag» tugmasi, pastda «Sign Up» promo qutisi.</li>
+      <li>Ikki ustunli joylashuvni <code class="inline">flex flex-col md:flex-row gap-10</code> bilan quring — mobilda ustma-ust, <code class="inline">md:</code>dan boshlab yonma-yon.</li>
+      <li>Miqdor tanlagichni <code class="inline">flex items-center gap-3</code> bilan yasang — funksional bo'lishi shart emas.</li>
+      <li>Chegirma foizini alohida rangda (masalan <code class="inline">text-red-500</code>) ko'rsating, eski narxni <code class="inline">line-through text-gray-400</code> bilan bering.</li>
+      <li>«Sign Up» promo qutisini <code class="inline">bg-emerald-50</code> (yoki boshqa fon rang) bilan ajrating.</li>
+      <li>375px, 768px va 1280px kengliklarida DevTools orqali tekshiring — gorizontal skroll bo'lmasin.</li>
+    </ol>
+    <div class="crit">
+      <b>Baholash mezoni:</b> ikki ustunli joylashuv (<code class="inline">flex-col md:flex-row</code>) · narx bloki eski (<code class="inline">line-through</code>) + yangi + chegirma foizi bilan to'g'ri ko'rinadi · reyting va miqdor tanlagich <code class="inline">flex</code> bilan joylashgan · «Sign Up» promo qutisi alohida fon bilan ajratilgan · 375/768/1280px kengliklarida dizayn buzilmaydi.
+    </div>
+  </div>
+</section>
+
+<!-- ===== 18 ===== -->
+<section class="slide">
+  <span class="eyebrow">Yakun</span>
+  <h2>Xulosa</h2>
+
+  <div class="recap">
+    <div><b>Figma — umumiy til</b>Dizayner va dasturchi orasidagi aniq texnik topshiriqnoma; Inspect/Dev Mode paneli piksel, HEX rang, shrift va spacing'ni tayyor beradi.</div>
+    <div><b>HEX → Tailwind palitrasi</b>Avval standart rang skalasidan eng yaqinini tanlang, arbitrary value (<code>bg-[#...]</code>) faqat istisno bo'lsin.</div>
+    <div><b>6 bosqichli workflow</b>Figma → tahlil → struktura → Tailwind → responsiv tekshiruv → komponentlarga ajratish.</div>
+    <div><b>Mobil menyu — juft class</b><code>hidden md:flex</code> va <code>md:hidden</code> doim birga ishlatiladi, aks holda menyu mobilda yo'qoladi.</div>
+    <div><b>Izchil konteyner pattern</b><code>max-w-6xl mx-auto px-6 py-16</code> — har bir bo'limda bir xil, bo'shliq va kenglik nomuvofiqligining oldini oladi.</div>
+    <div><b>Komponent — bu «shablon» ko'chirish</b>Bir marta yozilgan ishonchli class to'plamini nusxalash, har safar qayta o'ylab topmaslik.</div>
+  </div>
+
+  <h3 style="margin-top:30px">Savol-javob</h3>
+  <div class="quiz">
+    <div class="q">
+      <p>1. Figma Inspect/Dev Mode paneli nima uchun kerak?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">Dizaynerning asl piksel, rang, shrift va spacing qiymatlarini taxmin qilmasdan, aniq raqamlarda olish uchun — bu keyin to'g'ridan-to'g'ri Tailwind classiga (masalan <code>px-6 py-3</code>, <code>bg-emerald-600</code>) aylantiriladi.</div>
+    </div>
+    <div class="q">
+      <p>2. Nega Figma'dagi har bir noyob HEX rangni arbitrary value (<code>bg-[#...]</code>) bilan yozish tavsiya etilmaydi?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">Bu konsistentlikni yo'qotadi — sahifa bo'ylab bir-biriga juda yaqin, lekin turlicha ranglar paydo bo'ladi. Avval Tailwind'ning standart palitrasidan eng yaqinini tanlash, arbitrary value'ni esa faqat brend rangi standart skalada mutlaqo yo'q bo'lgandagina ishlatish kerak.</div>
+    </div>
+    <div class="q">
+      <p>3. <code>hidden md:flex</code> bilan <code>md:hidden</code> nima uchun ko'pincha birga ishlatiladi?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">Birinchisi asosiy menyuni mobilda yashirib, <code>md:</code> breakpoint'dan boshlab ko'rsatadi; ikkinchisi esa burger tugmasini faqat mobilda ko'rsatib, kattaroq ekranda yashiradi. Ikkalasi birga bo'lmasa, mobil foydalanuvchi menyuga umuman kira olmay qoladi.</div>
+    </div>
+    <div class="q">
+      <p>4. Har bir <code>section</code> uchun bir xil <code>max-w-6xl mx-auto px-6 py-16</code> patternini ishlatish nega muhim?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">Shunday qilib butun sahifa bo'ylab konteyner kengligi va vertikal bo'shliq izchil qoladi — bitta bo'limda <code>py-16</code>, boshqasida tasodifan <code>py-10</code> bo'lib qolmaydi. Bu sahifaning "notekis" ko'rinishining oldini oladi.</div>
+    </div>
+    <div class="q">
+      <p>5. Tailwind'da "komponent fikrlash" (DRY) qanday amalga oshiriladi, chunki alohida CSS class yozilmaydi?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">Bitta ishonchli class to'plami (masalan kartochka uchun) bir marta yoziladi va har safar shu "shablon" butunligicha nusxa ko'chiriladi — yangi class nomi o'ylab topilmaydi. Real (build asosidagi) loyihada buni React/Vue komponenti almashtirishi mumkin.</div>
+    </div>
+  </div>
+
+  <div class="lesson-jump">
+    <a href="../14-tailwind-responsive/index.html"><b>Oldingi modul</b><span>← 14-modul: Tailwind CSS bilan Adaptiv UI va Komponentlar</span></a>
+    <a href="../16-yakuniy-loyiha/index.html"><b>Keyingi modul</b><span>16-modul: Yakuniy loyiha (imtihon) →</span></a>
+  </div>
+</section>
+
+</main>
+
+<div class="deck-nav">
+  <button data-prev type="button" title="Oldingi (←)">‹</button>
+  <span class="hint">← → varaqlash · <kbd>O</kbd> ro'yxat · <kbd>F</kbd> to'liq ekran</span>
+  <button data-next type="button" title="Keyingi (→)">›</button>
+</div>
+
+<div class="deck-overview"><h3>Slaydlar ro'yxati</h3><div class="ov-grid"></div></div>
+
+<script src="../assets/js/deck.js"></script>
+</body>
+</html>

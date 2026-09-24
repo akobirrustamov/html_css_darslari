@@ -1,0 +1,643 @@
+<!doctype html>
+<html lang="uz" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>13-modul · Tailwind CSS'ga kirish va sozlash</title>
+<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body class="deck" data-lesson="13">
+
+<div class="deck-bar">
+  <a class="home" href="../index.html">← Kurs</a>
+  <span class="title">13-modul · Tailwind CSS'ga kirish va sozlash</span>
+  <span class="spacer"></span>
+  <div class="deck-tools">
+    <button class="tool" data-overview type="button" title="Slaydlar ro'yxati (O)">☰</button>
+    <button class="tool" data-theme-toggle type="button" title="Mavzu">☾</button>
+    <span class="counter">1 / 18</span>
+  </div>
+</div>
+<div class="deck-progress"></div>
+
+<main class="deck-stage">
+
+<!-- ===== 1 ===== -->
+<section class="slide cover">
+  <div class="lesson-no">13-modul</div>
+  <h1>Tailwind CSS'ga<br>kirish va sozlash</h1>
+  <p>12-modulda siz SASS/SCSS bilan CSS yozishni <b>tezlashtirishni</b> o'rgandingiz — o'zgaruvchilar, nesting, mixin. Lekin ikkala fayl (HTML va stil fayli) orasida sakrash hali ham qolgan edi. Bugun esa butunlay boshqa yondashuvga o'tamiz: <b>Tailwind CSS</b> — stillarni to'g'ridan-to'g'ri HTML ichida, tayyor kichik classlar orqali yozish usuli.</p>
+  <div class="cover-plan">
+    <div><b>Reja 1</b>Utility-first g'oyasi — Tailwind qanday fikrlaydi</div>
+    <div><b>Reja 2</b>Tailwind CSS'ni CDN orqali loyihaga ulash</div>
+    <div><b>Reja 3</b>Asosiy classlar: spacing, typography, rang, border, shadow</div>
+    <div><b>Reja 4</b>Flexbox va Grid — Tailwind'dagi yangi layout tushunchalari</div>
+    <div><b>Amaliyot</b>Hero-section va Card komponentini Tailwind bilan yasash</div>
+  </div>
+</section>
+
+<!-- ===== 2 ===== -->
+<section class="slide">
+  <span class="eyebrow">Maqsad</span>
+  <h2>Dars oxirida siz nima qila olasiz</h2>
+  <p class="big">Video oxirida siz Tailwind CSS'ni CDN orqali loyihaga ulab, spacing, typography, rang, flexbox va grid utility classlari yordamida oddiy komponentni <b>alohida CSS fayl yozmasdan</b> stillay olasiz.</p>
+  <div class="cardset">
+    <div class="card">
+      <span class="ico">⚡</span>
+      <h4>Tezroq stillaysiz</h4>
+      <p>CSS fayl bilan HTML fayl o'rtasida sakramasdan, to'g'ridan-to'g'ri class yozib natijani darhol ko'rasiz.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🧱</span>
+      <h4>Tayyor "g'isht" classlar</h4>
+      <p><code class="inline">p-6</code>, <code class="inline">rounded-xl</code>, <code class="inline">bg-blue-500</code> — har biri bitta CSS xususiyatini bajaradigan kichik utility class.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🧩</span>
+      <h4>Yangi layout tushunchalari</h4>
+      <p><code class="inline">flex</code> va <code class="inline">grid</code> — bu darsda birinchi marta ko'radigan, sahifani qatorga yoki katakchalarga bo'lib joylashtirish usullari.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🛍️</span>
+      <h4>Real komponent qurasiz</h4>
+      <p>Hero-section va mahsulot kartochkasi — har bir saytda uchraydigan ikkita komponentni Tailwind bilan yasaysiz.</p>
+    </div>
+  </div>
+  <div class="note tip">
+    <span class="note-t">Muhim eslatma</span>
+    <p>Tailwind sizga <b>yangi CSS</b> o'rgatmaydi — u allaqachon bilgan CSS xususiyatlaringiz (padding, rang, border-radius)ning <b>qisqa yozuv shakli</b>, xolos.</p>
+  </div>
+</section>
+
+<!-- ===== 3 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 1 · Nazariya</span>
+  <h2>Utility-first konsepsiyasi nima?</h2>
+  <p>Savol: SCSS'da karta komponenti uchun nima yozgan edik? Javob — avval HTML'ga <code class="inline">class="karta"</code> beramiz, keyin alohida faylga o'tib <code class="inline">.karta { padding: 24px; border-radius: 12px; }</code> deb yozamiz. <b>Tailwind CSS</b> — bu boshqacha falsafaga asoslangan CSS kutubxonasi: u tayyor komponentlar (Bootstrap kabi tayyor tugma yoki navbar dizayni) bermaydi, balki har biri bitta CSS xususiyatini bajaradigan kichik <b>utility class</b>lar beradi — xuddi LEGO konstruktoridagi kichik detallar kabi, uyni o'zingiz qurib chiqasiz.</p>
+
+  <div class="cols">
+    <div>
+      <h3>An'anaviy usul (SCSS, 12-modul)</h3>
+<pre class="code" data-lang="html" data-label="index.html"><code>&lt;div class="karta"&gt;...&lt;/div&gt;</code></pre>
+<pre class="code" data-lang="css" data-label="style.scss"><code>.karta {
+  padding: 24px;
+  border-radius: 12px;
+  background: #ffffff;
+}</code></pre>
+      <p>Ikkita fayl, o'zingiz o'ylab topgan class nomi, har bir xususiyat alohida qatorda.</p>
+    </div>
+    <div>
+      <h3>Utility-first (Tailwind)</h3>
+<pre class="code" data-lang="html" data-label="index.html"><code>&lt;div class="p-6 rounded-xl bg-white"&gt;
+  ...
+&lt;/div&gt;</code></pre>
+      <p style="margin-top:12px">Bitta fayl, class nomini o'ylab topish shart emas — <code class="inline">p-6</code> = padding, <code class="inline">rounded-xl</code> = border-radius, <code class="inline">bg-white</code> = background. Alohida CSS fayl umuman kerak emas.</p>
+    </div>
+  </div>
+
+  <div class="note warn">
+    <span class="note-t">Talabalar ko'p adashadigan joy</span>
+    <p>Ko'p talaba Tailwind'ni "tayyor dizayn kutubxonasi" deb o'ylaydi va tayyor tugma yoki navbar qidiradi. Aslida Tailwind faqat CSS xususiyatlarining <b>qisqa yozuvi</b> — dizaynni hamon o'zingiz bilgan CSS bilimingiz asosida quriysiz.</p>
+  </div>
+</section>
+
+<!-- ===== 4 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 1 · Taqqoslash</span>
+  <h2>Sof CSS va Tailwind — bir xil natija</h2>
+  <p>Quyidagi ikkala kod ham <b>xuddi bir xil</b> natija beradi: 24px padding va 12px burchak yumaloqligi bo'lgan quti. Farq faqat <b>qayerda</b> va <b>qanday</b> yozilishida.</p>
+
+  <div class="vs">
+    <div class="no">
+      <div class="vs-h">SOF CSS — alohida fayl kerak</div>
+<pre class="code" data-lang="css"><code>.card {
+  padding: 24px;
+  border-radius: 12px;
+}</code></pre>
+<pre class="code" data-lang="html"><code>&lt;div class="card"&gt;...&lt;/div&gt;</code></pre>
+    </div>
+    <div class="ok">
+      <div class="vs-h">TAILWIND — bitta qatorda, HTML ichida</div>
+<pre class="code" data-lang="html"><code>&lt;div class="p-6 rounded-xl"&gt;
+  ...
+&lt;/div&gt;</code></pre>
+    </div>
+  </div>
+
+  <div class="note">
+    <span class="note-t">Bu CSS'ning "yomon" ekanini anglatmaydi</span>
+    <p>Sof CSS to'liq to'g'ri va ba'zan yagona to'g'ri yechim (masalan murakkab animatsiya yoki noyob dizayn uchun). Tailwind faqat <b>tez-tez takrorlanadigan, oddiy</b> stillash uchun vaqtni qisqartiradi. <code class="inline">p-6</code> nega aynan 24px berayotgani — keyingi slaydlarda ko'ramiz.</p>
+  </div>
+</section>
+
+<!-- ===== 5 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 1 · Afzalliklar</span>
+  <h2>Nega Tailwind bunchalik mashhur</h2>
+  <div class="cardset">
+    <div class="card">
+      <span class="ico">🚀</span>
+      <h4>Tezlik</h4>
+      <p>Stil yozish uchun boshqa faylga o'tish, class nomi o'ylab topish, keyin qaytib kelish shart emas — hammasi bitta joyda, HTML ichida.</p>
+    </div>
+    <div class="card">
+      <span class="ico">📏</span>
+      <h4>Konsistentlik</h4>
+      <p>Spacing (<code class="inline">4, 8, 16, 24...</code>) va rang skalasi loyiha bo'ylab <b>oldindan belgilangan</b>. Bir dizaynerning "13px", boshqasining "17px" degan tasodifiy sonlari yo'qoladi.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🧹</span>
+      <h4>Kerakmas CSS yo'q</h4>
+      <p>Real loyihada build jarayoni sahifada <b>ishlatilmagan</b> classlarni yakuniy faylga umuman qo'shmaydi — natijada CSS fayl juda kichik bo'ladi.</p>
+    </div>
+  </div>
+  <div class="note">
+    <span class="note-t">Bitta eslatma</span>
+    <p>Yuqoridagi "ishlatilmagan CSS'ni olib tashlash" — bu <b>build jarayoni</b> (npm + Vite yoki shunga o'xshash vosita) orqali ishlaydi. Bugun biz oddiyroq — CDN — usulidan foydalanamiz, build jarayoni haqida keyingi slaydda bir og'iz gapiramiz.</p>
+  </div>
+</section>
+
+<!-- ===== 6 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 2 · Sozlash</span>
+  <h2>Tailwind CSS'ni CDN orqali loyihaga ulash</h2>
+  <p>Tailwind'ni ishlatishning eng tez yo'li — <code class="inline">&lt;head&gt;</code> ichiga bitta <code class="inline">&lt;script&gt;</code> qatorini qo'shish. Bu — <b>CDN</b> (Content Delivery Network, tayyor kutubxonani internetdan to'g'ridan-to'g'ri ulash xizmati) usuli. Hech qanday o'rnatish, hech qanday terminal buyrug'i kerak emas.</p>
+
+<pre class="code" data-lang="html" data-label="index.html"><code>&lt;!doctype html&gt;
+&lt;html lang="uz"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;title&gt;Sahifam&lt;/title&gt;
+  &lt;script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1 class="text-3xl font-bold text-blue-600"&gt;Ishladi!&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+  <div class="note tip">
+    <span class="note-t">Bugun aynan shu usuldan foydalanamiz</span>
+    <p>CDN usuli — o'quv va tezkor prototip maqsadlari uchun to'liq yetarli. Bu darsdagi jonli mashq ham aynan shu <code class="inline">&lt;script&gt;</code> orqali ishlaydi.</p>
+  </div>
+  <div class="note warn">
+    <span class="note-t">Talabalar ko'p adashadigan joy</span>
+    <p><code class="inline">&lt;script&gt;</code> tegini <code class="inline">&lt;body&gt;</code> ichiga yoki fayl oxiriga qo'yib qo'yishadi — natijada birinchi render paytida stillar "yalang'och" HTML ko'rinishida bir lahza miltillab ko'rinadi. Har doim <code class="inline">&lt;head&gt;</code> ichiga, va imkon qadar yuqoriroqqa qo'ying.</p>
+  </div>
+  <div class="note">
+    <span class="note-t">Real loyihada esa</span>
+    <p>Katta, jiddiy loyihalarda odatda npm orqali o'rnatiladigan va build (Vite, PostCSS) jarayonidan o'tadigan Tailwind ishlatiladi — bu ishlatilmagan classlarni avtomatik olib tashlaydi va yakuniy fayl hajmini kichraytiradi. Bu kursda bunga chuqurlashmaymiz, faqat borligini bilib qo'ying.</p>
+  </div>
+</section>
+
+<!-- ===== 7 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 3 · Asosiy</span>
+  <h2>Spacing utility'lari — <code class="inline">p-*</code>, <code class="inline">m-*</code>, <code class="inline">gap-*</code></h2>
+  <p>Tailwind'da har bir son o'ziga xos piksel qiymatiga emas, balki <b>oldindan belgilangan spacing skalasi</b>ga mos keladi: son × <code class="inline">4px</code>.</p>
+
+  <div class="cols">
+    <div>
+      <h3>Prefikslar</h3>
+      <table class="tbl">
+        <tr><td><code>p-4</code></td><td>Barcha tomonga padding</td></tr>
+        <tr><td><code>px-4</code></td><td>Faqat chap-o'ng (horizontal)</td></tr>
+        <tr><td><code>py-4</code></td><td>Faqat yuqori-past (vertical)</td></tr>
+        <tr><td><code>pt/pr/pb/pl-4</code></td><td>Faqat bitta tomon</td></tr>
+        <tr><td><code>m-4</code></td><td>Margin — xuddi shu mantiq</td></tr>
+        <tr><td><code>gap-4</code></td><td>Flex/grid elementlar orasidagi bo'shliq</td></tr>
+      </table>
+    </div>
+    <div>
+      <h3>Son → piksel skalasi</h3>
+      <table class="tbl">
+        <tr><th>Son</th><th>rem</th><th>px</th></tr>
+        <tr><td><code>1</code></td><td>0.25rem</td><td>4px</td></tr>
+        <tr><td><code>2</code></td><td>0.5rem</td><td>8px</td></tr>
+        <tr><td><code>3</code></td><td>0.75rem</td><td>12px</td></tr>
+        <tr><td><code>4</code></td><td>1rem</td><td><b>16px</b></td></tr>
+        <tr><td><code>6</code></td><td>1.5rem</td><td>24px</td></tr>
+        <tr><td><code>8</code></td><td>2rem</td><td>32px</td></tr>
+        <tr><td><code>12</code></td><td>3rem</td><td>48px</td></tr>
+        <tr><td><code>16</code></td><td>4rem</td><td>64px</td></tr>
+      </table>
+    </div>
+  </div>
+
+<pre class="code" data-lang="html" data-label="misol"><code>&lt;div class="p-6 mb-4 px-8"&gt;
+  &lt;!-- p-6 = 24px hamma tomonga
+       mb-4 = 16px pastga margin
+       px-8 = 32px chap-o'ngga padding --&gt;
+&lt;/div&gt;</code></pre>
+</section>
+
+<!-- ===== 8 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 3 · Asosiy</span>
+  <h2>Typography utility'lari</h2>
+  <p>Shrift o'lchami, qalinligi va tekislanishi ham xuddi shu prinsipda — oldindan belgilangan skala orqali beriladi.</p>
+
+  <div class="cols">
+    <div>
+      <h3>Shrift o'lchami</h3>
+      <table class="tbl">
+        <tr><th>Class</th><th>Natija</th></tr>
+        <tr><td><code>text-sm</code></td><td>0.875rem (14px)</td></tr>
+        <tr><td><code>text-base</code></td><td>1rem (16px) — standart</td></tr>
+        <tr><td><code>text-lg</code></td><td>1.125rem (18px)</td></tr>
+        <tr><td><code>text-xl</code></td><td>1.25rem (20px)</td></tr>
+        <tr><td><code>text-2xl</code></td><td>1.5rem (24px)</td></tr>
+      </table>
+    </div>
+    <div>
+      <h3>Qalinlik va tekislash</h3>
+      <ul>
+        <li><code class="inline">font-bold</code> / <code class="inline">font-semibold</code> / <code class="inline">font-medium</code> — shrift qalinligi</li>
+        <li><code class="inline">text-center</code> / <code class="inline">text-left</code> / <code class="inline">text-right</code> — matn tekislanishi</li>
+        <li>Matn rangi — <code class="inline">text-gray-500</code> kabi — keyingi slaydda batafsil</li>
+      </ul>
+    </div>
+  </div>
+
+<pre class="code" data-lang="html" data-label="misol"><code>&lt;h2 class="text-2xl font-bold text-center"&gt;Sarlavha&lt;/h2&gt;
+&lt;p class="text-sm text-gray-500"&gt;Yordamchi matn&lt;/p&gt;</code></pre>
+</section>
+
+<!-- ===== 9 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 3 · Ranglar</span>
+  <h2>Ranglar tizimi — tayyor palitradan foydalanish</h2>
+  <p>Har bir rang <code class="inline">{rang}-{ottenka}</code> ko'rinishida yoziladi: ottenka <code class="inline">50</code> (eng ochiq) dan <code class="inline">950</code> (eng to'q) gacha. Odatda <code class="inline">500</code> — o'sha rangning "asosiy" varianti.</p>
+
+  <div class="cols">
+    <div>
+<pre class="code" data-lang="html" data-label="misol"><code>&lt;div class="bg-blue-500 text-white"&gt;
+  Tugma
+&lt;/div&gt;
+&lt;p class="text-red-600"&gt;Xatolik xabari&lt;/p&gt;</code></pre>
+      <table class="tbl">
+        <tr><td><span style="display:inline-block;width:14px;height:14px;border-radius:3px;background:#eff6ff;border:1px solid #d1d5db;vertical-align:-2px"></span> <code>blue-50</code></td><td>Juda ochiq — fon uchun</td></tr>
+        <tr><td><span style="display:inline-block;width:14px;height:14px;border-radius:3px;background:#93c5fd;vertical-align:-2px"></span> <code>blue-300</code></td><td>O'rtacha ochiq</td></tr>
+        <tr><td><span style="display:inline-block;width:14px;height:14px;border-radius:3px;background:#3b82f6;vertical-align:-2px"></span> <code>blue-500</code></td><td>Asosiy rang — tugma, havola</td></tr>
+        <tr><td><span style="display:inline-block;width:14px;height:14px;border-radius:3px;background:#1d4ed8;vertical-align:-2px"></span> <code>blue-700</code></td><td>To'qroq — hover holati uchun</td></tr>
+        <tr><td><span style="display:inline-block;width:14px;height:14px;border-radius:3px;background:#1e3a8a;vertical-align:-2px"></span> <code>blue-900</code></td><td>Juda to'q — matn uchun</td></tr>
+      </table>
+    </div>
+    <div>
+      <div class="note tip">
+        <span class="note-t">Nega bu tasodifiy HEX kodlardan yaxshiroq</span>
+        <p>Loyihada bitta dizayner <code class="inline">#3B82F6</code>, boshqasi <code class="inline">#3A80F5</code> ishlatsa — ko'zga bilinmas, lekin natijada rang mos kelmay qoladi. Tayyor palitra bilan butun jamoa bir xil <code class="inline">blue-500</code>ni ishlatadi — natija har doim <b>konsistent</b>.</p>
+      </div>
+      <div class="note warn" style="margin-top:14px">
+        <span class="note-t">Talabalar ko'p adashadigan joy</span>
+        <p><code class="inline">text-blue</code> yoki <code class="inline">bg-blue</code> kabi ottenka raqamisiz yozishadi — bunday class ishlamaydi, chunki Tailwind'da ottenka (masalan <code class="inline">-500</code>) majburiy qism.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 10 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 3 · Asosiy</span>
+  <h2>Border va shadow (soya) utility'lari</h2>
+
+  <div class="cols">
+    <div>
+      <h3>Chegara va burchak</h3>
+      <table class="tbl">
+        <tr><td><code>border</code></td><td>1px chegara</td></tr>
+        <tr><td><code>border-2</code></td><td>2px chegara</td></tr>
+        <tr><td><code>rounded-md</code></td><td>6px burchak</td></tr>
+        <tr><td><code>rounded-lg</code></td><td>8px burchak</td></tr>
+        <tr><td><code>rounded-xl</code></td><td>12px burchak</td></tr>
+        <tr><td><code>rounded-full</code></td><td>To'liq doira/oval</td></tr>
+      </table>
+    </div>
+    <div>
+      <h3>Soya (shadow)</h3>
+      <table class="tbl">
+        <tr><td><code>shadow-sm</code></td><td>Juda yengil, sezilmas soya</td></tr>
+        <tr><td><code>shadow</code></td><td>Standart, yumshoq soya</td></tr>
+        <tr><td><code>shadow-md</code></td><td>O'rtacha — kartochkalar uchun mos</td></tr>
+        <tr><td><code>shadow-lg</code></td><td>Chuqurroq, "ko'tarilgan" his</td></tr>
+      </table>
+    </div>
+  </div>
+
+<pre class="code" data-lang="html" data-label="karta.html"><code>&lt;div class="border rounded-xl shadow-md p-6 bg-white"&gt;
+  Kartochka kontenti
+&lt;/div&gt;</code></pre>
+</section>
+
+<!-- ===== 11 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 4 · Yangi tushuncha</span>
+  <h2>Flexbox — bir yo'nalishli joylashuv</h2>
+  <p>Siz hali flexbox bo'yicha alohida dars ko'rmagansiz — shuning uchun avval tushunchani tushuntiramiz. <b>Flexbox</b> — elementlarni <b>bitta yo'nalish</b> (qator yoki ustun) bo'yicha tekislash va joylashtirish usuli: konteynerga <code class="inline">display: flex</code> berilsa, uning ichidagi barcha elementlar avtomatik bir qatorga tizilib, oralaridagi masofani va tekislanishni siz boshqarasiz. Tailwind'da bu xususiyat class nomi sifatida yoziladi: <code class="inline">display: flex</code> → <code class="inline">flex</code>, <code class="inline">justify-content: space-between</code> → <code class="inline">justify-between</code>, <code class="inline">align-items: center</code> → <code class="inline">items-center</code>.</p>
+
+<pre class="code" data-lang="html" data-label="navbar.html"><code>&lt;div class="flex justify-between items-center p-4"&gt;
+  &lt;span class="font-bold text-lg"&gt;Logo&lt;/span&gt;
+  &lt;button class="bg-blue-600 text-white px-4 py-2 rounded-lg"&gt;
+    Kirish
+  &lt;/button&gt;
+&lt;/div&gt;</code></pre>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th>Class</th><th>Sof CSS ekvivalenti</th></tr>
+      <tr><td><code>flex</code></td><td><code>display: flex;</code></td></tr>
+      <tr><td><code>justify-between</code></td><td><code>justify-content: space-between;</code></td></tr>
+      <tr><td><code>justify-center</code></td><td><code>justify-content: center;</code></td></tr>
+      <tr><td><code>items-center</code></td><td><code>align-items: center;</code></td></tr>
+      <tr><td><code>flex-col</code></td><td><code>flex-direction: column;</code></td></tr>
+    </table>
+  </div>
+
+  <div class="note warn">
+    <span class="note-t">Talabalar ko'p adashadigan joy</span>
+    <p><code class="inline">flex</code> classini qo'shmasdan to'g'ridan-to'g'ri <code class="inline">justify-between</code> yozishadi — <code class="inline">justify-between</code> faqat konteynerga <code class="inline">flex</code> yoki <code class="inline">grid</code> berilgan bo'lsa ishlaydi, aks holda hech narsa o'zgarmaydi.</p>
+  </div>
+</section>
+
+<!-- ===== 12 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 4 · Yangi tushuncha</span>
+  <h2>Grid — qator va ustunlarga bo'lingan joylashuv</h2>
+  <p><b>Grid</b> — flexbox'dan farqli o'laroq, elementlarni bir vaqtning o'zida <b>qator ham, ustun ham</b> bo'yicha, ikki o'lchamli katakchalar (jadval) shaklida joylashtirish usuli — masalan mahsulot kartochkalarini teng ustunlarga bo'lib chiqish uchun juda qulay. Konteynerga <code class="inline">display: grid</code> berilib, ustunlar soni <code class="inline">grid-template-columns</code> orqali belgilanadi.</p>
+
+<pre class="code" data-lang="html" data-label="grid.html"><code>&lt;div class="grid grid-cols-3 gap-4"&gt;
+  &lt;div class="col-span-2 bg-gray-100 p-4 rounded-lg"&gt;Keng ustun&lt;/div&gt;
+  &lt;div class="bg-gray-100 p-4 rounded-lg"&gt;Tor ustun&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th>Class</th><th>Sof CSS ekvivalenti</th></tr>
+      <tr><td><code>grid</code></td><td><code>display: grid;</code></td></tr>
+      <tr><td><code>grid-cols-3</code></td><td><code>grid-template-columns: repeat(3, 1fr);</code></td></tr>
+      <tr><td><code>col-span-2</code></td><td><code>grid-column: span 2;</code></td></tr>
+      <tr><td><code>gap-4</code></td><td><code>gap: 16px;</code></td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ===== 13 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 4 · Qaror</span>
+  <h2>Flex yoki Grid — qaysi birini tanlash?</h2>
+  <div class="vs">
+    <div class="no">
+      <div class="vs-h">Flexbox — bir yo'nalish (1D)</div>
+      <p>Navbar, tugmalar qatori, elementni markazga tekislash — barchasi <b>bitta chiziq</b> bo'ylab joylashadi. Ishlatiladigan class: <code class="inline">flex</code>.</p>
+    </div>
+    <div class="ok">
+      <div class="vs-h">Grid — qator + ustun (2D)</div>
+      <p>Mahsulot kartochkalari, galereya, sahifa layout'i — elementlar <b>ikki o'lchamli</b> katakchalarga teng bo'lib joylashadi. Ishlatiladigan class: <code class="inline">grid</code>.</p>
+    </div>
+  </div>
+  <div class="note tip">
+    <span class="note-t">Hech narsa yangi emas — faqat yozuv shakli</span>
+    <p>Agar keyinchalik sof CSS'da <code class="inline">display: flex</code> yoki <code class="inline">display: grid</code> ni chuqur o'rgansangiz — bu ikki slayd sizga faqat Tailwind'dagi <b>class nomlarini</b> ko'rsatdi, mantiq bir xil qoladi.</p>
+  </div>
+</section>
+
+<!-- ===== 14 ===== -->
+<section class="slide">
+  <span class="eyebrow">Amaliyot · Jonli mashq</span>
+  <h2>Amaliy: mahsulot (product) kartochkasi — jonli mashq</h2>
+  <p>Bu mashq shu darsda o'rgangan deyarli hamma narsani birlashtiradi: <code class="inline">flex</code>, <code class="inline">grid</code>, spacing, rang, <code class="inline">rounded</code>/<code class="inline">shadow</code> va typography. Chapdagi classlarni o'zgartiring, o'ngda natijani darhol ko'rasiz.</p>
+
+  <div class="live">
+    <div class="live-head">
+      <span class="dot"></span> mahsulot-kartochkasi.html
+      <span class="sp"></span>
+      <button class="live-reset" type="button">↺ Qayta</button>
+    </div>
+    <div class="live-body">
+      <div class="live-editor">
+<textarea spellcheck="false">
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gray-50 p-6">
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
+
+  <div class="bg-white rounded-2xl shadow-md p-4 flex flex-col gap-3">
+    <div class="h-32 rounded-xl bg-blue-100 flex items-center justify-center text-5xl">👟</div>
+    <div>
+      <p class="font-semibold text-gray-800">Krossovka "Runner"</p>
+      <p class="text-sm text-gray-500">Yengil va qulay</p>
+    </div>
+    <div class="flex items-center justify-between mt-2">
+      <span class="text-lg font-bold text-gray-900">249 000 so'm</span>
+      <button class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition">
+        Savatga
+      </button>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-2xl shadow-md p-4 flex flex-col gap-3">
+    <div class="h-32 rounded-xl bg-emerald-100 flex items-center justify-center text-5xl">🎒</div>
+    <div>
+      <p class="font-semibold text-gray-800">Ryukzak "Campus"</p>
+      <p class="text-sm text-gray-500">15" noutbuk uchun</p>
+    </div>
+    <div class="flex items-center justify-between mt-2">
+      <span class="text-lg font-bold text-gray-900">189 000 so'm</span>
+      <button class="bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition">
+        Savatga
+      </button>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-2xl shadow-md p-4 flex flex-col gap-3">
+    <div class="h-32 rounded-xl bg-[#87E464] flex items-center justify-center overflow-hidden"><img src="images/kepka.png" alt="Merch kepka" class="h-24 object-contain"></div>
+    <div>
+      <p class="font-semibold text-gray-800">Kepka "Merch"</p>
+      <p class="text-sm text-gray-500">Bir o'lcham hammaga</p>
+    </div>
+    <div class="flex items-center justify-between mt-2">
+      <span class="text-lg font-bold text-gray-900">99 000 so'm</span>
+      <button class="bg-gray-900 hover:bg-black text-white text-sm font-semibold px-4 py-2 rounded-lg transition">
+        Savatga
+      </button>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
+</textarea>
+      </div>
+      <div class="live-preview"><iframe title="Natija"></iframe></div>
+    </div>
+  </div>
+
+  <div class="note tip">
+    <span class="note-t">Sinab ko'ring</span>
+    <p>Birinchi tugmadagi <code class="inline">bg-blue-600</code>ni <code class="inline">bg-purple-600</code>ga o'zgartiring — natija darhol o'zgaradi, bu Tailwind'ning eng katta afzalligi. Uchinchi kartadagi <code class="inline">bg-[#87E464]</code>ni ham boshqa HEX rangga almashtirib ko'ring. <code class="inline">grid-cols-1 sm:grid-cols-2 lg:grid-cols-3</code> qatoridagi son(lar)ni o'zgartirib, brauzer oynasini kichraytirib-kattalashtirib ko'ring.</p>
+  </div>
+</section>
+
+<!-- ===== 15 ===== -->
+<section class="slide">
+  <span class="eyebrow">Xatolar</span>
+  <h2>Tailwind'da eng ko'p uchraydigan xatolar</h2>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th style="width:26%">Xato</th><th style="width:37%">Nima bo'ladi</th><th>Yechim</th></tr>
+      <tr>
+        <td><b>Class nomida xatolik (typo)</b></td>
+        <td>Masalan <code>text-blu-500</code> — hech qanday xato xabari chiqmaydi, stil shunchaki qo'llanmaydi</td>
+        <td>Brauzerning DevTools'ida elementni tekshiring — agar stil kutilganidek ko'rinmasa, class nomini harf-ma-harf qayta o'qing</td>
+      </tr>
+      <tr>
+        <td><b>Rang ottenkasini yozmaslik</b></td>
+        <td><code>text-blue</code> yoki <code>bg-blue</code> — ottenka raqamisiz class ishlamaydi</td>
+        <td>Har doim <code>{rang}-{ottenka}</code> to'liq yozilsin, masalan <code>bg-blue-500</code></td>
+      </tr>
+      <tr>
+        <td><b><code>flex</code>/<code>grid</code> classini unutish</b></td>
+        <td><code>justify-between</code> yoki <code>col-span-2</code> yozilgan, lekin konteynerda hech narsa o'zgarmagan</td>
+        <td>Bu classlar faqat konteynerga <code>flex</code> yoki <code>grid</code> berilgan bo'lsa ishlaydi — avval shuni tekshiring</td>
+      </tr>
+      <tr>
+        <td><b>CDN scriptni <code>&lt;body&gt;</code> oxiriga qo'yish</b></td>
+        <td>Sahifa birinchi ochilganda "yalang'och" HTML bir lahza ko'rinib, keyin stillanadi</td>
+        <td><code>&lt;script&gt;</code> tegini har doim <code>&lt;head&gt;</code> ichiga, imkon qadar yuqoriroqqa joylashtiring</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="note bad">
+    <span class="note-t">Eng muhim maslahat</span>
+    <p>Tailwind class'lari <b>hech qachon xato bermaydi</b> — noto'g'ri yozilgan class shunchaki e'tiborsiz qoldiriladi. Shuning uchun natija kutilganidek chiqmasa, birinchi navbatda class nomini qayta tekshiring.</p>
+  </div>
+</section>
+
+<!-- ===== 16 ===== -->
+<section class="slide">
+  <span class="eyebrow">Best practice</span>
+  <h2>Yaxshi amaliyot — qisqacha</h2>
+  <div class="cols">
+    <div>
+      <ul>
+        <li>Aksariyat holatda standart spacing va rang skalasidan foydalaning — bu konsistentlikni saqlaydi.</li>
+        <li>Classlarni o'qilishi oson bo'lishi uchun mantiqiy tartibda yozing: layout (<code class="inline">flex</code>/<code class="inline">grid</code>) → spacing → rang → border/shadow.</li>
+        <li><code class="inline">flex</code> yoki <code class="inline">grid</code>ni yozishni unutmang — ular bo'lmasa ichki utility'lar ishlamaydi.</li>
+      </ul>
+    </div>
+    <div>
+      <ul>
+        <li>CDN scriptni har doim <code class="inline">&lt;head&gt;</code> ichiga, eng boshiga qo'ying.</li>
+        <li>Sof CSS bilimingizni unutmang — Tailwind faqat uning ustiga qurilgan qisqa yozuv, asos hamon CSS.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="note tip">
+    <span class="note-t">Keyingi qadam</span>
+    <p>Keyingi darsda bu classlarni ekranga qarab o'zgartirishni — responsive prefikslar (<code class="inline">sm:</code>, <code class="inline">md:</code>, <code class="inline">lg:</code>), hover/focus holatlari va arbitrary values sintaksisini chuqurroq ko'ramiz. Sahifangiz nafaqat chiroyli, balki har qanday qurilmada mukammal ko'rinadigan bo'ladi.</p>
+  </div>
+</section>
+
+<!-- ===== 17 ===== -->
+<section class="slide">
+  <span class="eyebrow">Amaliy vazifa</span>
+  <h2>Uyga vazifa: Hero-section va Card komponenti</h2>
+  <p>Tailwind CSS yordamida tezkor Hero-section va Card komponentini yarating. Yangi HTML fayl oching, <code class="inline">&lt;head&gt;</code> ichiga bugun ko'rgan Tailwind CDN scriptini qo'ying.</p>
+
+  <div class="task">
+    <h4><span class="n">1</span> Hero-section</h4>
+    <ol>
+      <li>Katta sarlavha yozing — <code class="inline">text-3xl font-bold</code>.</li>
+      <li>Qisqa tavsif matni qo'shing — <code class="inline">text-gray-500</code>.</li>
+      <li>Bitta tugma qo'shing — <code class="inline">bg-blue-600 text-white px-6 py-3 rounded-lg</code>.</li>
+      <li>Hammasini <code class="inline">flex flex-col items-center</code> bilan vertikal markazlashtiring, atrofiga <code class="inline">py-16</code> bering.</li>
+    </ol>
+  </div>
+
+  <div class="task">
+    <h4><span class="n">2</span> Card komponenti</h4>
+    <ol>
+      <li>Har bir kartani <code class="inline">bg-white rounded-xl shadow-md p-6</code> asosida quring.</li>
+      <li>Ichiga sarlavha (<code class="inline">&lt;h3&gt;</code>) va qisqa matn qo'shing.</li>
+      <li>Kamida <b>3 ta</b> shunday kartani <code class="inline">grid grid-cols-3 gap-4</code> bilan joylashtiring.</li>
+    </ol>
+    <div class="crit">
+      <b>Baholash mezoni:</b> alohida CSS fayl yozilmagan · Hero-section markazlashgan va padding to'g'ri berilgan · kamida 3 ta karta grid orqali teng joylashgan · har bir kartada padding, rounded va shadow classlari mavjud · rang va typography classlari mos ishlatilgan.
+    </div>
+  </div>
+
+  <div class="note">
+    <span class="note-t">Demo qilib ko'ring</span>
+    <p>Brauzerda ochib, bitta classni o'zgartiring (masalan <code class="inline">bg-blue-600</code>ni <code class="inline">bg-purple-600</code>ga) — natija darhol o'zgarishini kuzating. Bu Tailwind'ning eng katta afzalligi.</p>
+  </div>
+</section>
+
+<!-- ===== 18 ===== -->
+<section class="slide">
+  <span class="eyebrow">Yakun</span>
+  <h2>Xulosa va o'z-o'zini tekshirish</h2>
+
+  <div class="recap">
+    <div><b>Utility-first</b>Har bir class faqat bitta CSS xususiyatini bajaradi — alohida CSS fayl kerak emas.</div>
+    <div><b>CDN — eng tezkor ulash</b>Bitta <code class="inline">&lt;script&gt;</code> qatori <code class="inline">&lt;head&gt;</code>ning boshida — hech qanday o'rnatish shart emas.</div>
+    <div><b>Skala — konsistentlik kaliti</b>Spacing (<code class="inline">4=16px</code>) va ranglar (<code class="inline">50–950</code>) oldindan belgilangan, tasodifiy son yo'q.</div>
+    <div><b>Flex — bir yo'nalish</b><code class="inline">flex</code>, <code class="inline">justify-between</code>, <code class="inline">items-center</code> — elementlarni bitta chiziq bo'ylab joylaydi.</div>
+    <div><b>Grid — qator va ustun</b><code class="inline">grid</code>, <code class="inline">grid-cols-3</code>, <code class="inline">gap-4</code> — elementlarni ikki o'lchamli katakchalarga bo'ladi.</div>
+    <div><b>Class hech qachon xato bermaydi</b>Typo bo'lsa, stil shunchaki qo'llanmaydi — DevTools bilan tekshiring.</div>
+  </div>
+
+  <h3 style="margin-top:30px">Savol-javob</h3>
+  <div class="quiz">
+    <div class="q">
+      <p>1. "Utility-first" yondashuvi nima degani?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">Alohida CSS fayl yozib, o'zi o'ylab topilgan class nomiga stil berish o'rniga, HTML ichida har biri bitta CSS xususiyatini bajaradigan kichik, tayyor classlardan (utility) foydalanish. Masalan <code>p-6</code>, <code>flex</code>, <code>rounded-xl</code>.</div>
+    </div>
+    <div class="q">
+      <p>2. <code class="inline">p-4</code> necha piksel padding beradi va nega aynan shuncha?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">16px. Tailwind'ning spacing skalasida har bir son <code>0.25rem (4px)</code>ga ko'paytiriladi: <code>4 × 4px = 16px</code>.</div>
+    </div>
+    <div class="q">
+      <p>3. Nega <code class="inline">text-blue</code> deb yozish ishlamaydi?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">Chunki Tailwind'da rang classlari <code>{rang}-{ottenka}</code> ko'rinishida yoziladi — ottenka (masalan <code>-500</code>) majburiy qism. To'g'ri yozuv: <code>text-blue-500</code>.</div>
+    </div>
+    <div class="q">
+      <p>4. Konteynerga <code class="inline">flex</code> yozmasdan, faqat <code class="inline">justify-between</code> yozilsa nima bo'ladi?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">Hech narsa o'zgarmaydi. <code>justify-between</code> (va shunga o'xshash boshqa flex/grid utility'lar) faqat konteynerga <code>display: flex</code> yoki <code>display: grid</code> berilgan bo'lsa ishlaydi.</div>
+    </div>
+    <div class="q">
+      <p>5. Tailwind CDN scriptini qayerga qo'yish kerak va nega?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans"><code>&lt;head&gt;</code> ichiga, imkon qadar yuqoriroqqa. Aks holda, script <code>&lt;body&gt;</code> oxirida yoki kech yuklansa, sahifa birinchi ochilganda "yalang'och" (stilsiz) HTML bir lahza ko'rinib, keyin stillanadi.</div>
+    </div>
+  </div>
+
+  <div class="lesson-jump">
+    <a href="../12-sass-scss/index.html"><b>Oldingi modul</b><span>← 12-modul: SASS/SCSS preprosessori</span></a>
+    <a href="../14-tailwind-responsive/index.html"><b>Keyingi modul</b><span>14-modul: Tailwind CSS bilan Adaptiv UI va Komponentlar →</span></a>
+  </div>
+</section>
+
+</main>
+
+<div class="deck-nav">
+  <button data-prev type="button" title="Oldingi (←)">‹</button>
+  <span class="hint">← → varaqlash · <kbd>O</kbd> ro'yxat · <kbd>F</kbd> to'liq ekran</span>
+  <button data-next type="button" title="Keyingi (→)">›</button>
+</div>
+
+<div class="deck-overview"><h3>Slaydlar ro'yxati</h3><div class="ov-grid"></div></div>
+
+<script src="../assets/js/deck.js"></script>
+</body>
+</html>

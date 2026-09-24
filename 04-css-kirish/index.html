@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="uz" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>04-modul · CSS ga kirish va Selektorlar</title>
+<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body class="deck" data-lesson="4">
+
+<div class="deck-bar">
+  <a class="home" href="../index.html">← Kurs</a>
+  <span class="title">04-modul · CSS ga kirish va Selektorlar</span>
+  <span class="spacer"></span>
+  <div class="deck-tools">
+    <button class="tool" data-overview type="button" title="Slaydlar ro'yxati (O)">☰</button>
+    <button class="tool" data-theme-toggle type="button" title="Mavzu">☾</button>
+    <span class="counter">1 / 11</span>
+  </div>
+</div>
+<div class="deck-progress"></div>
+
+<main class="deck-stage">
+
+<!-- ===== 1 ===== -->
+<section class="slide cover">
+  <div class="lesson-no">04-modul</div>
+  <h1>CSS ga kirish:<br>sahifangizga birinchi rangni bering</h1>
+  <p>Birinchi uchta darsda faqat HTML bilan ishladik — sarlavhalar, jadvallar, havolalar. Hammasi funksional ishladi, lekin oq fon va qora matndan nariga o'tmadi. Bugundan boshlab CSS (Cascading Style Sheets) bilan tanishasiz — bu kursning eng katta burilish nuqtasi.</p>
+  <div class="cover-plan">
+    <div><b>Reja 1</b>CSS nima va uni sahifaga ulashning 3 usuli</div>
+    <div><b>Reja 2</b>Selector, property, value — CSS gap tuzilishi</div>
+    <div><b>Reja 3</b>Selektor turlari: class, id, tag, universal</div>
+    <div><b>Amaliyot</b>3-darsdagi jadvalga CSS bilan uslub berish</div>
+  </div>
+</section>
+
+<!-- ===== 2 ===== -->
+<section class="slide">
+  <span class="eyebrow">Maqsad</span>
+  <h2>Dars oxirida siz nima qila olasiz</h2>
+  <p class="big">Bu darsdan keyin siz istalgan HTML sahifani uchta usulning biri bilan CSS'ga ulay olasiz, har bir CSS qoidasini selector-property-value sifatida o'qiy olasiz va class, id, tag hamda universal selektorlar orqali aynan kerakli elementga uslub bera olasiz.</p>
+  <div class="cardset">
+    <div class="card">
+      <span class="ico">🔌</span>
+      <h4>Ulaysiz</h4>
+      <p>Inline, internal va external — CSS'ni sahifaga ulashning uchala usulini va qachon qaysi birini ishlatishni.</p>
+    </div>
+    <div class="card">
+      <span class="ico">✍️</span>
+      <h4>O'qiysiz</h4>
+      <p>Har bir CSS qoidasini selector, property va value qismlariga ajratib tushunasiz.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🎯</span>
+      <h4>Tanlaysiz</h4>
+      <p>Class, id, tag va universal selektorlar orqali aynan kerakli elementni "nishonga olasiz".</p>
+    </div>
+    <div class="card">
+      <span class="ico">🛠</span>
+      <h4>Bezaysiz</h4>
+      <p>3-darsdagi jadvalingizga external CSS fayl yaratib, birinchi marta chinakam uslub berasiz.</p>
+    </div>
+  </div>
+  <div class="note tip">
+    <span class="note-t">Muhim eslatma</span>
+    <p>Ranglarni yozish usullari (HEX, RGB) — <b>05-modulda</b>, inheritance (merosxo'rlik) esa <b>06-modulda</b>. Bugun faqat CSS'ning fundamentiga — ulash usullari va selektorlarga — e'tibor qaratamiz.</p>
+  </div>
+</section>
+
+<!-- ===== 3 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 1 · Nazariya</span>
+  <h2>CSS nima — "Cascading Style Sheets"</h2>
+  <p>01-modulda uchta qatlamni eslang: <b>HTML — skelet (ma'no), CSS — ko'rinish, JavaScript — xatti-harakat</b>. Bugun o'sha ikkinchi qatlamga birinchi marta kirib boramiz.</p>
+
+  <div class="cols">
+    <div>
+      <h3>HTML ma'no beradi, CSS ko'rinish beradi</h3>
+      <p>Bir xil HTML elementi — masalan <code class="inline">&lt;h1&gt;</code> — har doim "bu sahifaning bosh sarlavhasi" degan <b>ma'noni</b> bildiradi. Lekin u qanday ko'rinishda chiqishi — qora rangdami, katta shriftdami, markazlashganmi — buni <b>CSS</b> hal qiladi.</p>
+      <div class="note tip">
+        <span class="note-t">Analogiya</span>
+        <p>HTML — uyning g'ishtlari va devorlari: qayerda xona, qayerda eshik. CSS — uyning dizayni, ranglari va bezaklari: devorlarni buzmasdan, uyni butunlay boshqacha ko'rinishga keltirish mumkin.</p>
+      </div>
+    </div>
+    <div>
+      <h3>Bugungacha nima ko'rgan edik</h3>
+      <p>Agar hozir 3-darsdagi jadvalingizni ochib ko'rsangiz — u funksional ishlaydi, lekin chiroyli emas, hatto biroz zerikarli ko'rinadi. Sababi oddiy: unga hali CSS berilmagan.</p>
+      <p>Bugundan boshlab sahifalarimiz rangga, shriftga va joylashuvga ega bo'lib, haqiqiy zamonaviy saytlarga o'xshab qoladi.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 4 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 1 · Asosiy</span>
+  <h2>CSS'ni sahifaga ulashning 3 usuli</h2>
+  <p>CSS qoidalarini yozish uchun uchta joy bor. Ulardan faqat bittasi haqiqiy loyihalarda ishlatiladi — lekin qolgan ikkitasini ham tanib olishingiz kerak.</p>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th>Usul</th><th>Qayerda yoziladi</th><th>Qachon ishlatiladi</th></tr>
+      <tr><td><b>Inline</b></td><td>Elementning o'zida, <code class="inline">style=""</code> atributida</td><td>Faqat bitta elementga. 10 ta elementga bir xil uslub kerak bo'lsa, har biriga alohida yozish kerak — shuning uchun katta loyihalarda deyarli ishlatilmaydi.</td></tr>
+      <tr><td><b>Internal</b></td><td><code class="inline">&lt;head&gt;</code> ichidagi <code class="inline">&lt;style&gt;</code> blokida</td><td>Butun sahifaga ta'sir qiladi, lekin faqat o'sha bitta HTML faylga tegishli. 10 ta sahifa bo'lsa, uslubni har biriga alohida nusxalash kerak bo'ladi.</td></tr>
+      <tr><td><b>External</b></td><td>Alohida <code class="inline">.css</code> faylda, <code class="inline">&lt;link&gt;</code> orqali ulanadi</td><td><b>Standart va tavsiya etiladigan usul.</b> Bitta fayl bir nechta sahifaga ulanadi — dizaynni bir joyda o'zgartirsangiz, hammasida o'zgaradi. Butun kurs davomida shundan foydalanamiz.</td></tr>
+    </table>
+  </div>
+
+  <div class="cols-3">
+    <div>
+      <h3>1. Inline</h3>
+<pre class="code" data-lang="html"><code>&lt;h1 style="color: red;"&gt;Salom&lt;/h1&gt;</code></pre>
+    </div>
+    <div>
+      <h3>2. Internal</h3>
+<pre class="code" data-lang="html"><code>&lt;head&gt;
+  &lt;style&gt;
+    h1 {
+      color: red;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;</code></pre>
+    </div>
+    <div>
+      <h3>3. External</h3>
+<pre class="code" data-lang="html"><code>&lt;head&gt;
+  &lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;</code></pre>
+<pre class="code" data-lang="css" data-label="style.css"><code>h1 {
+  color: red;
+}</code></pre>
+    </div>
+  </div>
+
+  <div class="note warn">
+    <span class="note-t">Talabalar ko'p adashadigan joy</span>
+    <p><code class="inline">&lt;link&gt;</code> tagida <code class="inline">href</code> yo'lini noto'g'ri yozish eng ko'p uchraydigan xato — masalan CSS fayl boshqa papkada bo'lsa-yu, to'g'ridan-to'g'ri nom yozilsa, uslub umuman ishlamaydi va sahifa <b>hech qanday xatosiz</b>, "jim" qolib ketadi. Har doim CSS fayl va HTML fayl qayerda joylashganini tekshiring.</p>
+  </div>
+</section>
+
+<!-- ===== 5 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 2 · Nazariya</span>
+  <h2>Asosiy tushunchalar: Selector, Property, Value</h2>
+  <p>Har bir CSS qoidasi uchtadan qismdan iborat — buni gap tuzilishiga o'xshatib eslab qoling: <b>KIM — NIMASINI — QANDAY</b> qiladi.</p>
+
+<pre class="code" data-lang="css" data-label="anatomiya"><code>h1     {  color:      blue;  }
+ │            │           │
+ │            │        VALUE — qanday qiymat beriladi
+ │        PROPERTY — qaysi xususiyat o'zgaradi
+SELECTOR — qaysi elementga</code></pre>
+
+  <div class="cols">
+    <div>
+      <h3>Selector (selektor) — "KIM"</h3>
+      <p>Qaysi HTML elementga uslub berilayotganini ko'rsatadi (masalan <code class="inline">h1</code>).</p>
+      <h3>Property (xususiyat) — "NIMASINI"</h3>
+      <p>O'sha elementning qaysi xususiyati o'zgartirilayotganini bildiradi (masalan <code class="inline">color</code> — rang, <code class="inline">font-size</code> — shrift o'lchami).</p>
+      <h3>Value (qiymat) — "QANDAY"</h3>
+      <p>O'sha xususiyatga qanday qiymat berilayotganini bildiradi (masalan <code class="inline">blue</code>, <code class="inline">32px</code>).</p>
+    </div>
+    <div>
+<pre class="code" data-lang="css"><code>h1 {
+  color: blue;
+  font-size: 32px;
+}</code></pre>
+      <div class="note warn">
+        <span class="note-t">Talabalar ko'p adashadigan joy</span>
+        <p>Property va value orasida ikki nuqta (<code class="inline">:</code>) o'rniga teng belgisi (<code class="inline">=</code>) yozish, yoki qator oxirida nuqta-vergul (<code class="inline">;</code>) qo'yishni unutish — bu ikkalasi ham CSS'ni "sindiradi" va uslub ishlamay qoladi.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 6 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 3 · Asosiy</span>
+  <h2>Selektor turlari: Tag, Class, ID, Universal</h2>
+  <p>Selektor — "qaysi elementga" degan savolga javob. To'rtta asosiy turini bilib oling.</p>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th>Selektor</th><th>Yozilishi</th><th>Nimani tanlaydi</th></tr>
+      <tr><td><b>Tag</b></td><td><code>p { }</code></td><td>Sahifadagi shu turdagi <b>barcha</b> elementlarni. Umumiy, global uslublar uchun qulay.</td></tr>
+      <tr><td><b>Class</b></td><td><code>.karta { }</code></td><td>Nuqta (<code class="inline">.</code>) bilan boshlanadi. <code class="inline">class="karta"</code> bo'lgan <b>barcha</b> elementlarga ta'sir qiladi — bir nechta elementga bir xil class berish mumkin.</td></tr>
+      <tr><td><b>Id</b></td><td><code>#header { }</code></td><td>Pag'ona (<code class="inline">#</code>) bilan boshlanadi. <code class="inline">id="header"</code> bo'lgan <b>bitta, noyob</b> elementga ta'sir qiladi — bir sahifada bir marta ishlatiladi.</td></tr>
+      <tr><td><b>Universal</b></td><td><code>* { }</code></td><td>Yulduzcha (<code class="inline">*</code>). Sahifadagi <b>absolyut barcha</b> elementga ta'sir qiladi — ko'pincha standart bo'shliqlarni (margin, padding) nolga tushirish uchun ("reset") ishlatiladi.</td></tr>
+    </table>
+  </div>
+
+  <div class="note">
+    <span class="note-t">Class nomlash qoidalari</span>
+    <p>Class nomi <b>kichik harflar</b> bilan yoziladi; agar bir necha so'zdan iborat bo'lsa <b>tire (<code class="inline">-</code>)</b> orqali qo'shiladi (masalan <code class="inline">baholar-jadvali</code>, probel yoki katta harf ishlatilmaydi) va <b>raqamdan boshlanmasligi</b> kerak.</p>
+  </div>
+
+<pre class="code" data-lang="html" data-label="jadval.html"><code>&lt;table class="baholar-jadvali"&gt;
+  &lt;tr&gt;
+    &lt;th&gt;Ism&lt;/th&gt;
+    &lt;th class="baho-ustuni"&gt;Baho&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Aziz Karimov&lt;/td&gt;
+    &lt;td class="baho-ustuni"&gt;92&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;</code></pre>
+
+<pre class="code" data-lang="css" data-label="style.css"><code>/* Universal selektor - hamma narsani nollashtirish */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Tag selektor - barcha jadvallarga */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+/* Class selektor - faqat shu klassdagi elementlarga */
+.baholar-jadvali {
+  border: 2px solid #333;
+}
+
+.baho-ustuni {
+  color: green;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* ID selektor - faqat bitta, noyob elementga */
+#asosiy-sarlavha {
+  color: darkblue;
+}</code></pre>
+
+  <div class="note warn">
+    <span class="note-t">Talabalar ko'p adashadigan joy</span>
+    <p>Class va ID belgilarini chalkashtirish eng keng tarqalgan xato — nuqta (<code class="inline">.</code>) class uchun, pag'ona (<code class="inline">#</code>) ID uchun. Yana bir xato — ID'ni bir sahifada bir necha marta ishlatish: texnik jihatdan brauzer buni "yutib yuboradi", lekin bu noto'g'ri amaliyot va katta loyihalarda muammolarga olib keladi.</p>
+  </div>
+</section>
+
+<!-- ===== 7 ===== -->
+<section class="slide">
+  <span class="eyebrow">Jonli mashq</span>
+  <h2>Selektorlarni sinab ko'ring</h2>
+  <p>Chapda kichik HTML + CSS bor. <code class="inline">.katta</code> ning rangini, <code class="inline">#muhim</code> ning shriftini, universal selektordagi <code class="inline">margin</code> qiymatini o'zgartiring — o'ngda natija darhol yangilanadi.</p>
+
+  <div class="live">
+    <div class="live-head">
+      <span class="dot"></span> selektorlar.html
+      <span class="sp"></span>
+      <button class="live-reset" type="button">↺ Qayta</button>
+    </div>
+    <div class="live-body">
+      <div class="live-editor">
+<textarea spellcheck="false">
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  p {
+    color: #4a5060;
+    padding: 6px 0;
+  }
+  .katta {
+    font-size: 22px;
+    color: #2f5cff;
+  }
+  #muhim {
+    color: #d92d20;
+    font-weight: bold;
+  }
+</style>
+
+<h2>Bugungi e'lonlar</h2>
+<p>Oddiy paragraf — tag selektor ishlaydi.</p>
+<p class="katta">Katta va ko'k paragraf — class selektor.</p>
+<p id="muhim">Muhim va qizil paragraf — id selektor.</p>
+</textarea>
+      </div>
+      <div class="live-preview"><iframe title="Natija"></iframe></div>
+    </div>
+  </div>
+
+  <div class="note tip">
+    <span class="note-t">Sinab ko'ring</span>
+    <p><code class="inline">#muhim</code> ichidagi rangni <code class="inline">#16a34a</code> ga (yashil) o'zgartiring va natijani kuzating. So'ng <code class="inline">* { margin: 0; padding: 0; }</code> blokini vaqtincha o'chirib ko'ring — brauzerning standart bo'shliqlari qayta paydo bo'ladi.</p>
+  </div>
+</section>
+
+<!-- ===== 8 ===== -->
+<section class="slide">
+  <span class="eyebrow">Xatolar</span>
+  <h2>Birinchi CSS darsining eng ko'p uchraydigan xatolari</h2>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th style="width:26%">Xato</th><th style="width:37%">Nima bo'ladi</th><th>Yechim</th></tr>
+      <tr>
+        <td><b>Nuqtali vergul (<code>;</code>) unutilgan</b></td>
+        <td>O'sha deklaratsiyadan keyingi qoida ham ishlamay qolishi mumkin</td>
+        <td>Har bir <code>property: value;</code> dan keyin <code>;</code> qo'ying, oxirgisida ham</td>
+      </tr>
+      <tr>
+        <td><b><code>{</code> yoki <code>}</code> yopilmagan</b></td>
+        <td>Keyingi barcha qoidalar o'sha blok "ichida qolib" ishlamay qoladi</td>
+        <td>Har ochilgan qavsni darhol yoping — VS Code buni avtomatik qiladi</td>
+      </tr>
+      <tr>
+        <td><b><code>href</code> yo'li noto'g'ri</b></td>
+        <td>CSS fayl umuman ulanmaydi, sahifa hech qanday xatosiz "jim" qoladi</td>
+        <td>CSS va HTML fayllarning qayerda joylashganini tekshiring</td>
+      </tr>
+      <tr>
+        <td><b>Class o'rniga id ko'p ishlatiladi</b></td>
+        <td>Id bir sahifada faqat bitta marta ishlatilishi kerak bo'lsa ham, ko'p elementga qo'yiladi — noto'g'ri amaliyot</td>
+        <td>Takrorlanadigan uslub uchun <code>class</code>, yagona qism uchungina <code>id</code> ishlating</td>
+      </tr>
+      <tr>
+        <td><b>Class/id belgisi chalkashtiriladi</b></td>
+        <td><code>.</code> (class) o'rniga <code>#</code> (id), yoki aksincha yozilgani uchun selektor hech narsani topmaydi</td>
+        <td>Nuqta — class, pag'ona (<code>#</code>) — id ekanini eslab qoling</td>
+      </tr>
+    </table>
+  </div>
+</section>
+
+<!-- ===== 9 ===== -->
+<section class="slide">
+  <span class="eyebrow">Best practice</span>
+  <h2>Har doim to'g'ri yo'lni tanlang: External + class</h2>
+  <p>Bu darsdan boshlab quyidagi ikki odat sizga butun kurs davomida yordam beradi.</p>
+
+  <div class="vs">
+    <div class="ok">
+      <div class="vs-h">✓ TAVSIYA ETILADI</div>
+<pre class="code" data-lang="html"><code>&lt;link rel="stylesheet" href="style.css"&gt;</code></pre>
+<pre class="code" data-lang="css"><code>.baho-ustuni { }
+.tugma-asosiy { }</code></pre>
+      <p>External CSS fayl + class selektor. Bir joyda o'zgartirilgan uslub barcha sahifalarga, barcha o'xshash elementlarga tarqaladi.</p>
+    </div>
+    <div class="no">
+      <div class="vs-h">✗ FAQAT KERAK BO'LGANDA</div>
+<pre class="code" data-lang="html"><code>&lt;h1 style="color: red;"&gt;Salom&lt;/h1&gt;</code></pre>
+<pre class="code" data-lang="css"><code>#karta { }
+#tugma { }</code></pre>
+      <p>Inline CSS va id selektorlarni faqat chindan ham noyob, bitta joyda kerak bo'lganda ishlating — masalan sahifaning yagona header'i.</p>
+    </div>
+  </div>
+
+  <div class="note warn">
+    <span class="note-t">Nega aynan shunday</span>
+    <p>Id juda kuchli va noyob bo'lgani uchun, uni ko'p ishlatish loyiha kattalashganda CSS'ni tartibga solishni qiyinlashtiradi. Class esa qayta-qayta ishlatilishi mumkinligi bilan moslashuvchan qoladi — shuning uchun stillash uchun asosan <code class="inline">class</code>dan foydalaning.</p>
+  </div>
+</section>
+
+<!-- ===== 10 ===== -->
+<section class="slide">
+  <span class="eyebrow">Amaliy vazifa</span>
+  <h2>Uyga vazifa — 3-dars jadvalini bezang</h2>
+
+  <div class="task">
+    <h4><span class="n">1</span> 3-darsdagi jadval sahifangizni CSS bilan jonlantiring</h4>
+    <ol>
+      <li>3-darsda yaratgan jadval sahifangizni qaytadan oching.</li>
+      <li>Alohida <code class="inline">style.css</code> fayl yarating va uni <code class="inline">&lt;link rel="stylesheet" href="style.css"&gt;</code> orqali <code class="inline">&lt;head&gt;</code>ga ulang (External usul).</li>
+      <li><b>Tag selektor</b> orqali jadvalga umumiy chegara (<code class="inline">border</code>) bering — masalan <code class="inline">table { border-collapse: collapse; }</code>.</li>
+      <li>Kamida bitta <b>class selektor</b> yarating (masalan sarlavha qatoriga yoki maxsus ustunga) va unga rang yoki shrift qalinligi bering.</li>
+      <li>Kamida bitta <b>id selektor</b> orqali jadvalning umumiy konteyneriga yoki sarlavhasiga noyob uslub qo'llang.</li>
+    </ol>
+    <p>Namuna sifatida ushbu darsda ko'rgan <code class="inline">baholar-jadvali</code> misolini asos qilib olishingiz mumkin, lekin o'z ranglaringiz va uslubingiz bilan ijodiy yondashing.</p>
+    <div class="crit">
+      <b>Baholash mezoni:</b> CSS alohida <code>.css</code> faylda yozilgan va <code>&lt;link&gt;</code> orqali to'g'ri ulangan (External usul) · kamida bitta tag, bitta class va bitta id selektor ishlatilgan · class nomlari to'g'ri qoidada (kichik harf, tire bilan, probelsiz) · sahifa Live Server orqali ochilganda uslublar haqiqatan ko'rinadi.
+    </div>
+  </div>
+</section>
+
+<!-- ===== 11 ===== -->
+<section class="slide">
+  <span class="eyebrow">Yakun</span>
+  <h2>Xulosa va o'z-o'zini tekshirish</h2>
+
+  <div class="recap">
+    <div><b>CSS — ko'rinish qatlami</b>HTML ma'noni, CSS ko'rinishni belgilaydi.</div>
+    <div><b>3 ulash usuli</b>Inline, internal, external — real loyihalarda faqat external ishlatiladi.</div>
+    <div><b>Selector — Property — Value</b>"KIM — NIMASINI — QANDAY" gap tuzilishi kabi.</div>
+    <div><b>4 selektor turi</b>Tag (barchasi), class (<code>.</code>, takrorlanadi), id (<code>#</code>, yagona), universal (<code>*</code>, hammasi).</div>
+    <div><b>class asosiy, id kamdan-kam</b>Stillash uchun asosan class, id — faqat noyob holatlar uchun.</div>
+    <div><b>Sintaksisni saqlang</b><code class="inline">;</code> va <code class="inline">{ }</code>ni unutish — CSS'ning eng ko'p uchraydigan sinish sababi.</div>
+  </div>
+
+  <h3 style="margin-top:30px">Savol-javob</h3>
+  <div class="quiz">
+    <div class="q">
+      <p>1. Inline, internal va external CSS o'rtasidagi asosiy farq nima va qaysi biri tavsiya etiladi?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">Inline — elementning <code>style=""</code> atributida, internal — <code>&lt;head&gt;</code>dagi <code>&lt;style&gt;</code> blokida, external — alohida <code>.css</code> faylda va <code>&lt;link&gt;</code> orqali ulanadi. <b>External</b> tavsiya etiladi, chunki bitta fayl bir nechta sahifaga ulanadi va dizaynni bir joyda o'zgartirish mumkin.</div>
+    </div>
+    <div class="q">
+      <p>2. <code class="inline">h1 { color: blue; font-size: 32px; }</code> qoidasida qaysi qism selector, qaysisi property va qaysisi value?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans"><code>h1</code> — selector (qaysi elementga), <code>color</code> va <code>font-size</code> — property (qaysi xususiyat), <code>blue</code> va <code>32px</code> — value (qanday qiymat).</div>
+    </div>
+    <div class="q">
+      <p>3. Class va id selektorlari qanday belgi bilan yoziladi va ular orasidagi asosiy farq nima?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">Class — nuqta (<code>.</code>) bilan, bir nechta elementga takror ishlatilishi mumkin. Id — pag'ona (<code>#</code>) bilan, bitta sahifada faqat bitta, noyob elementga ishlatilishi kerak.</div>
+    </div>
+    <div class="q">
+      <p>4. Universal selektor (<code class="inline">*</code>) nimaga ta'sir qiladi va odatda nima uchun ishlatiladi?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">Sahifadagi <b>absolyut barcha</b> elementga ta'sir qiladi. Odatda barcha elementlarning standart bo'shliqlarini (margin, padding) nolga tushirish uchun — buni "reset" deb atashadi.</div>
+    </div>
+    <div class="q">
+      <p>5. Bu CSS kodida nechta sintaksis xatosi bor? <code class="inline">.karta { color: red font-size: 16px }</code></p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">Bitta xato: <code>color: red</code> dan keyin <b>nuqtali vergul (<code>;</code>)</b> yo'q — shuning uchun brauzer <code>red font-size: 16px</code> ni bitta noto'g'ri qiymat deb o'qiy boshlaydi va ikkala deklaratsiya ham ishlamay qolishi mumkin. To'g'risi: <code>.karta { color: red; font-size: 16px; }</code></div>
+    </div>
+  </div>
+
+  <div class="lesson-jump">
+    <a href="../03-jadvallar/index.html"><b>Oldingi modul</b><span>← 03-modul: HTML Jadvallar bilan professional ishlash</span></a>
+    <a href="../05-ranglar-olchamlar/index.html"><b>Keyingi modul</b><span>05-modul: CSS Ranglar va O'lchamlar bilan ishlash →</span></a>
+  </div>
+</section>
+
+</main>
+
+<div class="deck-nav">
+  <button data-prev type="button" title="Oldingi (←)">‹</button>
+  <span class="hint">← → varaqlash · <kbd>O</kbd> ro'yxat · <kbd>F</kbd> to'liq ekran</span>
+  <button data-next type="button" title="Keyingi (→)">›</button>
+</div>
+
+<div class="deck-overview"><h3>Slaydlar ro'yxati</h3><div class="ov-grid"></div></div>
+
+<script src="../assets/js/deck.js"></script>
+</body>
+</html>

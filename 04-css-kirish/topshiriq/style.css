@@ -1,0 +1,60 @@
+/* 1. UNIVERSAL — standart bo'shliqlarni nollaymiz */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 2. TAG — butun sahifa uchun umumiy uslub */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #fdf6ec;
+  padding: 30px;
+}
+
+h2 {
+  color: #7a3e12;
+  font-size: 22px;
+}
+
+p {
+  color: #555555;
+}
+
+/* 3. ID — sahifada faqat bir marta uchraydi */
+#kafe-nomi {
+  color: #b45309;
+  font-size: 34px;
+  text-align: center;
+}
+
+#manzil {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+/* 4. CLASS — har bir taom kartasi uchun (takrorlanadi) */
+.taom {
+  background-color: white;
+  border: 2px solid #e5d3bd;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.tavsif {
+  font-size: 14px;
+  margin: 5px 0;
+}
+
+.narx {
+  color: #15803d;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+/* Qo'shimcha class — tavsiya etilgan taomlarni ajratish */
+.tavsiya {
+  border: 2px solid #f59e0b;
+  background-color: #fff7e6;
+}

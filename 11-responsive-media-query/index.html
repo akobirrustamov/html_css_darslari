@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="uz" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>11-modul · Adaptiv dizayn (Responsive) va Media Queries</title>
+<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body class="deck" data-lesson="11">
+
+<div class="deck-bar">
+  <a class="home" href="../index.html">← Kurs</a>
+  <span class="title">11-modul · Adaptiv dizayn (Responsive) va Media Queries</span>
+  <span class="spacer"></span>
+  <div class="deck-tools">
+    <button class="tool" data-overview type="button" title="Slaydlar ro'yxati (O)">☰</button>
+    <button class="tool" data-theme-toggle type="button" title="Mavzu">☾</button>
+    <span class="counter">1 / 14</span>
+  </div>
+</div>
+<div class="deck-progress"></div>
+
+<main class="deck-stage">
+
+<!-- ===== 1 ===== -->
+<section class="slide cover">
+  <div class="lesson-no">11-modul</div>
+  <h1>Adaptiv dizayn (Responsive)<br>va Media Queries</h1>
+  <p>Kompyuteringizdagi biror saytni telefon o'lchamiga kichraytiring — ba'zilari buziladi: matn ekrandan chiqadi, tugmalar bir-biriga yopishadi. Boshqalari esa o'zini "qayta tashkil qiladi". O'zbekistonda foydalanuvchilarning aksariyati telefondan kiradi — bugun saytingizni har qanday ekranga moslashtirishni o'rganamiz.</p>
+  <div class="cover-plan">
+    <div><b>Reja 1</b>Mobile-first va Desktop-first yondashuvlari</div>
+    <div><b>Reja 2</b><code class="inline">viewport</code> meta tegi</div>
+    <div><b>Reja 3</b><code class="inline">@media</code> so'rovlari va breakpoint tanlash</div>
+    <div><b>Reja 4</b>Google Fonts integratsiyasi</div>
+    <div><b>Amaliyot</b>Barcha qurilmalarga moslashuvchan interaktiv forma yasaymiz</div>
+  </div>
+</section>
+
+<!-- ===== 2 ===== -->
+<section class="slide">
+  <span class="eyebrow">Maqsad</span>
+  <h2>Dars oxirida siz nima qila olasiz</h2>
+  <p class="big">Video oxirida siz mobile-first va desktop-first yondashuvlar farqini tushunasiz, <code class="inline">viewport</code> meta tegini to'g'ri sozlaysiz, <code class="inline">@media</code> so'rovlari orqali breakpoint'lar yasaysiz va Google Fonts'ni loyihaga ulaysiz — natijada barcha qurilmalarga moslashuvchi forma yasay olasiz.</p>
+  <div class="cardset">
+    <div class="card">
+      <span class="ico">📱</span>
+      <h4>Yondashuv tanlaysiz</h4>
+      <p>Mobile-first bilan desktop-first o'rtasidagi farqni va nega birinchisi tavsiya etilishini tushunasiz.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🔍</span>
+      <h4>Viewport sozlaysiz</h4>
+      <p>Responsive'ning "old sharti" bo'lgan bitta qatorlik meta tegini har bir sahifada to'g'ri qo'yasiz.</p>
+    </div>
+    <div class="card">
+      <span class="ico">📐</span>
+      <h4>Breakpoint yasaysiz</h4>
+      <p><code class="inline">@media</code> sintaksisi va kontentga qarab breakpoint tanlash mantig'ini qo'llaysiz.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🔤</span>
+      <h4>Shrift ulaysiz</h4>
+      <p>Google Fonts'dan shrift tanlab, uni <code class="inline">&lt;link&gt;</code> va <code class="inline">font-family</code> orqali loyihaga qo'shasiz.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 3 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 1 · Nazariya</span>
+  <h2>Mobile-first va Desktop-first yondashuvlari</h2>
+  <p>Saytni moslashuvchi qilishning ikkita yo'li bor. Farqni uy qurishga o'xshatish mumkin: <b>desktop-first</b> — katta uydan boshlab, keyin uni kichraytirish; <b>mobile-first</b> — kichik xonadan boshlab, kerak bo'lganda kengaytirish.</p>
+
+  <div class="vs">
+    <div class="ok">
+      <div class="vs-h">✓ Mobile-first</div>
+      <p>Avval eng kichik ekran (telefon) uchun bazaviy CSS yozamiz, keyin <code class="inline">min-width</code> bilan katta ekranlar uchun qo'shimcha stillar "qo'shib" boramiz.</p>
+<pre class="code" data-lang="css"><code>/* Mobile-first: bazaviy stil - telefon uchun */
+.container {
+  display: block;
+  padding: 16px;
+}
+
+/* Kattaroq ekranlar uchun qo'shimcha (min-width) */
+@media (min-width: 768px) {
+  .container {
+    display: flex;
+    padding: 32px;
+  }
+}</code></pre>
+    </div>
+    <div class="no">
+      <div class="vs-h">✗ Desktop-first (eski)</div>
+      <p>Avval katta ekran (kompyuter) uchun dizayn yozib, keyin kichik ekranlar uchun <code class="inline">max-width</code> bilan "tuzatishlar" qo'shib boramiz — eski, an'anaviy yondashuv.</p>
+      <p>Foydalanuvchilarning ko'pchiligi telefondan kiradi, va mobile-first yozilgan kod odatda soddaroq va tezroq yuklanadi — shu sabab yangi loyihalarda mobile-first ko'proq tanlanadi.</p>
+    </div>
+  </div>
+
+  <div class="note warn">
+    <span class="note-t">Talabalar ko'p adashadigan joy</span>
+    <p>Mobile-first bilan Desktop-first'ni aralashtirib, bir loyihada ham <code class="inline">min-width</code>, ham <code class="inline">max-width</code> ishlatib, breakpoint'lar bir-biriga zid kelib, natija oldindan aytib bo'lmaydigan bo'lib qoladi — bitta loyihada bittasini tanlab, oxirigacha o'shanga amal qiling.</p>
+  </div>
+</section>
+
+<!-- ===== 4 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 2</span>
+  <h2><code class="inline">viewport</code> meta tegi — responsive'ning old sharti</h2>
+  <p>Bu — bitta qatorlik kod, lekin usiz butun responsive dizayn ishlamaydi. Muammo shunda: telefonlar ekranlari kichik bo'lsa ham, saytlarni "kattalashtirib" (masalan 980px kenglikda) ko'rsatishga harakat qiladi — foydalanuvchi barmog'i bilan siqib-kattalashtirib o'qishga majbur bo'ladi.</p>
+
+<pre class="code" data-lang="html" data-label="index.html"><code>&lt;head&gt;
+  &lt;meta charset="UTF-8" /&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;
+  &lt;title&gt;Mening saytim&lt;/title&gt;
+&lt;/head&gt;</code></pre>
+
+  <p>Bu teg brauzerga "sun'iy kattalashtirma, sahifa kengligini qurilmaning haqiqiy kengligiga tengla" deb aytadi. U har doim <code class="inline">&lt;head&gt;</code> ichida, HTML faylning eng boshida bo'lishi shart — CSS'dagi <code class="inline">@media</code> qoidalari ham aynan shu teg to'g'ri qo'yilgandagina kutilganidek ishlaydi.</p>
+
+  <div class="note bad">
+    <span class="note-t">Talabalar ko'p adashadigan joy</span>
+    <p>Bu tegni umuman qo'shishni unutish — natijada <code class="inline">@media</code> qoidalarini to'g'ri yozgan bo'lsangiz ham, telefonda sayt hech qanday moslashmaganday ko'rinadi, chunki brauzer sahifani kattalashtirib ko'rsatib, "telefon ekrani kichik" degan holatga umuman kirmaydi.</p>
+  </div>
+</section>
+
+<!-- ===== 5 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 3 · Sintaksis</span>
+  <h2><code class="inline">@media</code> — shart asosida CSS qo'llash</h2>
+  <p><code class="inline">@media</code> — bu CSS'ga "faqat mana bu shartda ishla" deyish usuli. Eng ko'p ishlatilgani — ekran kengligiga qarab: <code class="inline">@media screen and (max-width: 768px) { ... }</code> degani "ekran 768px yoki undan tor bo'lsa, shu ichidagi qoidalarni qo'll" degani.</p>
+
+  <div class="cols">
+    <div>
+<pre class="code" data-lang="css" data-label="Bazaviy (mobil)"><code>.cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}</code></pre>
+    </div>
+    <div>
+<pre class="code" data-lang="css" data-label="Kattaroq ekranlar"><code>@media (min-width: 600px) {
+  .cards {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 1024px) {
+  .cards {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}</code></pre>
+    </div>
+  </div>
+
+  <div class="note warn">
+    <span class="note-t">Talabalar ko'p adashadigan joy</span>
+    <p><code class="inline">@media</code> qoidalarini noto'g'ri tartibda yozish (masalan avval <code class="inline">min-width: 1024px</code>, keyin <code class="inline">min-width: 600px</code>) — CSS yuqoridan pastga o'qilgani uchun, keyingi qoida oldingisini "bosib" qo'yishi mumkin. Shu sabab breakpoint'larni kichikdan kattaga qarab tartib bilan yozish tavsiya etiladi (mobile-first yondashuvda).</p>
+  </div>
+</section>
+
+<!-- ===== 6 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 3 · Breakpoint tanlash</span>
+  <h2>Breakpoint — qaysi kenglikda dizayn o'zgaradi</h2>
+  <p>Breakpoint (qaysi kenglikda dizayn o'zgarishi) tanlashda eng mashhur uchta chegara bor. Lekin muhim maslahat — breakpoint'ni "qurilma modeliga" emas, "kontentga" qarab tanlash kerak.</p>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th>Breakpoint</th><th>Odatiy qurilma</th></tr>
+      <tr><td>~480px</td><td>Kichik telefonlar</td></tr>
+      <tr><td>~768px</td><td>Planshetlar</td></tr>
+      <tr><td>~1024px</td><td>Kichik noutbuklar / katta planshetlar</td></tr>
+    </table>
+  </div>
+
+  <div class="note tip">
+    <span class="note-t">Muhim maslahat</span>
+    <p>Sahifangizni sekin toraytiring va u qayerda "buzila boshlasa" (matn siqilib qolsa, ustunlar tiqilishib ketsa) — aynan o'sha yerga breakpoint qo'yiladi. Bir nechta <code class="inline">@media</code> qoidasini birga ishlatib, forma yoki karta layoutining telefon/planshet/desktop'dagi farqini jonli ko'ring.</p>
+  </div>
+</section>
+
+<!-- ===== 7 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 3 · Jonli mashq</span>
+  <h2>Breakpoint effektini his qiling</h2>
+  <p>Pastdagi <code class="inline">textarea</code>'dagi <code class="inline">max-width</code> qiymatini o'zgartirib, preview panelidagi kartochkalar qachon bittadan ustunga tushishini kuzating.</p>
+
+  <div class="live">
+    <div class="live-head">
+      <span class="dot"></span> breakpoint.html
+      <span class="sp"></span>
+      <button class="live-reset" type="button">↺ Qayta</button>
+    </div>
+    <div class="live-body">
+      <div class="live-editor">
+<textarea spellcheck="false">
+<style>
+  body { font-family: Arial, sans-serif; padding: 12px; background: #f5f6fa; }
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .card { background: #2f5cff; color: #fff; padding: 14px; border-radius: 8px; text-align: center; }
+
+  /* Bu preview kengligi taxminan 380px atrofida -
+     shu raqamni o'zgartirib sinab ko'ring */
+  @media (max-width: 420px) {
+    .cards {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<div class="cards">
+  <div class="card">Karta 1</div>
+  <div class="card">Karta 2</div>
+</div>
+</textarea>
+      </div>
+      <div class="live-preview"><iframe title="Natija"></iframe></div>
+    </div>
+  </div>
+
+  <div class="note tip">
+    <span class="note-t">Haqiqiy sinov uchun</span>
+    <p>Bu preview oynasi o'lchami o'zgarmasligi sababli, haqiqiy brauzer o'lchamini torayting-kengaytirib ko'rish uchun ushbu faylni <b>eksport qilib, o'z brauzeringizda oching</b> va oyna kengligini qo'lda o'zgartiring.</p>
+  </div>
+</section>
+
+<!-- ===== 8 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 4</span>
+  <h2>Google Fonts (Google shriftlari) integratsiyasi</h2>
+  <p>Standart shriftlar (Arial, Times New Roman) barcha saytlarda bir xil ko'rinadi va zamonaviy tuyulmaydi. Google Fonts — bepul, tayyor shriftlar to'plami: <b>fonts.google.com</b> saytiga kirib, kerakli shriftni tanlaymiz, u bizga tayyor <code class="inline">&lt;link&gt;</code> teg beradi — shuni HTML faylning <code class="inline">&lt;head&gt;</code> qismiga, boshqa stillardan OLDIN qo'shamiz.</p>
+
+<pre class="code" data-lang="html" data-label="index.html"><code>&lt;head&gt;
+  &lt;link rel="preconnect" href="https://fonts.googleapis.com" /&gt;
+  &lt;link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;display=swap"
+    rel="stylesheet" /&gt;
+&lt;/head&gt;</code></pre>
+
+<pre class="code" data-lang="css" data-label="style.css"><code>body {
+  font-family: "Inter", Arial, sans-serif;
+}</code></pre>
+
+  <p>Keyin CSS'da oddiy <code class="inline">font-family</code> orqali shu shriftni ishlatamiz, lekin har doim orqasidan zaxira (fallback) shrift ham yozib qo'yamiz — agar internet sekin bo'lsa yoki shrift yuklanmasa, brauzer eng yaqin oddiy shriftga o'tadi.</p>
+
+  <div class="note warn">
+    <span class="note-t">Talabalar ko'p adashadigan joy</span>
+    <p>Google Fonts saytida shrift tanlaganda faqat kerakli og'irliklarni (weight, masalan 400 va 700) tanlash kerak — hammasini (barcha qalinliklarni) qo'shib yuborish sahifani sekinlashtiradi, chunki har bir qo'shimcha og'irlik alohida fayl bo'lib yuklanadi.</p>
+  </div>
+</section>
+
+<!-- ===== 9 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 4 · Jonli mashq</span>
+  <h2>Google Fonts'ni sinab ko'ring</h2>
+  <p>Pastdagi kodda <code class="inline">font-family</code> qiymatini <code class="inline">"Inter"</code>'dan <code class="inline">"Poppins"</code>'ga almashtiring va preview'da sarlavha ko'rinishi qanday o'zgarishini kuzating (ikkalasi ham yuklab qo'yilgan).</p>
+
+  <div class="live">
+    <div class="live-head">
+      <span class="dot"></span> google-fonts.html
+      <span class="sp"></span>
+      <button class="live-reset" type="button">↺ Qayta</button>
+    </div>
+    <div class="live-body">
+      <div class="live-editor">
+<textarea spellcheck="false">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  body { padding: 20px; background: #f5f6fa; }
+  h1 {
+    font-family: "Inter", Arial, sans-serif;
+    color: #2f5cff;
+  }
+  p {
+    font-family: "Inter", Arial, sans-serif;
+    color: #333;
+  }
+</style>
+
+<h1>Bu sarlavha Google Fonts bilan</h1>
+<p>Font-family qiymatini o'zgartirib ko'ring.</p>
+</textarea>
+      </div>
+      <div class="live-preview"><iframe title="Natija"></iframe></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 10 ===== -->
+<section class="slide">
+  <span class="eyebrow">Xatolar</span>
+  <h2>O'n birinchi darsning eng ko'p uchraydigan xatolari</h2>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th style="width:26%">Xato</th><th style="width:37%">Nima bo'ladi</th><th>Yechim</th></tr>
+      <tr>
+        <td><b><code>viewport</code> meta tegini unutish</b></td>
+        <td>Telefonda sahifa desktop ko'rinishida kichraytirilib chiqadi, matn juda mayda bo'lib qoladi</td>
+        <td><code class="inline">&lt;head&gt;</code> ichiga <code class="inline">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code> ni doim qo'shing</td>
+      </tr>
+      <tr>
+        <td><b>Breakpoint qiymatini "qurilmaga" bog'lash</b></td>
+        <td>Yangi telefon modeli chiqishi bilan tanlangan qiymat eskirib, real qurilmalarga to'g'ri kelmay qoladi</td>
+        <td>Breakpoint'ni kontentga qarab tanlang — sahifa qayerda "buzila boshlasa", o'sha yerga qo'ying</td>
+      </tr>
+      <tr>
+        <td><b>Juda ko'p yoki juda kam breakpoint</b></td>
+        <td>Ko'pi — kodni murakkablashtiradi va boshqarishni qiyinlashtiradi; kami — ba'zi o'lchamlarda maket buzilib qoladi</td>
+        <td>Odatda 2–3 ta breakpoint (~480px, ~768px, ~1024px) yetarli, kontentga qarab moslang</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="note bad">
+    <span class="note-t">Eng oson tekshiruv</span>
+    <p>DevTools'dagi Device toolbar'ni (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>M</kbd>) yoqib, sahifangizni bir necha xil telefon o'lchamida ko'rib chiqing — bu xatolarning barchasi shu yerda darhol ko'zga tashlanadi.</p>
+  </div>
+</section>
+
+<!-- ===== 11 ===== -->
+<section class="slide">
+  <span class="eyebrow">Best practice</span>
+  <h2>Yaxshi amaliyot — qisqacha</h2>
+  <div class="cols">
+    <div>
+      <ul>
+        <li><code class="inline">viewport</code> meta tegini hech qachon unutmang — bu responsive'ning birinchi sharti.</li>
+        <li>Bitta loyihada faqat bitta yondashuv tanlang: mobile-first (<code class="inline">min-width</code>) yoki desktop-first (<code class="inline">max-width</code>) — aralashtirmang.</li>
+        <li><code class="inline">@media</code> qoidalarini kichikdan kattaga tartib bilan yozing.</li>
+      </ul>
+    </div>
+    <div>
+      <ul>
+        <li>Breakpoint'ni kontentga qarab tanlang, tayyor jadvaldan emas.</li>
+        <li>Google Fonts'dan faqat kerakli og'irliklarni (masalan 400 va 700) tanlang.</li>
+        <li>Har doim fallback shrift qoldiring: <code class="inline">font-family: "Inter", Arial, sans-serif;</code></li>
+      </ul>
+    </div>
+  </div>
+  <div class="note tip">
+    <span class="note-t">Xotira uchun formula</span>
+    <p><b>Bitta yondashuv, kontentga qarab breakpoint, har doim viewport, har doim fallback shrift.</b> Shu to'rtta qoidani saqlasangiz, responsive dizaynda asosiy xatolarning oldini olasiz.</p>
+  </div>
+</section>
+
+<!-- ===== 12 ===== -->
+<section class="slide">
+  <span class="eyebrow">Amaliyot uchun poydevor</span>
+  <h2>Forma asoslari — bugun birinchi marta forma yasaysiz</h2>
+  <p>Bugungi vazifada birinchi marta <code class="inline">&lt;form&gt;</code> elementi bilan ishlaysiz. Shuning uchun asoslarni qisqacha tushuntiramiz — bu keyingi modullarda ham kerak bo'ladi.</p>
+
+  <div class="cardset">
+    <div class="card">
+      <span class="ico">🏷️</span>
+      <h4><code class="inline">&lt;label&gt;</code></h4>
+      <p>Inputning nomi/yorlig'i. <code class="inline">for</code> atributi orqali inputning <code class="inline">id</code>'siga bog'lanadi — shunda label'ga bosilganda ham input faollashadi.</p>
+    </div>
+    <div class="card">
+      <span class="ico">⌨️</span>
+      <h4><code class="inline">&lt;input&gt;</code></h4>
+      <p><code class="inline">type="text"</code>, <code class="inline">type="email"</code>, <code class="inline">type="password"</code> — turli xil kiritish maydonlari.</p>
+    </div>
+    <div class="card">
+      <span class="ico">📨</span>
+      <h4><code class="inline">&lt;button&gt;</code></h4>
+      <p><code class="inline">type="submit"</code> — formani yuborish tugmasi.</p>
+    </div>
+  </div>
+
+<pre class="code" data-lang="html" data-label="forma-namuna.html"><code>&lt;form&gt;
+  &lt;label for="ism"&gt;Ismingiz&lt;/label&gt;
+  &lt;input type="text" id="ism" name="ism"&gt;
+
+  &lt;label for="email"&gt;Email&lt;/label&gt;
+  &lt;input type="email" id="email" name="email"&gt;
+
+  &lt;button type="submit"&gt;Yuborish&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+
+  <div class="note tip">
+    <span class="note-t">Nega bu muhim</span>
+    <p><code class="inline">label</code> va <code class="inline">input</code>'ni <code class="inline">for</code>/<code class="inline">id</code> orqali bog'lash shunchaki qulaylik emas — bu ekran o'quvchilari (screen reader) va foydalanuvchi tajribasi uchun ham muhim odat.</p>
+  </div>
+</section>
+
+<!-- ===== 13 ===== -->
+<section class="slide">
+  <span class="eyebrow">Amaliy vazifa</span>
+  <h2>Uyga vazifa</h2>
+
+  <div class="task">
+    <h4><span class="n">1</span> Barcha qurilmalarga moslashuvchan interaktiv forma</h4>
+    <ol>
+      <li><code class="inline">dars-11</code> papkasida <code class="inline">index.html</code> yarating.</li>
+      <li>"Bog'lanish" yoki "Ro'yxatdan o'tish" mavzusida <code class="inline">&lt;form&gt;</code> yasang: kamida <b>3 ta input</b> va <b>1 ta tugma</b>dan iborat bo'lsin.</li>
+      <li>Har bir inputda mos <code class="inline">&lt;label&gt;</code> bo'lsin (<code class="inline">for</code>/<code class="inline">id</code> bog'langan).</li>
+      <li>Telefonda (torroq ekranda) inputlar bitta ustunda tik joylashsin, kompyuterda esa ikki ustunga bo'linishi mumkin — buni <code class="inline">@media</code> bilan ta'minlang.</li>
+      <li><code class="inline">viewport</code> meta tegini HTML faylga albatta qo'shing.</li>
+      <li>Google Fonts orqali kamida bitta maxsus shrift ulang va <code class="inline">font-family</code> bilan qo'llang.</li>
+    </ol>
+    <div class="crit">
+      <b>Baholash mezoni:</b> DevTools'da telefon o'lchamida ko'rinish buzilmaydi · <code>viewport</code> tegi mavjud · kamida bitta <code>@media</code> qoidasi ishlatilgan · shrift Google Fonts'dan yuklangan · har bir inputda bog'langan <code>label</code> bor.
+    </div>
+  </div>
+</section>
+
+<!-- ===== 14 ===== -->
+<section class="slide">
+  <span class="eyebrow">Yakun</span>
+  <h2>Xulosa</h2>
+  <p>Tabriklaymiz — endi saytingiz har qanday ekranda "o'ziga yarasha" ko'rinadi, va siz birinchi marta haqiqiy forma bilan ishladingiz. Lekin diqqat qildingizmi, biz bugun CSS'da bir xil rangni, bir xil breakpoint qiymatini bir necha marta qayta-qayta yozdik? Agar rangni o'zgartirmoqchi bo'lsak, butun faylni qidirib yurishimiz kerak bo'ladi. Keyingi darsda CSS yozish usulimizni butunlay yangi darajaga ko'taramiz — <b>SASS/SCSS</b> degan vositani o'rganamiz, u yordamida ranglarni bitta joyda saqlab, keyin hamma yerda qayta ishlatamiz.</p>
+
+  <div class="recap">
+    <div><b>Mobile-first</b>Avval kichik ekran uchun qurish, <code>min-width</code> bilan kengaytirish — teskarisidan osonroq va tezroq.</div>
+    <div><b><code>viewport</code> meta tegi</b>Uni yozmasangiz, telefon sahifani kichraytirib ko'rsatadi — responsive CSS ishlamaydi.</div>
+    <div><b><code>@media</code></b>Ekran kengligi shartiga qarab CSS qo'llash usuli; breakpoint'ni kontentga qarab tanlang.</div>
+    <div><b>Google Fonts</b><code>&lt;link&gt;</code> orqali ulanadi, <code>font-family</code>'da har doim fallback shrift bilan ishlatiladi.</div>
+    <div><b>Forma asoslari</b><code>label</code>+<code>input</code>+<code>button</code> — bugun birinchi marta ishlatgan uchta element.</div>
+  </div>
+
+  <h3 style="margin-top:30px">Savol-javob</h3>
+  <div class="quiz">
+    <div class="q">
+      <p>1. Mobile-first va desktop-first yondashuvlari orasidagi asosiy farq nima?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">Mobile-first — avval kichik ekran (telefon) uchun bazaviy CSS yozib, <code>min-width</code> bilan katta ekranlarga qo'shimcha stillar qo'shiladi. Desktop-first — aksincha, avval katta ekran uchun yozib, <code>max-width</code> bilan kichik ekranlar uchun tuzatishlar qo'shiladi. Yangi loyihalarda mobile-first tavsiya etiladi.</div>
+    </div>
+    <div class="q">
+      <p>2. <code class="inline">viewport</code> meta tegi bo'lmasa, telefonda nima sodir bo'ladi?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">Brauzer sahifani xuddi kengroq (taxminan 980px) desktop sifatida chizib, keyin uni butunligicha kichraytirib ko'rsatadi. Natijada matn juda mayda bo'lib ko'rinadi, garchi CSS'da xato bo'lmasa ham.</div>
+    </div>
+    <div class="q">
+      <p>3. Breakpoint qiymatini qanday tanlash kerak?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">"Qurilma modeliga" emas, "kontentga" qarab: sahifani sekin toraytirib, u qayerda "buzila boshlasa" (matn siqilib qolsa, ustunlar tiqilishib ketsa) — aynan o'sha yerga breakpoint qo'yiladi. Odatiy yo'l ko'rsatkich sifatida ~480px, ~768px, ~1024px ishlatiladi.</div>
+    </div>
+    <div class="q">
+      <p>4. Google Fonts'dan shrift ulaganda nimaga e'tibor berish kerak?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">Faqat kerakli og'irliklarni (weight, masalan 400 va 700) tanlash kerak — hammasini qo'shib yuborish sahifani sekinlashtiradi, chunki har bir qo'shimcha og'irlik alohida fayl bo'lib yuklanadi. Shuningdek, <code>font-family</code>'da har doim fallback shrift qoldirish kerak.</div>
+    </div>
+    <div class="q">
+      <p>5. <code class="inline">&lt;label for="..."&gt;</code> nima uchun kerak?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">Label'ni <code>for</code> atributi orqali inputning <code>id</code>'siga bog'lash uchun — shunda foydalanuvchi label matniga bossa ham, mos input faollashadi. Bu qulaylik va ekran o'quvchilari uchun muhim odat.</div>
+    </div>
+  </div>
+
+  <div class="lesson-jump">
+    <a href="../10-transform-transition-animation/index.html"><b>Oldingi modul</b><span>← 10-modul: CSS Transform, Transition va Animatsiyalar</span></a>
+    <a href="../12-sass-scss/index.html"><b>Keyingi modul</b><span>12-modul: SASS/SCSS preprosessori →</span></a>
+  </div>
+</section>
+
+</main>
+
+<div class="deck-nav">
+  <button data-prev type="button" title="Oldingi (←)">‹</button>
+  <span class="hint">← → varaqlash · <kbd>O</kbd> ro'yxat · <kbd>F</kbd> to'liq ekran</span>
+  <button data-next type="button" title="Keyingi (→)">›</button>
+</div>
+
+<div class="deck-overview"><h3>Slaydlar ro'yxati</h3><div class="ov-grid"></div></div>
+
+<script src="../assets/js/deck.js"></script>
+</body>
+</html>

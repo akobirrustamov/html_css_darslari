@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="uz" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>07-modul · CSS Display moduli (Block, Inline, Inline-Block)</title>
+<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body class="deck" data-lesson="7">
+
+<div class="deck-bar">
+  <a class="home" href="../index.html">← Kurs</a>
+  <span class="title">07-modul · CSS Display moduli (Block, Inline, Inline-Block)</span>
+  <span class="spacer"></span>
+  <div class="deck-tools">
+    <button class="tool" data-overview type="button" title="Slaydlar ro'yxati (O)">☰</button>
+    <button class="tool" data-theme-toggle type="button" title="Mavzu">☾</button>
+    <span class="counter">1 / 14</span>
+  </div>
+</div>
+<div class="deck-progress"></div>
+
+<main class="deck-stage">
+
+<!-- ===== 1 ===== -->
+<section class="slide cover">
+  <div class="lesson-no">07-modul</div>
+  <h1>CSS Display moduli:<br>Block, Inline, Inline-Block va None</h1>
+  <p><code class="inline">&lt;span&gt;</code> elementiga <code class="inline">width: 200px</code> va <code class="inline">height: 100px</code> berasiz — lekin ekranda hech narsa o'zgarmaydi! Xuddi shu kodni <code class="inline">&lt;div&gt;</code>ga bersangiz esa, ajoyib ishlaydi. Nega? Va nega ikkita <code class="inline">&lt;div&gt;</code> har doim ustma-ust, alohida qatorda chiqadi — ularni yonma-yon, masalan menyu qilib joylashtirish uchun nima qilish kerak? Bugun buning sirini — CSS'ning <code class="inline">display</code> xususiyatini — to'liq ochamiz.</p>
+  <div class="cover-plan">
+    <div><b>Reja 1</b>display: block, inline, inline-block farqi</div>
+    <div><b>Reja 2</b>display: none va visibility: hidden farqi</div>
+    <div><b>Reja 3</b>box-sizing: border-box — o'lchamlarni bashorat qilinadigan qilish</div>
+    <div><b>Amaliyot</b>inline-block yordamida yonma-yon menyu navigatsiyasi yasash</div>
+  </div>
+</section>
+
+<!-- ===== 2 ===== -->
+<section class="slide">
+  <span class="eyebrow">Maqsad</span>
+  <h2>Dars oxirida siz nima qila olasiz</h2>
+  <p class="big">Bu darsdan keyin siz <code class="inline">block</code>, <code class="inline">inline</code> va <code class="inline">inline-block</code> elementlarning xulq-atvoridagi farqni tushunasiz, <code class="inline">display: none</code> bilan <code class="inline">visibility: hidden</code> orasidagi farqni bilasiz va <code class="inline">box-sizing: border-box</code>dan foydalanib, o'lchamlarni bashorat qilinadigan (predictable) qila olasiz.</p>
+  <div class="cardset">
+    <div class="card">
+      <span class="ico">🧱</span>
+      <h4>Uchtasini farqlaysiz</h4>
+      <p>block, inline va inline-block — har biri qanday joy egallaydi va width/height ishlaydimi.</p>
+    </div>
+    <div class="card">
+      <span class="ico">👻</span>
+      <h4>Yashirishni tushunasiz</h4>
+      <p>display: none — joy qoldirmaydi, visibility: hidden — joyni saqlab qoladi.</p>
+    </div>
+    <div class="card">
+      <span class="ico">📐</span>
+      <h4>O'lchamni nazorat qilasiz</h4>
+      <p>box-sizing: border-box bilan padding va border width ichiga sig'dirilishini.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🧭</span>
+      <h4>Menyu yasaysiz</h4>
+      <p>inline-block yordamida elementlarni yonma-yon joylashtirib, oddiy navigatsiya menyusi qurasiz.</p>
+    </div>
+  </div>
+  <div class="note tip">
+    <span class="note-t">Bu darsning o'rni</span>
+    <p><code class="inline">display</code> — deyarli har qanday layout muammosining boshlanish nuqtasi. Element nega kutilganidek joylashmayotganini tushunish uchun avval "bu element tabiatan qanday display'ga ega" savoliga javob berish kerak.</p>
+  </div>
+</section>
+
+<!-- ===== 3 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 1 · Nazariya</span>
+  <h2>display: block, inline, inline-block — asosiy farq</h2>
+  <p>Har bir HTML elementi brauzer tomonidan standart bir <code class="inline">display</code> turiga ega bo'ladi. Buni analogiya orqali tasavvur qiling: <b>block</b> elementlar — har biri o'z qatorida turadigan kitob bo'limlari kabi; <b>inline</b> elementlar — gap ichidagi alohida so'zlar kabi; <b>inline-block</b> esa — qatorga yozilgan, lekin xohlagan o'lchamda yasash mumkin bo'lgan yorliqlar (stikerlar) kabi.</p>
+
+  <div class="cardset">
+    <div class="card">
+      <span class="ico">📚</span>
+      <h4>block</h4>
+      <p>O'z qatorini butunlay egallaydi, undan keyingi element majburan yangi qatordan boshlanadi.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🔤</span>
+      <h4>inline</h4>
+      <p>Faqat o'ziga kerakli joyni egallaydi, xuddi so'z kabi matn ichida oqib turadi.</p>
+    </div>
+    <div class="card">
+      <span class="ico">🏷️</span>
+      <h4>inline-block</h4>
+      <p>Matn qatorida yonma-yon turadi, lekin unga width va height berish mumkin va ular ishlaydi.</p>
+    </div>
+  </div>
+
+  <div class="note warn">
+    <span class="note-t">Talabalar ko'p adashadigan joy</span>
+    <p><code class="inline">span</code> yoki <code class="inline">a</code> elementiga <code class="inline">width</code>/<code class="inline">height</code> berib, "nega ishlamayapti" deb ajablanishadi — sababi, bu elementlar standart holda <code class="inline">inline</code>, va ularga o'lcham berish uchun avval <code class="inline">display: inline-block</code> yoki <code class="inline">display: block</code> qilish kerak.</p>
+  </div>
+</section>
+
+<!-- ===== 4 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 1 · Jadval</span>
+  <h2>Uchtasini yonma-yon taqqoslaymiz</h2>
+  <p>Har bir qiymat uchta savolga har xil javob beradi: o'z qatorini egallaydimi, width/height ishlaydimi va margin/padding qanday ishlaydi.</p>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th>Qiymat</th><th>O'z qatorini egallaydimi?</th><th><code>width</code>/<code>height</code> ishlaydimi?</th><th>margin/padding barcha tomondan ishlaydimi?</th><th>Tabiiy misol</th></tr>
+      <tr><td><code>block</code></td><td><b>Ha</b> — keyingi element majburan yangi qatordan boshlanadi</td><td><b>Ha</b></td><td><b>Ha</b></td><td><code>div</code>, <code>p</code>, <code>h1</code>-<code>h6</code>, <code>ul</code>, <code>li</code></td></tr>
+      <tr><td><code>inline</code></td><td>Yo'q — matn kabi oqib turadi</td><td><b>Yo'q</b> — e'tiborga olinmaydi</td><td>Faqat chap-o'ng; tepa-past qo'shni qatorga ta'sir qilmaydi</td><td><code>span</code>, <code>a</code>, <code>strong</code></td></tr>
+      <tr><td><code>inline-block</code></td><td>Yo'q — yonma-yon turadi</td><td><b>Ha</b></td><td><b>Ha</b></td><td>maxsus <code>div</code>, <code>button</code></td></tr>
+    </table>
+  </div>
+
+  <div class="cols">
+    <div>
+      <h3>Tabiatan block teglar</h3>
+      <table class="tbl">
+        <tr><td><code>div</code></td><td>Umumiy konteyner</td></tr>
+        <tr><td><code>p</code></td><td>Paragraf</td></tr>
+        <tr><td><code>h1</code>–<code>h6</code></td><td>Sarlavhalar</td></tr>
+        <tr><td><code>ul</code>, <code>li</code></td><td>Ro'yxat va band</td></tr>
+      </table>
+    </div>
+    <div>
+      <h3>Tabiatan inline teglar</h3>
+      <table class="tbl">
+        <tr><td><code>span</code></td><td>Neytral matn ichi</td></tr>
+        <tr><td><code>a</code></td><td>Havola</td></tr>
+        <tr><td><code>strong</code></td><td>Qalin urg'u</td></tr>
+        <tr><td><code>img</code></td><td>Rasm (istisno — replaced element)</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="note">
+    <span class="note-t"><code class="inline">img</code> — istisno</span>
+    <p><code class="inline">img</code> — inline element bo'lsa-da, u "almashtiriladigan" (replaced) element hisoblanadi, shuning uchun unga <code class="inline">width</code>/<code class="inline">height</code> ham ishlaydi.</p>
+  </div>
+</section>
+
+<!-- ===== 5 ===== -->
+<section class="slide">
+  <span class="eyebrow">Jonli mashq</span>
+  <h2>Farqni o'z ko'zingiz bilan ko'ring</h2>
+  <p><code class="inline">width</code> va <code class="inline">height</code> berilgan bo'lsa ham, <code class="inline">display: inline</code> elementda ular ishlamayotganiga e'tibor bering.</p>
+
+  <div class="live">
+    <div class="live-head">
+      <span class="dot"></span> display.html
+      <span class="sp"></span>
+      <button class="live-reset" type="button">↺ Qayta</button>
+    </div>
+    <div class="live-body">
+      <div class="live-editor">
+<textarea spellcheck="false">
+<style>
+  body { font-family: Arial, sans-serif; }
+  .box {
+    margin: 6px;
+    padding: 10px;
+    box-sizing: border-box;
+    background: #eef1ff;
+    border: 1px solid #2f5cff;
+    color: #2f5cff;
+    font-size: 13px;
+  }
+  .d-block {
+    display: block;
+    width: 200px;
+    height: 60px;
+  }
+  .d-inline {
+    display: inline;
+    width: 200px;  /* e'tiborga olinmaydi */
+    height: 100px; /* e'tiborga olinmaydi */
+  }
+  .d-inline-block {
+    display: inline-block;
+    width: 140px;
+    height: 60px;
+  }
+</style>
+
+<div class="box d-block">Block 1</div>
+<div class="box d-block">Block 2</div>
+
+<span class="box d-inline">Inline — width/height ishlamayapti</span>
+
+<span class="box d-inline-block">IB 1</span>
+<span class="box d-inline-block">IB 2</span>
+</textarea>
+      </div>
+      <div class="live-preview"><iframe title="Natija"></iframe></div>
+    </div>
+  </div>
+
+  <div class="note tip">
+    <span class="note-t">Sinab ko'ring</span>
+    <p><code class="inline">.d-inline</code> qoidasidagi <code class="inline">display: inline;</code> ni <code class="inline">display: inline-block;</code> ga o'zgartiring. Endi <code class="inline">width</code>/<code class="inline">height</code> ishlay boshlaydi, lekin element hamon matn qatorida boshqalar bilan yonma-yon turaveradi.</p>
+  </div>
+</section>
+
+<!-- ===== 6 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 2 · Nazariya</span>
+  <h2>display: none va visibility: hidden farqi</h2>
+  <p>Ikkalasi ham elementni ko'rinmas qiladi, lekin ular orasida muhim farq bor. Buni shunday tasavvur qiling: <code class="inline">display: none</code> — xonadan butunlay chiqib ketish, joy bo'shab qoladi. <code class="inline">visibility: hidden</code> esa — ko'rinmas plash kiyib, xonada turishda davom etish, ya'ni joy hali ham band.</p>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th>Xossa</th><th>Ko'rinishi</th><th>Joy egallaydimi?</th></tr>
+      <tr><td><code>display: none;</code></td><td>Butunlay yo'qoladi — sahifada mavjud emasdek</td><td><b>Yo'q</b> — atrofidagi elementlar uning o'rniga siljib keladi</td></tr>
+      <tr><td><code>visibility: hidden;</code></td><td>Ko'rinmas bo'ladi</td><td><b>Ha</b> — o'z joyini saqlab qoladi, sahifada bo'sh joy qolaveradi</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ===== 7 ===== -->
+<section class="slide">
+  <span class="eyebrow">Jonli mashq</span>
+  <h2>Joy egallash farqini o'z ko'zingiz bilan ko'ring</h2>
+  <p>Pastdagi 4 ta qatordan qay biri joy egallashini, qay biri egallamasligini solishtiring.</p>
+
+  <div class="live">
+    <div class="live-head">
+      <span class="dot"></span> hide.html
+      <span class="sp"></span>
+      <button class="live-reset" type="button">↺ Qayta</button>
+    </div>
+    <div class="live-body">
+      <div class="live-editor">
+<textarea spellcheck="false">
+<style>
+  body { font-family: Arial, sans-serif; }
+  .row {
+    width: 120px;
+    padding: 14px;
+    margin: 6px 0;
+    background: #eef1ff;
+    border: 1px solid #2f5cff;
+    text-align: center;
+  }
+  .hide-none {
+    display: none; /* joy qoldirmaydi, sahifadan yo'qoladi */
+  }
+  .hide-visibility {
+    visibility: hidden; /* joy qoldiradi, lekin ko'rinmaydi */
+  }
+</style>
+
+<div class="row">1) Oddiy blok</div>
+<div class="row hide-none">2) display: none — meni ko'rmaysiz</div>
+<div class="row hide-visibility">3) visibility: hidden — joyim bo'sh qoladi</div>
+<div class="row">4) Oddiy blok</div>
+</textarea>
+      </div>
+      <div class="live-preview"><iframe title="Natija"></iframe></div>
+    </div>
+  </div>
+
+  <div class="note tip">
+    <span class="note-t">Sinab ko'ring</span>
+    <p><code class="inline">.hide-none</code> dagi <code class="inline">display: none</code>ni o'chirib ko'ring — 2-qator paydo bo'lib, joy egallashi bilan 3-qatordagi bo'sh joydan farqini solishtiring.</p>
+  </div>
+</section>
+
+<!-- ===== 8 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 3 · Nazariya</span>
+  <h2>box-sizing: content-box muammosi</h2>
+  <p>Standart holatda (<code class="inline">box-sizing: content-box</code>), <code class="inline">width</code>/<code class="inline">height</code> faqat elementning ichki kontentiga tegishli bo'ladi — <code class="inline">padding</code> va <code class="inline">border</code> shu o'lchamga <b>QO'SHIB</b> hisoblanadi. Masalan, <code class="inline">width: 200px</code>, <code class="inline">padding: 20px</code>, <code class="inline">border: 5px</code> bo'lsa, elementning haqiqiy (ko'rinadigan) kengligi 200 + 40 (ikki tomondan padding) + 10 (ikki tomondan border) = <b>250px</b> bo'lib chiqadi.</p>
+
+<pre class="code" data-lang="css" data-label="style.css"><code>.box {
+  width: 200px;
+  padding: 20px;
+  border: 5px solid black;
+  /* haqiqiy kengligi: 200 + 40 (padding) + 10 (border) = 250px */
+}</code></pre>
+
+  <div class="note bad">
+    <span class="note-t">Bu esa layout yasashda ko'p chalkashlik keltirib chiqaradi</span>
+    <p>Dasturchi <code class="inline">width: 200px</code> deb hisoblaydi, lekin ekranda element 250px kenglikda chiqadi — bu ayniqsa bir nechta ustunni yonma-yon joylashtirganda umumiy kenglikni "sig'dirmay qo'yadi".</p>
+  </div>
+</section>
+
+<!-- ===== 9 ===== -->
+<section class="slide">
+  <span class="eyebrow">Reja 3 · Yechim</span>
+  <h2>box-sizing: border-box — o'lchamlarni bashorat qilinadigan qilish</h2>
+  <p><code class="inline">box-sizing: border-box</code> bilan esa <code class="inline">padding</code> va <code class="inline">border</code> <code class="inline">width</code>ning <b>O'ZI ICHIGA</b> hisoblanadi — element aynan berilgan 200px kenglikda qoladi, ichki bo'sh joy shu 200px ichidan "kesib olinadi".</p>
+
+  <div class="vs">
+    <div class="no">
+      <b>content-box (sukut)</b>
+<pre class="code" data-lang="css"><code>.box {
+  width: 200px;
+  padding: 20px;
+  border: 5px solid black;
+}
+/* haqiqiy kengligi:
+   200 + 40 (padding) + 10 (border)
+   = 250px */</code></pre>
+      <p>Kutilmagan holda element kattaroq chiqadi — layout matematikasi buziladi.</p>
+    </div>
+    <div class="ok">
+      <b>border-box</b>
+<pre class="code" data-lang="css"><code>* {
+  box-sizing: border-box;
+}
+.box {
+  width: 200px;
+  padding: 20px;
+  border: 5px solid black;
+}
+/* haqiqiy kengligi baribir 200px,
+   ichki bo'sh joy shu 200px ichidan
+   "kesib olinadi" */</code></pre>
+      <p>Element aynan berilgan 200px kenglikda qoladi — bashorat qilish oson.</p>
+    </div>
+  </div>
+
+  <div class="note warn">
+    <span class="note-t">Shuning uchun</span>
+    <p>Deyarli barcha zamonaviy loyihalarda dasturchilar eng boshida <code class="inline">* { box-sizing: border-box; }</code> deb yozib, barcha elementlarga shu qoidani qo'llab qo'yishadi — bu o'lchamlarni bashorat qilinadigan (predictable) qiladi.</p>
+  </div>
+</section>
+
+<!-- ===== 10 ===== -->
+<section class="slide">
+  <span class="eyebrow">Jonli mashq</span>
+  <h2>inline-block bilan yonma-yon menyu navigatsiyasi</h2>
+  <p>Endi barcha o'rganganlarimizni birlashtiramiz: <code class="inline">&lt;nav&gt;</code> ichida bir nechta <code class="inline">&lt;a&gt;</code> havolani <code class="inline">display: inline-block</code> qilib, ularga <code class="inline">padding</code> va fon rang berib, "tugma"ga o'xshatamiz.</p>
+
+  <div class="live">
+    <div class="live-head">
+      <span class="dot"></span> menu.html
+      <span class="sp"></span>
+      <button class="live-reset" type="button">↺ Qayta</button>
+    </div>
+    <div class="live-body">
+      <div class="live-editor">
+<textarea spellcheck="false">
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: Arial, sans-serif; padding: 20px; }
+
+  nav {
+    background: #111;
+    padding: 10px;
+  }
+
+  nav a {
+    display: inline-block;
+    padding: 12px 20px;
+    background: #2f5cff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    margin-right: 8px;
+    font-size: 14px;
+  }
+
+  nav a:last-child {
+    margin-right: 0;
+  }
+</style>
+
+<nav>
+  <a href="#">Bosh sahifa</a>
+  <a href="#">Xizmatlar</a>
+  <a href="#">Aloqa</a>
+</nav>
+</textarea>
+      </div>
+      <div class="live-preview"><iframe title="Natija"></iframe></div>
+    </div>
+  </div>
+
+  <div class="note tip">
+    <span class="note-t">Sinab ko'ring</span>
+    <p><code class="inline">nav a</code> qoidasidagi <code class="inline">display: inline-block</code>ni <code class="inline">display: block</code>ga o'zgartiring — havolalar pastma-past tushib ketadi. Bu — <code class="inline">inline-block</code>ning aynan nima uchun kerakligini isbotlaydi.</p>
+  </div>
+</section>
+
+<!-- ===== 11 ===== -->
+<section class="slide">
+  <span class="eyebrow">Xatolar</span>
+  <h2>Bu mavzuda ko'p uchraydigan xatolar</h2>
+
+  <div class="tbl-scroll">
+    <table class="tbl">
+      <tr><th style="width:30%">Xato</th><th style="width:38%">Nima bo'ladi</th><th>Yechim</th></tr>
+      <tr>
+        <td><b>inline elementga <code>width</code>/<code>height</code> berish</b></td>
+        <td><code>span</code> yoki <code>a</code> ga o'lcham berilsa — hech narsa o'zgarmaydi, e'tiborga olinmaydi</td>
+        <td>Kerak bo'lsa <code>display: inline-block</code> yoki <code>block</code> qiling</td>
+      </tr>
+      <tr>
+        <td><b><code>box-sizing: border-box</code> ni unutish</b></td>
+        <td><code>padding</code> yoki <code>border</code> qo'shilganda element kutilganidan kattaroq chiqib, layout matematikasi buziladi</td>
+        <td>Loyihaning boshidayoq <code>* { box-sizing: border-box; }</code> qo'ying</td>
+      </tr>
+      <tr>
+        <td><b><code>display: none</code> bilan <code>visibility: hidden</code>ni chalkashtirish</b></td>
+        <td>Element yashirilishi kerak bo'lgan joyda joy bo'sh qolib ketadi (yoki aksincha)</td>
+        <td>Joy ham yo'qolishi kerakmi — <code>display: none</code>; joy saqlanishi kerakmi — <code>visibility: hidden</code></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="note bad">
+    <span class="note-t">Eng muhim maslahat</span>
+    <p>Element kutilganidek joylashmasa yoki o'lcham qabul qilmasa — birinchi savol: <b>bu element tabiatan block, inline yoki inline-block?</b> Ko'pchilik layout xatosi aynan shu savolga noto'g'ri javob berishdan kelib chiqadi.</p>
+  </div>
+</section>
+
+<!-- ===== 12 ===== -->
+<section class="slide">
+  <span class="eyebrow">Best practice</span>
+  <h2>Yaxshi amaliyot — qisqacha</h2>
+  <div class="cols">
+    <div>
+      <ul>
+        <li>Har bir loyihaning boshida <code class="inline">* { box-sizing: border-box; }</code> yozing.</li>
+        <li>inline elementga o'lcham berishga urinmang — avval <code class="inline">display</code> qiymatini tekshiring.</li>
+        <li>Yonma-yon "tugma"ga o'xshash elementlar uchun <code class="inline">inline-block</code> qulay tanlov.</li>
+      </ul>
+    </div>
+    <div>
+      <ul>
+        <li>Elementni butunlay olib tashlash kerakmi yoki joyini saqlab, faqat yashirish kerakmi — buni oldindan aniqlab oling.</li>
+        <li><code class="inline">img</code> — inline bo'lsa-da, "almashtiriladigan" (replaced) element sifatida <code class="inline">width</code>/<code class="inline">height</code> qabul qiladi — bu istisno.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="note tip">
+    <span class="note-t">Bugungi eng muhim xulosa</span>
+    <p><code class="inline">display</code> — har qanday layout muammosining boshlanish nuqtasi. Element block, inline yoki inline-block ekanini bilish — keyingi darsdagi CSS Position mantig'ini tushunishning birinchi qadami.</p>
+  </div>
+</section>
+
+<!-- ===== 13 ===== -->
+<section class="slide">
+  <span class="eyebrow">Amaliy vazifa</span>
+  <h2>Uyga vazifa</h2>
+
+  <div class="task">
+    <h4><span class="n">1</span> Elementlarni yonma-yon joylashtirish va oddiy menyu navigatsiyasi</h4>
+    <ol>
+      <li><code class="inline">dars-07</code> papkasida <code class="inline">index.html</code> yarating.</li>
+      <li>Ichida <code class="inline">&lt;nav&gt;</code> elementi, uning ichida kamida 3 ta <code class="inline">&lt;a&gt;</code> havola bo'lsin.</li>
+      <li>Har bir havolaga <code class="inline">display: inline-block</code>, <code class="inline">padding</code> va <code class="inline">background-color</code> bering — ularni "tugma"ga o'xshating.</li>
+      <li>Natijada havolalar bitta qatorda, yonma-yon, chiroyli menyu ko'rinishida chiqishi kerak.</li>
+      <li><code class="inline">*</code> selektoriga <code class="inline">box-sizing: border-box</code> qo'shing, shunda <code class="inline">padding</code> menyuning umumiy o'lchamini buzmaydi.</li>
+    </ol>
+    <div class="crit">
+      <b>Baholash mezoni:</b> menyudagi havolalar bitta qatorda, yonma-yon joylashgan · har birida yetarlicha padding bor · box-sizing: border-box qo'llangan.
+    </div>
+  </div>
+</section>
+
+<!-- ===== 14 ===== -->
+<section class="slide">
+  <span class="eyebrow">Yakun</span>
+  <h2>Xulosa va o'z-o'zini tekshirish</h2>
+
+  <div class="recap">
+    <div><b>block</b>O'z qatorini butunlay egallaydi, keyingi element yangi qatordan boshlanadi. width/height to'liq ishlaydi.</div>
+    <div><b>inline</b>Matn kabi oqib turadi, width/height e'tiborga olinmaydi. Faqat gorizontal margin/padding ishlaydi.</div>
+    <div><b>inline-block</b>Yonma-yon turadi (inline kabi), lekin width/height ham ishlaydi (block kabi).</div>
+    <div><b>display: none vs visibility: hidden</b>none — joyi ham yo'qoladi. hidden — ko'rinmaydi, lekin joyi saqlanadi.</div>
+    <div><b>box-sizing: border-box</b>padding va border width ichiga hisoblanadi — o'lcham bashorat qilinadigan bo'ladi.</div>
+    <div><b>Amaliyot</b>inline-block yordamida oddiy, yonma-yon menyu navigatsiyasi yasadik.</div>
+  </div>
+
+  <h3 style="margin-top:30px">Savol-javob</h3>
+  <div class="quiz">
+    <div class="q">
+      <p>1. <code class="inline">display: block</code> va <code class="inline">display: inline</code> orasidagi ikkita asosiy farqni ayting.</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">1) Block — o'z qatorini egallaydi (yangi qatordan boshlanadi), inline — matn kabi yonma-yon oqadi. 2) Block'da <code>width</code>/<code>height</code> ishlaydi, inline'da ular e'tiborga olinmaydi.</div>
+    </div>
+    <div class="q">
+      <p>2. <code class="inline">inline-block</code> nima uchun "aralash" hisoblanadi?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">U inline elementlar kabi matn oqimida yonma-yon joylashadi, lekin block elementlar kabi <code>width</code>, <code>height</code>, <code>padding</code> qabul qiladi — ikkala turning xususiyatlarini birlashtiradi.</div>
+    </div>
+    <div class="q">
+      <p>3. <code class="inline">display: none</code> bilan <code class="inline">visibility: hidden</code> orasidagi farq nima?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans"><code>display: none</code> — element sahifadan butunlay olib tashlanadi va joy egallamaydi. <code>visibility: hidden</code> — element ko'rinmas bo'ladi, lekin o'z joyini saqlab qoladi.</div>
+    </div>
+    <div class="q">
+      <p>4. <code class="inline">box-sizing: border-box</code> nima uchun kerak?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans">Sukut holatda (content-box) padding va border width'ga qo'shilib hisoblanadi, natijada element kattaroq chiqadi. border-box bilan ular width ichiga sig'diriladi, shuning uchun element aynan berilgan o'lchamda qoladi — bu o'lchamlarni bashorat qilinadigan qiladi.</div>
+    </div>
+    <div class="q">
+      <p>5. <code class="inline">span</code> elementiga <code class="inline">width: 200px</code> yozdingiz, lekin natija o'zgarmadi. Sabab nima?</p>
+      <button type="button">Javobni ko'rish</button>
+      <div class="ans"><code>span</code> tabiatan <code>inline</code> element, inline elementlarga esa <code>width</code>/<code>height</code> ta'sir qilmaydi. Kerak bo'lsa <code>display: inline-block</code> yoki <code>display: block</code> qo'yish kerak.</div>
+    </div>
+  </div>
+
+  <div class="lesson-jump">
+    <a href="../06-inheritance-object-fit/index.html"><b>Oldingi modul</b><span>← 06-modul: CSS Inheritance, Object-fit va Retina Display</span></a>
+    <a href="../08-css-position/index.html"><b>Keyingi modul</b><span>08-modul: CSS Position moduli →</span></a>
+  </div>
+</section>
+
+</main>
+
+<div class="deck-nav">
+  <button data-prev type="button" title="Oldingi (←)">‹</button>
+  <span class="hint">← → varaqlash · <kbd>O</kbd> ro'yxat · <kbd>F</kbd> to'liq ekran</span>
+  <button data-next type="button" title="Keyingi (→)">›</button>
+</div>
+
+<div class="deck-overview"><h3>Slaydlar ro'yxati</h3><div class="ov-grid"></div></div>
+
+<script src="../assets/js/deck.js"></script>
+</body>
+</html>
