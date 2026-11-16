@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test: 1–8-darslar</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 40px 16px;
+    }
+    .card {
+      width: 100%;
+      max-width: 680px;
+      background: #1e293b;
+      border-radius: 16px;
+      padding: 28px;
+    }
+    .top {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      color: #94a3b8;
+      margin-bottom: 10px;
+    }
+    .bar { height: 6px; background: #334155; border-radius: 3px; margin-bottom: 24px; }
+    .bar div { height: 100%; width: 0; background: #38bdf8; border-radius: 3px; transition: width .3s; }
+    h1 { font-size: 22px; line-height: 1.4; margin-bottom: 20px; }
+    .option {
+      display: block;
+      width: 100%;
+      text-align: left;
+      font: inherit;
+      color: inherit;
+      background: #0f172a;
+      border: 2px solid #334155;
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+    .option:hover { border-color: #64748b; }
+    .option.selected { border-color: #38bdf8; background: #0c4a6e; }
+    .btn {
+      font: inherit;
+      font-weight: 600;
+      color: #0f172a;
+      background: #38bdf8;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 28px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    .btn:disabled { opacity: .4; cursor: not-allowed; }
+    .score { font-size: 56px; font-weight: 700; color: #38bdf8; margin: 8px 0; }
+    .center { text-align: center; }
+    .muted { color: #94a3b8; }
+    .mistakes { text-align: left; margin-top: 28px; }
+    .mistakes h2 { font-size: 17px; margin-bottom: 12px; }
+    .mistake { background: #0f172a; border-radius: 10px; padding: 14px 16px; margin-bottom: 10px; font-size: 15px; line-height: 1.5; }
+    .wrong { color: #f87171; }
+    .right { color: #4ade80; }
+  </style>
+</head>
+<body>
+  <div class="card" id="app"></div>
+
+  <script>
+    // a: variantlar, c: to'g'ri javobning indeksi
+    const QUESTIONS = [
+      { q: "DNS ning asosiy vazifasi nima?", a: ["Saytni internetga joylashtirish", "Domen nomini IP manzilga aylantirish", "Internet tezligini oshirish", "HTML kodni brauzerda chizish"], c: 1 },
+      { q: "Quyidagilardan qaysi biri toq (yopilmaydigan) teg?", a: ["<p>", "<h1>", "<br>", "<a>"], c: 2 },
+      { q: "<img> tegidagi alt atributi nima uchun kerak?", a: ["Rasm o'lchamini belgilash uchun", "Rasm manzilini ko'rsatish uchun", "Rasmga ramka berish uchun", "Rasm yuklanmaganda uning o'rniga chiqadigan matnni berish uchun"], c: 3 },
+      { q: "Havolani yangi oynada (tab) ochish uchun qaysi atribut yoziladi?", a: ['target="_blank"', 'href="_new"', 'open="tab"', 'rel="blank"'], c: 0 },
+      { q: "Tartiblangan (raqamli) ro'yxat qaysi teg bilan yaratiladi?", a: ["<ul>", "<li>", "<ol>", "<hr>"], c: 2 },
+      { q: "Jadvalda yangi qator qaysi teg bilan ochiladi?", a: ["<td>", "<tr>", "<th>", "<table>"], c: 1 },
+      { q: '<td colspan="2"> nima qiladi?', a: ["Katakni ikkita qatorga bo'ladi", "Ikkita qatorni vertikal birlashtiradi", "Katak ikkita ustun joyini egallaydi (gorizontal birlashadi)", "Jadvalga ikkita yangi ustun qo'shadi"], c: 2 },
+      { q: "Jadvalning sarlavha katagi uchun qaysi teg ishlatiladi?", a: ["<th>", "<td>", "<thead>", "<h1>"], c: 0 },
+      { q: "Tashqi (external) CSS faylni sahifaga ulashning to'g'ri usuli qaysi?", a: ['<style src="style.css">', '<css href="style.css">', '<script href="style.css">', '<link rel="stylesheet" href="style.css">'], c: 3 },
+      { q: 'class="card" berilgan elementni CSS\'da qanday tanlaymiz?', a: ["#card", ".card", "card", "*card"], c: 1 },
+      { q: "p { color: red; } yozuvida color nima deb ataladi?", a: ["Selector (selektor)", "Value (qiymat)", "Property (xususiyat)", "Atribut"], c: 2 },
+      { q: "rgba(0, 0, 0, 0.5) dagi oxirgi qiymat (0.5) nimani bildiradi?", a: ["Rangning shaffofligini", "Ko'k rang miqdorini", "Rangning yorqinligini", "Element o'lchamini"], c: 0 },
+      { q: "#ff0000 qaysi rangni bildiradi?", a: ["Ko'k", "Yashil", "Qora", "Qizil"], c: 3 },
+      { q: "height: 100vh nimani anglatadi?", a: ["Ota element balandligining 100%", "Brauzer oynasi (viewport) balandligining 100%", "100 piksel balandlik", "Sahifadagi barcha kontent balandligi"], c: 1 },
+      { q: "Quyidagi xususiyatlardan qaysi biri ota elementdan bolaga meros bo'lib o'tadi?", a: ["border", "margin", "color", "padding"], c: 2 },
+      { q: "object-fit: cover rasmga qanday ta'sir qiladi?", a: ["Rasm nisbatini saqlab, blokni to'liq to'ldiradi, ortiqcha qismi kesiladi", "Rasm blokka sig'ishi uchun cho'ziladi va nisbati buziladi", "Rasm to'liq ko'rinadi, lekin blokda bo'sh joy qolishi mumkin", "Rasm asl o'lchamida qoladi"], c: 0 },
+      { q: "Qaysi display qiymatida elementlar bir qatorda yonma-yon turadi va ularga width hamda height berish mumkin?", a: ["display: block", "display: inline", "display: none", "display: inline-block"], c: 3 },
+      { q: "Elementga box-sizing: border-box; width: 200px; padding: 20px; border: 5px solid; berilgan. Uning ekrandagi umumiy kengligi qancha?", a: ["250px", "200px", "240px", "225px"], c: 1 },
+      { q: "Ustma-ust tushgan elementlardan qaysi biri ustida turishini qaysi xususiyat belgilaydi?", a: ["display", "opacity", "z-index", "object-fit"], c: 2 },
+      { q: "Scroll qilganda ham joyidan qimirlamaydigan element uchun qaysi position ishlatiladi?", a: ["position: fixed", "position: relative", "position: static", "position: absolute"], c: 0 }
+    ];
+
+    const app = document.getElementById("app");
+    const TIME_PER_QUESTION = 60; // har bir savol uchun vaqt (soniya)
+    let quiz, index, selected, mistakes, timer;
+
+    // Fisher–Yates aralashtirish
+    function shuffle(arr) {
+      const a = arr.slice();
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    function el(tag, className, text) {
+      const node = document.createElement(tag);
+      if (className) node.className = className;
+      if (text !== undefined) node.textContent = text; // teglar matn sifatida chiqadi
+      return node;
+    }
+
+    function start() {
+      // Savollar ham, har bir savolning variantlari ham aralashtiriladi
+      quiz = shuffle(QUESTIONS).map(item => ({
+        q: item.q,
+        correct: item.a[item.c],
+        options: shuffle(item.a)
+      }));
+      index = 0;
+      mistakes = [];
+      showQuestion();
+    }
+
+    function showQuestion() {
+      const item = quiz[index];
+      selected = null;
+      app.innerHTML = "";
+
+      const top = el("div", "top");
+      const clock = el("span", "", "⏱ " + TIME_PER_QUESTION + " s");
+      top.append(el("span", "", "1–8-darslar bo'yicha test"), clock, el("span", "", (index + 1) + " / " + quiz.length));
+      const bar = el("div", "bar");
+      const fill = el("div");
+      fill.style.width = (index / quiz.length * 100) + "%";
+      bar.append(fill);
+
+      const next = el("button", "btn", index === quiz.length - 1 ? "Yakunlash" : "Keyingi");
+      const goNext = () => {
+        clearInterval(timer);
+        item.yours = selected;
+        if (selected !== item.correct) mistakes.push(item);
+        index++;
+        index < quiz.length ? showQuestion() : showResult();
+      };
+      next.onclick = goNext;
+
+      // Vaqt tugasa, belgilangan javob (bo'lsa) bilan avtomatik keyingi savolga o'tadi
+      let left = TIME_PER_QUESTION;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        left--;
+        clock.textContent = "⏱ " + left + " s";
+        if (left <= 10) clock.className = "wrong";
+        if (left <= 0) goNext();
+      }, 1000);
+
+      app.append(top, bar, el("h1", "", item.q));
+      const letters = ["A", "B", "C", "D"];
+      item.options.forEach((opt, i) => {
+        const btn = el("button", "option", letters[i] + ") " + opt);
+        btn.onclick = () => {
+          selected = opt;
+          app.querySelectorAll(".option").forEach(b => b.classList.remove("selected"));
+          btn.classList.add("selected");
+        };
+        app.append(btn);
+      });
+      app.append(next);
+    }
+
+    function showResult() {
+      const total = quiz.length;
+      const correct = total - mistakes.length;
+      app.innerHTML = "";
+
+      const box = el("div", "center");
+      box.append(
+        el("p", "muted", "Test yakunlandi"),
+        el("div", "score", correct + " / " + total),
+        el("p", "", "To'g'ri javoblar soni: " + correct + " ta (" + Math.round(correct / total * 100) + "%)")
+      );
+      const again = el("button", "btn", "Qayta boshlash");
+      again.onclick = start;
+      box.append(again);
+      app.append(box);
+
+      // Barcha savollar to'g'ri javobi bilan ko'rsatiladi (belgilanmaganlari ham)
+      const list = el("div", "mistakes");
+      list.append(el("h2", "", "Barcha savollar va to'g'ri javoblar:"));
+      quiz.forEach((m, i) => {
+        const row = el("div", "mistake");
+        row.append(el("div", "", (i + 1) + ". " + m.q));
+        if (m.yours === null) {
+          row.append(el("div", "muted", "Javob berilmagan"));
+        } else if (m.yours !== m.correct) {
+          row.append(el("div", "wrong", "Sizning javobingiz: " + m.yours));
+        }
+        row.append(el("div", "right", (m.yours === m.correct ? "✓ To'g'ri javob berdingiz: " : "To'g'ri javob: ") + m.correct));
+        list.append(row);
+      });
+      app.append(list);
+    }
+
+    start();
+  </script>
+</body>
+</html>
